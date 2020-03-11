@@ -26,22 +26,25 @@ public enum ConnectionPool {
     private Queue<ProxyConnection> usedConnections;
 
     private Properties properties;
-    private static final String URL_KEY = "url";
     private static final String DATABASE_PROPERTIES_PATH = "database.properties";
+    private static final String URL_KEY = "url";
+    private static final String DRIVER_KEY = "driver";
+
     private String url;
+    private String driver;
 
     public void init(){
         availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
         usedConnections = new ArrayDeque<>();
         try {
             loadDatabaseProperties();
-            DriverManager.registerDriver(DriverManager.getDriver(url));
+            Class.forName(driver);
             ProxyConnection connection;
             for (int i = 0; i < POOL_SIZE; i++) {
                 connection = new ProxyConnection(DriverManager.getConnection(url, properties));
                 availableConnections.add(connection);
             }
-        } catch (SQLException | NoJDBCPropertiesException e) {
+        } catch (SQLException | NoJDBCPropertiesException | ClassNotFoundException e) {
             logger.fatal(e);
         }
     }
@@ -79,6 +82,7 @@ public enum ConnectionPool {
         try {
             properties.load(classLoader.getResourceAsStream(DATABASE_PROPERTIES_PATH));
             url = properties.getProperty(URL_KEY);
+            driver = properties.getProperty(DRIVER_KEY);
         } catch (IOException e) {
             throw new NoJDBCPropertiesException("Failed to load database properties");
         }
