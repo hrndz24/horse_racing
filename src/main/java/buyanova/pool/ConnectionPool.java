@@ -30,14 +30,15 @@ public enum ConnectionPool {
     private static final String DATABASE_PROPERTIES_PATH = "database.properties";
     private String url;
 
-    ConnectionPool() {
+    public void init(){
         availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
         usedConnections = new ArrayDeque<>();
         try {
             loadDatabaseProperties();
             DriverManager.registerDriver(DriverManager.getDriver(url));
-            ProxyConnection connection = new ProxyConnection(DriverManager.getConnection(url, properties));
+            ProxyConnection connection;
             for (int i = 0; i < POOL_SIZE; i++) {
+                connection = new ProxyConnection(DriverManager.getConnection(url, properties));
                 availableConnections.add(connection);
             }
         } catch (SQLException | NoJDBCPropertiesException e) {
