@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public enum ConnectionPool {
 
@@ -24,6 +25,7 @@ public enum ConnectionPool {
     private static final int POOL_SIZE = 32;
     private BlockingQueue<ProxyConnection> availableConnections;
     private Queue<ProxyConnection> usedConnections;
+    private AtomicBoolean isInitialized = new AtomicBoolean(false);
 
     private Properties properties;
     private static final String DATABASE_PROPERTIES_PATH = "database.properties";
@@ -33,19 +35,18 @@ public enum ConnectionPool {
     private String url;
     private String driver;
 
-    public void init(){
-        availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
-        usedConnections = new ArrayDeque<>();
-        try {
-            loadDatabaseProperties();
-            Class.forName(driver);
-            ProxyConnection connection;
-            for (int i = 0; i < POOL_SIZE; i++) {
-                connection = new ProxyConnection(DriverManager.getConnection(url, properties));
-                availableConnections.add(connection);
+    public void init() {
+        if (!isInitialized.get()) {
+            availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
+            usedConnections = new ArrayDeque<>();
+            try {
+                loadDatabaseProperties();
+                Class.forName(driver);
+                fillAvailableConnections();
+                isInitialized.set(true);
+            } catch (SQLException | NoJDBCPropertiesException | ClassNotFoundException e) {
+                logger.fatal("Failed to initialize connection pool", e);
             }
-        } catch (SQLException | NoJDBCPropertiesException | ClassNotFoundException e) {
-            logger.fatal(e);
         }
     }
 
@@ -60,7 +61,7 @@ public enum ConnectionPool {
         return connection;
     }
 
-    public void releaseConnection(ProxyConnection connection) {
+    void releaseConnection(ProxyConnection connection) {
         usedConnections.remove(connection);
         availableConnections.add(connection);
     }
@@ -69,11 +70,19 @@ public enum ConnectionPool {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 availableConnections.take().closeInPool();
+                deregisterDrivers();
             } catch (SQLException | InterruptedException e) {
-                logger.warn(e);
+                logger.warn("Failed to close connection pool", e);
             }
         }
-        deregisterDrivers();
+    }
+
+    private void fillAvailableConnections() throws SQLException {
+        ProxyConnection connection;
+        for (int i = 0; i < POOL_SIZE; i++) {
+            connection = new ProxyConnection(DriverManager.getConnection(url, properties));
+            availableConnections.add(connection);
+        }
     }
 
     private void loadDatabaseProperties() throws NoJDBCPropertiesException {
