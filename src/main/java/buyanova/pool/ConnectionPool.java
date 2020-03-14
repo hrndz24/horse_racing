@@ -1,5 +1,6 @@
 package buyanova.pool;
 
+import buyanova.exception.ConnectionPoolException;
 import buyanova.exception.NoJDBCPropertiesException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -35,7 +36,7 @@ public enum ConnectionPool {
     private String url;
     private String driver;
 
-    public void init() {
+    public void init() throws ConnectionPoolException {
         if (!isInitialized.get()) {
             availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
             usedConnections = new ArrayDeque<>();
@@ -45,7 +46,7 @@ public enum ConnectionPool {
                 fillAvailableConnections();
                 isInitialized.set(true);
             } catch (SQLException | NoJDBCPropertiesException | ClassNotFoundException e) {
-                logger.fatal("Failed to initialize connection pool", e);
+                throw new ConnectionPoolException("Failed to initialize connection pool", e);
             }
         }
     }
@@ -66,15 +67,15 @@ public enum ConnectionPool {
         availableConnections.add(connection);
     }
 
-    public void destroyPool() {
+    public void destroyPool() throws ConnectionPoolException {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
                 availableConnections.take().closeInPool();
-                deregisterDrivers();
             } catch (SQLException | InterruptedException e) {
-                logger.warn("Failed to close connection pool", e);
+                throw new ConnectionPoolException("Failed to close connection pool", e);
             }
         }
+        deregisterDrivers();
     }
 
     private void fillAvailableConnections() throws SQLException {
