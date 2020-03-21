@@ -1,9 +1,12 @@
+# Maven
 target/
 *.class
 *.jar
 
+# Project specific
 logs/
 src/main/java/buyanova/Main.java
+src/main/java/buyanova/Todo.java
 
 # IntelliJ project files
 *.iml
@@ -11,7 +14,7 @@ src/main/java/buyanova/Main.java
 *.ipr
 .idea/
 
-# eclipse project file
+# Eclipse project file
 .settings/
 .classpath
 .project

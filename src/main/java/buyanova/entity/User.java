@@ -1,29 +1,30 @@
 package buyanova.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class User {
+public class User implements Serializable {
 
     private int id;
     private String name;
     private String login;
     private char[] password;
     private String email;
-    private int userRoleId;
+    private UserRole userRole;
     private boolean isActive;
     private BigDecimal balance;
 
     public User(){}
 
-    public User(int id, String name, String login, char[] password, String email, int userRoleId, boolean isActive, BigDecimal balance) {
+    public User(int id, String name, String login, char[] password, String email, UserRole userRole, boolean isActive, BigDecimal balance) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
         this.email = email;
-        this.userRoleId = userRoleId;
+        this.userRole = userRole;
         this.isActive = isActive;
         this.balance = balance;
     }
@@ -68,12 +69,12 @@ public class User {
         this.email = email;
     }
 
-    public int getUserRoleId() {
-        return userRoleId;
+    public UserRole getUserRole() {
+        return userRole;
     }
 
-    public void setUserRoleId(int userRoleId) {
-        this.userRoleId = userRoleId;
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public boolean isActive() {
@@ -98,13 +99,13 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
-                userRoleId == user.userRoleId &&
                 isActive == user.isActive &&
-                name.equals(user.name) &&
-                login.equals(user.login) &&
+                Objects.equals(name, user.name) &&
+                Objects.equals(login, user.login) &&
                 Arrays.equals(password, user.password) &&
-                email.equals(user.email) &&
-                balance.equals(user.balance);
+                Objects.equals(email, user.email) &&
+                userRole == user.userRole &&
+                Objects.equals(balance, user.balance);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class User {
                 ", login='" + login + '\'' +
                 ", password=" + Arrays.toString(password) +
                 ", email='" + email + '\'' +
-                ", userRoleId=" + userRoleId +
+                ", userRoleId=" + userRole +
                 ", isActive=" + isActive +
                 ", balance=" + balance +
                 '}';

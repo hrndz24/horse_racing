@@ -1,8 +1,9 @@
 package buyanova.entity;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Horse {
+public class Horse implements Serializable {
 
     private int id;
     private int jockeyId;
