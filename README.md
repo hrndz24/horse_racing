@@ -32,7 +32,7 @@ Libraries used for the project:
 * Java 8;
 * JavaEE: Servlet, JSP;
 * Server / Servlet container: Tomcat 9
-* Data base: MySQL;
+* Database: MySQL;
 * JDBC;
 * Logger: Log4J2;
 * Tests: JUnit 4;
