@@ -109,7 +109,7 @@ public class User implements Serializable {
     }
 
     @Override
-    public int hashCode() { // TODO: 05.03.2020 maybe return plain id
+    public int hashCode() {
         return Objects.hash(id);
     }
 

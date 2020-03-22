@@ -17,25 +17,55 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * A multithreading storage of database connections.
+ */
+
 public enum ConnectionPool {
 
     INSTANCE;
 
     private Logger logger = LogManager.getLogger(ConnectionPool.class);
 
+    /** The number of connections stored. */
     private static final int POOL_SIZE = 32;
+
+    /** Storage of connections that are not taken. */
     private BlockingQueue<ProxyConnection> availableConnections;
+
+    /** Storage of connections that are currently executed. */
     private Queue<ProxyConnection> usedConnections;
+
+    /** The value is used to declare that the pool was created. */
     private AtomicBoolean isInitialized = new AtomicBoolean(false);
 
+    /** Properties file with url, driver, user and password information at least */
     private Properties properties;
+
+    /** Database properties filename */
     private static final String DATABASE_PROPERTIES_PATH = "database.properties";
+
+    /** Key for url in properties */
     private static final String URL_KEY = "url";
+
+    /** Key for driver name in properties */
     private static final String DRIVER_KEY = "driver";
 
+    /** Database url */
     private String url;
+
+    /** Database driver name*/
     private String driver;
 
+    /**
+     * Initializes pool with database connections.
+     * <p>
+     * Does its job only at a first call.
+     *
+     * @throws  ConnectionPoolException
+     *          If no or invalid jdbc properties are provided
+     *          or a database access error occurs
+     * */
     public void init() throws ConnectionPoolException {
         if (!isInitialized.get()) {
             availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
@@ -51,6 +81,11 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Removes a connection from {@code availableConnections} and puts it into {@code usedConnections}
+     *
+     * @return  database connection
+     * */
     public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -67,6 +102,14 @@ public enum ConnectionPool {
         availableConnections.add(connection);
     }
 
+    /**
+     * Closes all database connections stored here and deregisters drivers.
+     * <p>
+     * After calling this method it's impossible to reinitialize the pool.
+     *
+     * @throws  ConnectionPoolException
+     *          If a database access error occurs
+     * */
     public void destroyPool() throws ConnectionPoolException {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
