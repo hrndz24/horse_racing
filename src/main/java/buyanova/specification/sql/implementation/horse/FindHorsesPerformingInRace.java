@@ -11,7 +11,7 @@ public class FindHorsesPerformingInRace implements SqlSpecification {
     private int raceId;
 
     private static final String SQL_QUERY =
-                "SELECT \n" +
+            "SELECT \n" +
             "    horses.horse_id,\n" +
             "    jockey_id,\n" +
             "    horse_name, \n" +

@@ -10,7 +10,7 @@ public enum ColumnLabel {
     HORSE_BREED("horse_breed"), HORSE_AGE("horse_age"), IS_PERFORMING("is_performing"),
     RACES_WON_NUMBER("races_won_number"), RACES_LOST_NUMBER("races_lost_number"),
 
-    BET_ID("bet_id"),
+    BET_ID("bet_id"), BET_SUM("bet_sum"), ODDS_ID("odds_id"),
 
     RACE_ID("race_id");
     private String value;

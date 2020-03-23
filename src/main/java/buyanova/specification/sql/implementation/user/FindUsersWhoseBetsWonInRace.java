@@ -30,7 +30,7 @@ public class FindUsersWhoseBetsWonInRace implements SqlSpecification {
                     "    races ON odds.race_id = races.race_id\n" +
                     "WHERE\n" +
                     "    odds.horse_id = races.horse_winner_id\n" +
-                    "        AND races.race_id = ?";
+                    "        AND races.race_id = ?;";
 
     public FindUsersWhoseBetsWonInRace(int raceId) {
         this.raceId = raceId;
