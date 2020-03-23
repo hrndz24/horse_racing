@@ -89,10 +89,11 @@ public enum SqlUserRepository implements UserRepository {
 
         List<User> users = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection)) {
 
-            ResultSet resultSet = statement.executeQuery();
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             ResultSet resultSet = statement.executeQuery()) {
+
             User user;
             while (resultSet.next()) {
                 user = buildUser(resultSet);

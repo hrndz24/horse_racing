@@ -89,9 +89,9 @@ public enum SqlHorseRepository implements HorseRepository {
         List<Horse> horses = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection)) {
+             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            ResultSet resultSet = statement.executeQuery();
             Horse horse;
             while (resultSet.next()) {
                 horse = buildHorse(resultSet);

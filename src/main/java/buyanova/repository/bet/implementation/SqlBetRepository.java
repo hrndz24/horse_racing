@@ -79,9 +79,9 @@ public enum SqlBetRepository implements BetRepository {
         List<Bet> bets = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection)) {
+             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             ResultSet resultSet = statement.executeQuery()) {
 
-            ResultSet resultSet = statement.executeQuery();
             Bet bet;
             while (resultSet.next()) {
                 bet = buildBet(resultSet);
