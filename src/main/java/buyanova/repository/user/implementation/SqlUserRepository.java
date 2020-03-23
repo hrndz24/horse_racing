@@ -30,7 +30,6 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public void add(User user) throws RepositoryException {
-
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
 
@@ -50,7 +49,6 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public void remove(User user) throws RepositoryException {
-
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
 
