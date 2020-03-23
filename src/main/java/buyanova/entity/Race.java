@@ -5,6 +5,12 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
 
+/**
+ * Sport event typically involving two or more horses ridden by jockeys
+ * over a set {@code distance}, competing for {@code prizeMoney}.
+ *
+ * @author Natalie
+ * */
 public class Race implements Serializable {
 
     private int id;

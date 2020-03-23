@@ -1,0 +1,16 @@
+buyanova
+buyanova.entity
+buyanova.exception
+buyanova.pool
+buyanova.repository
+buyanova.repository.bet
+buyanova.repository.bet.implementation
+buyanova.repository.horse
+buyanova.repository.horse.implementation
+buyanova.repository.user
+buyanova.repository.user.implementation
+buyanova.specification
+buyanova.specification.sql
+buyanova.specification.sql.implementation.bet
+buyanova.specification.sql.implementation.horse
+buyanova.specification.sql.implementation.user

@@ -3,6 +3,11 @@ package buyanova.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Main participant of the races. The core element of the project.
+ *
+ * @author Natalie
+ * */
 public class Horse implements Serializable {
 
     private int id;

@@ -1,5 +1,11 @@
 package buyanova.entity;
 
+/**
+ * Types of people who can visit the website
+ * differentiated by provided services.
+ *
+ * @author Natalie
+ * */
 public enum UserRole {
 
     ADMINISTRATOR(1),

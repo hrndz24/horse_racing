@@ -4,6 +4,11 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * Nothing much but a mere website user.
+ *
+ * @author Natalie
+ * */
 public class User implements Serializable {
 
     private int id;

@@ -4,6 +4,12 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+/**
+ * The money client stakes to a wager based on bookmaker's odds.
+ *
+ * @see buyanova.entity.Odds
+ * @author Natalie
+ * */
 public class Bet implements Serializable {
 
     private int id;

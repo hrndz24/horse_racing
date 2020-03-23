@@ -3,25 +3,41 @@ package buyanova.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Representation of numerical expression, usually described as a pair
+ * of numbers, used in both gambling and statistics.
+ * <p>
+ * Conventionally, gambling odds are expressed in the form <b>X to Y</b>.
+ * Here <b>X</b> is represented by {@code oddsInFavor}
+ * and <b>Y</b> is {@code oddsAgainst}.
+ * <p>
+ * In gambling, odds represent the ratio between the amounts
+ * staked by parties to a bet.
+ * In simplest terms, <b>5 to 2</b> odds means if you bet a dollar,
+ * and you win you get paid five dollars (1 times 5),
+ * in other case you lose two dollars (1 times 2).
+ *
+ * @author Natalie
+ * */
 public class Odds implements Serializable {
 
     private int id;
     private int bookmakerId;
     private int horseId;
     private int raceId;
-    private int winOdds;
-    private int loseOdds;
+    private int oddsInFavor;
+    private int oddsAgainst;
 
     public Odds() {
     }
 
-    public Odds(int id, int bookmakerId, int horseId, int raceId, int winOdds, int loseOdds) {
+    public Odds(int id, int bookmakerId, int horseId, int raceId, int oddsInFavor, int oddsAgainst) {
         this.id = id;
         this.bookmakerId = bookmakerId;
         this.horseId = horseId;
         this.raceId = raceId;
-        this.winOdds = winOdds;
-        this.loseOdds = loseOdds;
+        this.oddsInFavor = oddsInFavor;
+        this.oddsAgainst = oddsAgainst;
     }
 
     public int getId() {
@@ -56,20 +72,20 @@ public class Odds implements Serializable {
         this.raceId = raceId;
     }
 
-    public int getWinOdds() {
-        return winOdds;
+    public int getOddsInFavor() {
+        return oddsInFavor;
     }
 
-    public void setWinOdds(int winOdds) {
-        this.winOdds = winOdds;
+    public void setOddsInFavor(int oddsInFavor) {
+        this.oddsInFavor = oddsInFavor;
     }
 
-    public int getLoseOdds() {
-        return loseOdds;
+    public int getOddsAgainst() {
+        return oddsAgainst;
     }
 
-    public void setLoseOdds(int loseOdds) {
-        this.loseOdds = loseOdds;
+    public void setOddsAgainst(int oddsAgainst) {
+        this.oddsAgainst = oddsAgainst;
     }
 
     @Override
@@ -81,8 +97,8 @@ public class Odds implements Serializable {
                 bookmakerId == odds.bookmakerId &&
                 horseId == odds.horseId &&
                 raceId == odds.raceId &&
-                winOdds == odds.winOdds &&
-                loseOdds == odds.loseOdds;
+                oddsInFavor == odds.oddsInFavor &&
+                oddsAgainst == odds.oddsAgainst;
     }
 
     @Override
@@ -97,8 +113,8 @@ public class Odds implements Serializable {
                 ", bookmakerId=" + bookmakerId +
                 ", horseId=" + horseId +
                 ", raceId=" + raceId +
-                ", winOdds=" + winOdds +
-                ", loseOdds=" + loseOdds +
+                ", winOdds=" + oddsInFavor +
+                ", loseOdds=" + oddsAgainst +
                 '}';
     }
 }

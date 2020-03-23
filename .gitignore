@@ -5,7 +5,6 @@ target/
 
 # Project specific files
 logs/
-docs/
 src/main/java/buyanova/Main.java
 src/main/java/buyanova/Todo.java
 
