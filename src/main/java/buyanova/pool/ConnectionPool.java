@@ -18,7 +18,7 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A multithreading storage of database connections.
+ * A multithreading storage of project database connections.
  */
 
 public enum ConnectionPool {
@@ -82,7 +82,7 @@ public enum ConnectionPool {
     }
 
     /**
-     * Removes a connection from {@code availableConnections} and puts it into {@code usedConnections}
+     * Moves a connection from {@code availableConnections} to {@code usedConnections} and then returns it.
      *
      * @return  database connection
      * */
@@ -103,7 +103,7 @@ public enum ConnectionPool {
     }
 
     /**
-     * Closes all database connections stored here and deregisters drivers.
+     * Clears the pool by closing all database connections stored in it and deregistering drivers.
      * <p>
      * After calling this method it's impossible to reinitialize the pool.
      *

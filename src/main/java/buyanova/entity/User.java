@@ -2,7 +2,6 @@ package buyanova.entity;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Objects;
 
 public class User implements Serializable {
@@ -10,15 +9,16 @@ public class User implements Serializable {
     private int id;
     private String name;
     private String login;
-    private char[] password;
+    private String password;
     private String email;
     private UserRole userRole;
     private boolean isActive;
     private BigDecimal balance;
 
-    public User(){}
+    public User() {
+    }
 
-    public User(int id, String name, String login, char[] password, String email, UserRole userRole, boolean isActive, BigDecimal balance) {
+    public User(int id, String name, String login, String password, String email, UserRole userRole, boolean isActive, BigDecimal balance) {
         this.id = id;
         this.name = name;
         this.login = login;
@@ -53,11 +53,11 @@ public class User implements Serializable {
         this.login = login;
     }
 
-    public char[] getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(char[] password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -102,7 +102,7 @@ public class User implements Serializable {
                 isActive == user.isActive &&
                 Objects.equals(name, user.name) &&
                 Objects.equals(login, user.login) &&
-                Arrays.equals(password, user.password) &&
+                Objects.equals(password, user.password) &&
                 Objects.equals(email, user.email) &&
                 userRole == user.userRole &&
                 Objects.equals(balance, user.balance);
@@ -119,7 +119,7 @@ public class User implements Serializable {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
-                ", password=" + Arrays.toString(password) +
+                ", password='" + password + '\'' +
                 ", email='" + email + '\'' +
                 ", userRoleId=" + userRole +
                 ", isActive=" + isActive +
