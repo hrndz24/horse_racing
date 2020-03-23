@@ -97,6 +97,10 @@ public enum ConnectionPool {
         return connection;
     }
 
+    /*
+    * Package private method used in ProxyConnection so that to prevent closing
+    * database connection and make it reusable.
+    * */
     void releaseConnection(ProxyConnection connection) {
         usedConnections.remove(connection);
         availableConnections.add(connection);
