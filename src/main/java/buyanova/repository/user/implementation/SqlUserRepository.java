@@ -16,6 +16,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of {@code UserRepository} interface that uses sql database as a data source.
+ *
+ * @see buyanova.repository.user.UserRepository
+ * @author Natalie
+ */
 public enum SqlUserRepository implements UserRepository {
 
     INSTANCE;

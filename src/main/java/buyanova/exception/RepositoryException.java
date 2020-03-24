@@ -1,5 +1,11 @@
 package buyanova.exception;
 
+/**
+ * Thrown in case of any exceptional situation
+ * on the data access level.
+ *
+ * @author Natalie
+ * */
 public class RepositoryException extends Exception {
     public RepositoryException() {
     }

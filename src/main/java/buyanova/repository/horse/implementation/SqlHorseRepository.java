@@ -15,6 +15,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of {@code HorseRepository} interface that uses sql database as a data source.
+ *
+ * @see buyanova.repository.horse.HorseRepository
+ * @author Natalie
+ */
 public enum SqlHorseRepository implements HorseRepository {
 
     INSTANCE;

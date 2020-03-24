@@ -15,6 +15,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of {@code BetRepository} interface that uses sql database as a data source.
+ *
+ * @see buyanova.repository.bet.BetRepository
+ * @author Natalie
+ */
 public enum SqlBetRepository implements BetRepository {
 
     INSTANCE;

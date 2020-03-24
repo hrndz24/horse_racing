@@ -7,6 +7,8 @@ buyanova.repository.bet
 buyanova.repository.bet.implementation
 buyanova.repository.horse
 buyanova.repository.horse.implementation
+buyanova.repository.odds
+buyanova.repository.race
 buyanova.repository.user
 buyanova.repository.user.implementation
 buyanova.specification

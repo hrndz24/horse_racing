@@ -1,5 +1,11 @@
 package buyanova.repository;
 
+/**
+ * A {@code ColumnLabel} enum is used to encapsulate the {@code value}
+ * that represents a column name of a table from the database of the project.
+ *
+ * @author Natalie
+ */
 public enum ColumnLabel {
 
     USER_ID("user_id"), USER_NAME("user_name"), USER_LOGIN("user_login"),
