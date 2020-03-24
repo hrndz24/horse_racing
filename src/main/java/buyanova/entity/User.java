@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Nothing much but a mere website user.
+ * Any mere mortal scrolling down the website.
  *
  * @author Natalie
  * */

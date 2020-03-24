@@ -18,7 +18,7 @@ public class FindUsersWhoseBetsWonInRace implements SqlSpecification {
                     "    user_password,\n" +
                     "    user_email,\n" +
                     "    user_role_id,\n" +
-                    "    is_active,\n" +
+                    "    user_is_active,\n" +
                     "    user_balance\n" +
                     "FROM\n" +
                     "    users\n" +

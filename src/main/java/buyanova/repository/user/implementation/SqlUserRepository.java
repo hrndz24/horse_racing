@@ -113,7 +113,7 @@ public enum SqlUserRepository implements UserRepository {
         user.setPassword(resultSet.getString(ColumnLabel.USER_PASSWORD.getValue()));
         user.setEmail(resultSet.getString(ColumnLabel.USER_EMAIL.getValue()));
         user.setUserRole(UserRole.getById(resultSet.getInt(ColumnLabel.USER_ROLE_ID.getValue())));
-        user.setActive(resultSet.getBoolean(ColumnLabel.IS_ACTIVE.getValue()));
+        user.setActive(resultSet.getBoolean(ColumnLabel.USER_IS_ACTIVE.getValue()));
         user.setBalance(resultSet.getBigDecimal(ColumnLabel.USER_BALANCE.getValue()));
         return user;
     }

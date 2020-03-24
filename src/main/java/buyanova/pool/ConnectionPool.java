@@ -57,6 +57,12 @@ public enum ConnectionPool {
     /** Database driver name*/
     private String driver;
 
+
+    ConnectionPool(){
+        availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
+        usedConnections = new ArrayDeque<>();
+    }
+
     /**
      * Initializes pool with database connections.
      * <p>
@@ -68,8 +74,6 @@ public enum ConnectionPool {
      * */
     public void init() throws ConnectionPoolException {
         if (!isInitialized.get()) {
-            availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
-            usedConnections = new ArrayDeque<>();
             try {
                 loadDatabaseProperties();
                 Class.forName(driver);

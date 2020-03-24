@@ -4,15 +4,20 @@ public enum ColumnLabel {
 
     USER_ID("user_id"), USER_NAME("user_name"), USER_LOGIN("user_login"),
     USER_PASSWORD("user_password"), USER_EMAIL("user_email"), USER_ROLE_ID("user_role_id"),
-    IS_ACTIVE("is_active"), USER_BALANCE("user_balance"),
+    USER_IS_ACTIVE("user_is_active"), USER_BALANCE("user_balance"),
 
     HORSE_ID("horse_id"), JOCKEY_ID("jockey_id"), HORSE_NAME("horse_name"),
     HORSE_BREED("horse_breed"), HORSE_AGE("horse_age"), IS_PERFORMING("is_performing"),
     RACES_WON_NUMBER("races_won_number"), RACES_LOST_NUMBER("races_lost_number"),
 
-    BET_ID("bet_id"), BET_SUM("bet_sum"), ODDS_ID("odds_id"),
+    BET_ID("bet_id"), BET_SUM("bet_sum"),
 
-    RACE_ID("race_id");
+    ODDS_ID("odds_id"), BOOKMAKER_ID("bookmaker_id"), ODDS_IN_FAVOR("odds_in_favor"),
+    ODDS_AGAINST("odds_against"),
+
+    RACE_ID("race_id"), RACE_PRIZE_MONEY("race_prize_money"), RACE_DISTANCE("race_distance"),
+    RACE_DATE("race_date"), HORSE_WINNER_ID("horse_winner_id");
+
     private String value;
 
     ColumnLabel(String value) {

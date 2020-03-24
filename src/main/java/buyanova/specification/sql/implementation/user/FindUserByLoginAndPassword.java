@@ -12,7 +12,7 @@ public class FindUserByLoginAndPassword implements SqlSpecification {
     private String password;
 
     private static final String SQL_QUERY = "SELECT user_id, user_name, user_login, user_password, " +
-            "user_email, user_role_id, is_active, user_balance FROM users WHERE user_login = ? and user_password = ?;";
+            "user_email, user_role_id, user_is_active, user_balance FROM users WHERE user_login = ? and user_password = ?;";
 
     public FindUserByLoginAndPassword(String login, String password) {
         this.login = login;
