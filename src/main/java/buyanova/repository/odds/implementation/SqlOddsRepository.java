@@ -1,0 +1,120 @@
+package buyanova.repository.odds.implementation;
+
+import buyanova.entity.Odds;
+import buyanova.exception.RepositoryException;
+import buyanova.pool.ConnectionPool;
+import buyanova.pool.ProxyConnection;
+import buyanova.repository.ColumnLabel;
+import buyanova.repository.odds.OddsRepository;
+import buyanova.specification.Specification;
+import buyanova.specification.sql.SqlSpecification;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Implementation of {@code OddsRepository} interface that uses sql database as a data source.
+ *
+ * @author Natalie
+ * @see buyanova.repository.odds.OddsRepository
+ */
+
+public enum SqlOddsRepository implements OddsRepository {
+
+    INSTANCE;
+
+    private static final String INSERT_QUERY = "INSERT INTO odds(race_id, bookmaker_id," +
+            "horse_id, odds_in_favour, odds_against) VALUES(?,?,?,?,?)";
+
+    private static final String REMOVE_QUERY = "DELETE FROM odds WHERE odds_id = ?";
+
+    private static final String UPDATE_QUERY = "UPDATE odds SET race_id = ?, bookmaker_id = ?," +
+            "horse_id = ?, odds_in_favour = ?, odds_against = ? WHERE odds_id = ?";
+
+    @Override
+    public void add(Odds odds) throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
+
+            statement.setInt(1, odds.getRaceId());
+            statement.setInt(2, odds.getBookmakerId());
+            statement.setInt(3, odds.getHorseId());
+            statement.setInt(4, odds.getOddsInFavour());
+            statement.setInt(5, odds.getOddsAgainst());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to add odds", e);
+        }
+    }
+
+    @Override
+    public void remove(Odds odds) throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
+
+            statement.setInt(1, odds.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to remove odds", e);
+        }
+    }
+
+    @Override
+    public void update(Odds odds) throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+
+            statement.setInt(1, odds.getRaceId());
+            statement.setInt(2, odds.getBookmakerId());
+            statement.setInt(3, odds.getHorseId());
+            statement.setInt(4, odds.getOddsInFavour());
+            statement.setInt(5, odds.getOddsAgainst());
+            statement.setInt(6, odds.getId());
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to update odds", e);
+        }
+    }
+
+    @Override
+    public List<Odds> query(Specification specification) throws RepositoryException {
+        if (specification == null) {
+            throw new RepositoryException("Null specification");
+        }
+        if (!(specification instanceof SqlSpecification)) {
+            throw new RepositoryException("Invalid specification type");
+        }
+
+        List<Odds> oddsList = new ArrayList<>();
+        SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            Odds odds;
+            while (resultSet.next()) {
+                odds = buildOdds(resultSet);
+                oddsList.add(odds);
+            }
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to get odds", e);
+        }
+        return oddsList;
+    }
+
+    private Odds buildOdds(ResultSet resultSet) throws SQLException {
+        Odds odds = new Odds();
+        odds.setId(resultSet.getInt(ColumnLabel.ODDS_ID.getValue()));
+        odds.setRaceId(resultSet.getInt(ColumnLabel.RACE_ID.getValue()));
+        odds.setBookmakerId(resultSet.getInt(ColumnLabel.BOOKMAKER_ID.getValue()));
+        odds.setHorseId(resultSet.getInt(ColumnLabel.HORSE_ID.getValue()));
+        odds.setOddsInFavour(resultSet.getInt(ColumnLabel.ODDS_IN_FAVOUR.getValue()));
+        odds.setOddsAgainst(resultSet.getInt(ColumnLabel.ODDS_AGAINST.getValue()));
+        return odds;
+    }
+}

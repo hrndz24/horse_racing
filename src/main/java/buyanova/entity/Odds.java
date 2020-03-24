@@ -8,7 +8,7 @@ import java.util.Objects;
  * of numbers, used in both gambling and statistics.
  * <p>
  * Conventionally, gambling odds are expressed in the form <b>X to Y</b>.
- * Here <b>X</b> is represented by {@code oddsInFavor}
+ * Here <b>X</b> is represented by {@code oddsInFavour}
  * and <b>Y</b> is {@code oddsAgainst}.
  * <p>
  * In gambling, odds represent the ratio between the amounts
@@ -25,18 +25,18 @@ public class Odds implements Serializable {
     private int bookmakerId;
     private int horseId;
     private int raceId;
-    private int oddsInFavor;
+    private int oddsInFavour;
     private int oddsAgainst;
 
     public Odds() {
     }
 
-    public Odds(int id, int bookmakerId, int horseId, int raceId, int oddsInFavor, int oddsAgainst) {
+    public Odds(int id, int bookmakerId, int horseId, int raceId, int oddsInFavour, int oddsAgainst) {
         this.id = id;
         this.bookmakerId = bookmakerId;
         this.horseId = horseId;
         this.raceId = raceId;
-        this.oddsInFavor = oddsInFavor;
+        this.oddsInFavour = oddsInFavour;
         this.oddsAgainst = oddsAgainst;
     }
 
@@ -72,12 +72,12 @@ public class Odds implements Serializable {
         this.raceId = raceId;
     }
 
-    public int getOddsInFavor() {
-        return oddsInFavor;
+    public int getOddsInFavour() {
+        return oddsInFavour;
     }
 
-    public void setOddsInFavor(int oddsInFavor) {
-        this.oddsInFavor = oddsInFavor;
+    public void setOddsInFavour(int oddsInFavour) {
+        this.oddsInFavour = oddsInFavour;
     }
 
     public int getOddsAgainst() {
@@ -97,7 +97,7 @@ public class Odds implements Serializable {
                 bookmakerId == odds.bookmakerId &&
                 horseId == odds.horseId &&
                 raceId == odds.raceId &&
-                oddsInFavor == odds.oddsInFavor &&
+                oddsInFavour == odds.oddsInFavour &&
                 oddsAgainst == odds.oddsAgainst;
     }
 
@@ -113,7 +113,7 @@ public class Odds implements Serializable {
                 ", bookmakerId=" + bookmakerId +
                 ", horseId=" + horseId +
                 ", raceId=" + raceId +
-                ", winOdds=" + oddsInFavor +
+                ", winOdds=" + oddsInFavour +
                 ", loseOdds=" + oddsAgainst +
                 '}';
     }

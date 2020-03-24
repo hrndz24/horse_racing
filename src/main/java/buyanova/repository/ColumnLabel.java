@@ -18,7 +18,7 @@ public enum ColumnLabel {
 
     BET_ID("bet_id"), BET_SUM("bet_sum"),
 
-    ODDS_ID("odds_id"), BOOKMAKER_ID("bookmaker_id"), ODDS_IN_FAVOR("odds_in_favor"),
+    ODDS_ID("odds_id"), BOOKMAKER_ID("bookmaker_id"), ODDS_IN_FAVOUR("odds_in_favour"),
     ODDS_AGAINST("odds_against"),
 
     RACE_ID("race_id"), RACE_PRIZE_MONEY("race_prize_money"), RACE_DISTANCE("race_distance"),
