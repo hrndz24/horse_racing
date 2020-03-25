@@ -12,14 +12,16 @@ import buyanova.specification.sql.SqlSpecification;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@code BetRepository} interface that uses sql database as a data source.
+ * Implementation of {@code BetRepository} interface
+ * that uses sql database as a data source.
  *
- * @see buyanova.repository.bet.BetRepository
  * @author Natalie
+ * @see buyanova.repository.bet.BetRepository
  */
 public enum SqlBetRepository implements BetRepository {
 
@@ -34,13 +36,17 @@ public enum SqlBetRepository implements BetRepository {
     @Override
     public void add(Bet bet) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
+             ResultSet generatedKeys = statement.getGeneratedKeys()) {
 
             statement.setInt(1, bet.getUserId());
             statement.setBigDecimal(2, bet.getSum());
             statement.setInt(3, bet.getOddsId());
-
             statement.executeUpdate();
+
+            if (generatedKeys.next()) {
+                bet.setId(generatedKeys.getInt(ColumnLabel.BET_ID.getValue()));
+            }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add bet", e);
         }
@@ -81,11 +87,14 @@ public enum SqlBetRepository implements BetRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-
-        List<Bet> bets = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        return getBetsFromDatabase(sqlSpecification);
+    }
+
+    private List<Bet> getBetsFromDatabase(SqlSpecification specification) throws RepositoryException {
+        List<Bet> bets = new ArrayList<>();
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 
             Bet bet;

@@ -12,14 +12,16 @@ import buyanova.specification.sql.SqlSpecification;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@code HorseRepository} interface that uses sql database as a data source.
+ * Implementation of {@code HorseRepository} interface
+ * that uses sql database as a data source.
  *
- * @see buyanova.repository.horse.HorseRepository
  * @author Natalie
+ * @see buyanova.repository.horse.HorseRepository
  */
 public enum SqlHorseRepository implements HorseRepository {
 
@@ -36,7 +38,8 @@ public enum SqlHorseRepository implements HorseRepository {
     @Override
     public void add(Horse horse) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
+             ResultSet generatedKeys = statement.getGeneratedKeys()) {
 
             statement.setInt(1, horse.getJockeyId());
             statement.setString(2, horse.getName());
@@ -45,8 +48,11 @@ public enum SqlHorseRepository implements HorseRepository {
             statement.setBoolean(5, horse.isPerforming());
             statement.setInt(6, horse.getRacesWonNumber());
             statement.setInt(7, horse.getRacesLostNumber());
-
             statement.executeUpdate();
+
+            if (generatedKeys.next()) {
+                horse.setId(generatedKeys.getInt(ColumnLabel.HORSE_ID.getValue()));
+            }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add horse", e);
         }
@@ -91,11 +97,14 @@ public enum SqlHorseRepository implements HorseRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-
-        List<Horse> horses = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        return getHorsesFromDatabase(sqlSpecification);
+    }
+
+    private List<Horse> getHorsesFromDatabase(SqlSpecification specification) throws RepositoryException {
+        List<Horse> horses = new ArrayList<>();
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 
             Horse horse;

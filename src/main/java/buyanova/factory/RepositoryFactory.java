@@ -13,7 +13,7 @@ import buyanova.repository.user.implementation.SqlUserRepository;
 
 /**
  * {@code RepositoryFactory} class uses factory pattern to decide
- * what Repository implementations it should provide to layers above
+ * what {@code Repository} implementations it should provide to layers above
  * the data access layer.
  * <p>
  * Currently it provides classes that use sql database as data source.

@@ -12,11 +12,13 @@ import buyanova.specification.sql.SqlSpecification;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@code OddsRepository} interface that uses sql database as a data source.
+ * Implementation of {@code OddsRepository} interface
+ * that uses sql database as a data source.
  *
  * @author Natalie
  * @see buyanova.repository.odds.OddsRepository
@@ -37,15 +39,19 @@ public enum SqlOddsRepository implements OddsRepository {
     @Override
     public void add(Odds odds) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
+             ResultSet generatedKeys = statement.getGeneratedKeys()) {
 
             statement.setInt(1, odds.getRaceId());
             statement.setInt(2, odds.getBookmakerId());
             statement.setInt(3, odds.getHorseId());
             statement.setInt(4, odds.getOddsInFavour());
             statement.setInt(5, odds.getOddsAgainst());
-
             statement.executeUpdate();
+
+            if (generatedKeys.next()) {
+                odds.setId(generatedKeys.getInt(ColumnLabel.ODDS_ID.getValue()));
+            }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add odds", e);
         }
@@ -89,11 +95,14 @@ public enum SqlOddsRepository implements OddsRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-
-        List<Odds> oddsList = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        return getOddsFromDatabase(sqlSpecification);
+    }
+
+    private List<Odds> getOddsFromDatabase(SqlSpecification specification) throws RepositoryException {
+        List<Odds> oddsList = new ArrayList<>();
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 
             Odds odds;

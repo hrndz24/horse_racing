@@ -12,11 +12,13 @@ import buyanova.specification.sql.SqlSpecification;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@code RaceRepository} interface that uses sql database as a data source.
+ * Implementation of {@code RaceRepository} interface
+ * that uses sql database as a data source.
  *
  * @author Natalie
  * @see buyanova.repository.race.RaceRepository
@@ -36,14 +38,18 @@ public enum SqlRaceRepository implements RaceRepository {
     @Override
     public void add(Race race) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
+             ResultSet generatedKeys = statement.getGeneratedKeys()) {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
             statement.setInt(2, race.getHorseWinnerId());
             statement.setDate(3, new java.sql.Date(race.getDate().getTime()));
             statement.setInt(4, race.getDistance());
-
             statement.executeUpdate();
+
+            if (generatedKeys.next()) {
+                race.setId(generatedKeys.getInt(ColumnLabel.RACE_ID.getValue()));
+            }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add race", e);
         }
@@ -86,11 +92,14 @@ public enum SqlRaceRepository implements RaceRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-
-        List<Race> races = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        return getRacesFromDatabase(sqlSpecification);
+    }
+
+    private List<Race> getRacesFromDatabase(SqlSpecification specification) throws RepositoryException {
+        List<Race> races = new ArrayList<>();
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 
             Race race;

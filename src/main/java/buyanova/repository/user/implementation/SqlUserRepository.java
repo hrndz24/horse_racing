@@ -13,23 +13,25 @@ import buyanova.specification.sql.SqlSpecification;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Implementation of {@code UserRepository} interface that uses sql database as a data source.
+ * Implementation of {@code UserRepository} interface
+ * that uses sql database as a data source.
  *
- * @see buyanova.repository.user.UserRepository
  * @author Natalie
+ * @see buyanova.repository.user.UserRepository
  */
 public enum SqlUserRepository implements UserRepository {
 
     INSTANCE;
 
     private static final String INSERT_QUERY = "INSERT INTO users(user_name, user_login, user_password," +
-            "user_email, user_role_id, is_active, user_balance) VALUES(?,?,?,?,?,?,?)";
+            "user_email, user_role_id, user_is_active, user_balance) VALUES(?,?,?,?,?,?,?)";
 
-    private static final String REMOVE_QUERY = "UPDATE users SET is_active = false WHERE user_id = ?";
+    private static final String REMOVE_QUERY = "UPDATE users SET user_is_active = false WHERE user_id = ?";
 
     private static final String UPDATE_QUERY = "UPDATE users SET user_name = ?, user_login = ?," +
             "user_password = ?, user_email = ?, user_role_id = ?, user_balance = ? WHERE user_id = ?";
@@ -37,7 +39,8 @@ public enum SqlUserRepository implements UserRepository {
     @Override
     public void add(User user) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY)) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
+             ResultSet generatedKeys = statement.getGeneratedKeys()) {
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
@@ -46,8 +49,11 @@ public enum SqlUserRepository implements UserRepository {
             statement.setInt(5, user.getUserRole().getId());
             statement.setBoolean(6, user.isActive());
             statement.setBigDecimal(7, user.getBalance());
-
             statement.executeUpdate();
+
+            if (generatedKeys.next()) {
+                user.setId(generatedKeys.getInt(ColumnLabel.USER_ID.getValue()));
+            }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add user", e);
         }
@@ -92,12 +98,14 @@ public enum SqlUserRepository implements UserRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-
-        List<User> users = new ArrayList<>();
         SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        return getUsersFromDatabase(sqlSpecification);
+    }
 
+    private List<User> getUsersFromDatabase(SqlSpecification specification) throws RepositoryException {
+        List<User> users = new ArrayList<>();
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = sqlSpecification.toSqlStatement(connection);
+             PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 
             User user;
