@@ -1,10 +1,11 @@
-package buyanova.repository.race;
+package buyanova.repository.race.implementation;
 
 import buyanova.entity.Race;
 import buyanova.exception.RepositoryException;
 import buyanova.pool.ConnectionPool;
 import buyanova.pool.ProxyConnection;
 import buyanova.repository.ColumnLabel;
+import buyanova.repository.race.RaceRepository;
 import buyanova.specification.Specification;
 import buyanova.specification.sql.SqlSpecification;
 
@@ -21,6 +22,7 @@ import java.util.List;
  * @see buyanova.repository.race.RaceRepository
  */
 public enum SqlRaceRepository implements RaceRepository {
+
     INSTANCE;
 
     private static final String INSERT_QUERY = "INSERT INTO races(race_prize_money," +

@@ -8,11 +8,15 @@ buyanova.repository.bet.implementation
 buyanova.repository.horse
 buyanova.repository.horse.implementation
 buyanova.repository.odds
+buyanova.repository.odds.implementation
 buyanova.repository.race
+buyanova.repository.race.implementation
 buyanova.repository.user
 buyanova.repository.user.implementation
 buyanova.specification
 buyanova.specification.sql
 buyanova.specification.sql.implementation.bet
 buyanova.specification.sql.implementation.horse
+buyanova.specification.sql.implementation.odds
+buyanova.specification.sql.implementation.race
 buyanova.specification.sql.implementation.user

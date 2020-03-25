@@ -13,6 +13,8 @@ import java.util.List;
  * @see buyanova.repository.user.UserRepository
  * @see buyanova.repository.bet.BetRepository
  * @see buyanova.repository.horse.HorseRepository
+ * @see buyanova.repository.odds.OddsRepository
+ * @see buyanova.repository.race.RaceRepository
  */
 public interface Repository<T> {
 
