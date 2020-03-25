@@ -6,7 +6,12 @@ import buyanova.specification.Specification;
 import java.util.List;
 
 /**
- * Basic data access layer interface based on repository pattern.
+ * {@code Repository} interface uses repository pattern to
+ * manipulate data on the data access level.
+ * <p>
+ * Every entity that is to be stored should have an interface
+ * that extends {@code Repository} interface and parameterize
+ * it with its type.
  *
  * @param <T> type of entity it should provide access to.
  * @author Natalie

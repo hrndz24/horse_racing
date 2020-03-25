@@ -19,21 +19,22 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * A multithreading storage of project database connections.
+ *
+ * @author Natalie
  */
-
 public enum ConnectionPool {
 
     INSTANCE;
 
     private Logger logger = LogManager.getLogger(ConnectionPool.class);
 
-    /** The number of connections stored. */
+    /** The number of database connections stored. */
     private static final int POOL_SIZE = 32;
 
-    /** Storage of connections that are not taken. */
+    /** Storage of database connections that are not taken. */
     private BlockingQueue<ProxyConnection> availableConnections;
 
-    /** Storage of connections that are currently executed. */
+    /** Storage of database connections that are currently executed. */
     private Queue<ProxyConnection> usedConnections;
 
     /** The value is used to declare that the pool was created. */
