@@ -27,7 +27,7 @@ public interface Repository<T> {
      * Adds an item to the specified data source.
      *
      * @param item element to be added to the data source
-     * @throws RepositoryException if data source access error occurs
+     * @throws RepositoryException if a data source access error occurs
      */
     void add(T item) throws RepositoryException;
 
@@ -35,7 +35,7 @@ public interface Repository<T> {
      * Removes an item from the specified data source.
      *
      * @param item element to be removed from the data source
-     * @throws RepositoryException if data source access error occurs
+     * @throws RepositoryException if a data source access error occurs
      */
     void remove(T item) throws RepositoryException;
 
@@ -43,7 +43,7 @@ public interface Repository<T> {
      * Updates information about {@code item} in the specified data source.
      *
      * @param item element to update information about
-     * @throws RepositoryException if data source access error occurs
+     * @throws RepositoryException if a data source access error occurs
      */
     void update(T item) throws RepositoryException;
 
@@ -52,7 +52,7 @@ public interface Repository<T> {
      *
      * @param specification instance of {@code Specification} interface that provides criteria for the query
      * @return list of items that suit the criteria of the {@code specification}
-     * @throws RepositoryException if data source access error occurs
+     * @throws RepositoryException if a data source access error occurs
      * @see buyanova.specification.Specification
      */
     List<T> query(Specification specification) throws RepositoryException;

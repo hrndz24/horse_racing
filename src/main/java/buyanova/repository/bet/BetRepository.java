@@ -7,6 +7,7 @@ import buyanova.repository.Repository;
  * Interface used to mark classes that implement data access for {@code Bet} entity.
  *
  * @see buyanova.repository.Repository
+ * @see buyanova.entity.Bet
  * @author Natalie
  */
 public interface BetRepository extends Repository<Bet> {

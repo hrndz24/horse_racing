@@ -2,8 +2,13 @@
 <html>
   <head>
     <title>$Title$</title>
+    <style>
+      body {
+        background-image: url(images/homepage_bg.png);
+      }
+    </style>
   </head>
   <body>
-  $END$
+
   </body>
 </html>

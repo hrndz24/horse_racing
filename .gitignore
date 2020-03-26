@@ -7,7 +7,6 @@ target/
 logs/
 src/main/java/buyanova/Main.java
 src/main/java/buyanova/Todo.java
-src/main/java/buyanova/service/
 
 # IntelliJ project files
 *.iml

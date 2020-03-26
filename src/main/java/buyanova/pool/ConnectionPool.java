@@ -18,9 +18,18 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A multithreading storage of project database connections.
+ * A multithreading storage of project database connections
+ * presented as instances of {@code ProxyConnection} class.
+ * <p>
+ * Any class that performs database access should get
+ * {@code ProxyConnection} from here using {@code getConnection} method.
+ * <p>
+ * Note: method {@code init} should be called before any other method,
+ * otherwise other methods would be forced to wait
+ * infinitely until {@code availableConnections} are filled.
  *
  * @author Natalie
+ * @see buyanova.pool.ProxyConnection
  */
 public enum ConnectionPool {
 
@@ -28,38 +37,58 @@ public enum ConnectionPool {
 
     private Logger logger = LogManager.getLogger(ConnectionPool.class);
 
-    /** The number of database connections stored. */
+    /**
+     * The number of database connections stored.
+     */
     private static final int POOL_SIZE = 32;
 
-    /** Storage of database connections that are not taken. */
+    /**
+     * Storage of database connections that are not taken.
+     */
     private BlockingQueue<ProxyConnection> availableConnections;
 
-    /** Storage of database connections that are currently executed. */
+    /**
+     * Storage of database connections that are currently executed.
+     */
     private Queue<ProxyConnection> usedConnections;
 
-    /** The value is used to declare that the pool was created. */
+    /**
+     * The value is used to declare that the pool was created.
+     */
     private AtomicBoolean isInitialized = new AtomicBoolean(false);
 
-    /** Properties file with url, driver, user and password information at least */
+    /**
+     * Properties file with url, driver, user and password information at least
+     */
     private Properties properties;
 
-    /** Database properties filename */
+    /**
+     * Database properties filename
+     */
     private static final String DATABASE_PROPERTIES_PATH = "database.properties";
 
-    /** Key for url in properties */
+    /**
+     * Key for url in properties
+     */
     private static final String URL_KEY = "url";
 
-    /** Key for driver name in properties */
+    /**
+     * Key for driver name in properties
+     */
     private static final String DRIVER_KEY = "driver";
 
-    /** Database url */
+    /**
+     * Database url
+     */
     private String url;
 
-    /** Database driver name*/
+    /**
+     * Database driver name
+     */
     private String driver;
 
 
-    ConnectionPool(){
+    ConnectionPool() {
         availableConnections = new LinkedBlockingQueue<>(POOL_SIZE);
         usedConnections = new ArrayDeque<>();
     }
@@ -69,10 +98,9 @@ public enum ConnectionPool {
      * <p>
      * Does its job only at a first call.
      *
-     * @throws  ConnectionPoolException
-     *          If no or invalid jdbc properties are provided
-     *          or a database access error occurs
-     * */
+     * @throws ConnectionPoolException If no or invalid jdbc properties are provided
+     *                                 or a database access error occurs
+     */
     public void init() throws ConnectionPoolException {
         if (!isInitialized.get()) {
             try {
@@ -87,10 +115,11 @@ public enum ConnectionPool {
     }
 
     /**
-     * Moves a connection from {@code availableConnections} to {@code usedConnections} and then returns it.
+     * Moves a connection from {@code availableConnections}
+     * to {@code usedConnections} and then returns it.
      *
-     * @return  database connection
-     * */
+     * @return database connection
+     */
     public ProxyConnection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -103,9 +132,9 @@ public enum ConnectionPool {
     }
 
     /*
-    * Package private method used in ProxyConnection so that to prevent closing
-    * database connection and make it reusable.
-    * */
+     * Package private method used in ProxyConnection so that to prevent closing
+     * database connection and make it reusable.
+     * */
     void releaseConnection(ProxyConnection connection) {
         usedConnections.remove(connection);
         availableConnections.add(connection);
@@ -116,9 +145,8 @@ public enum ConnectionPool {
      * <p>
      * After calling this method it's impossible to reinitialize the pool.
      *
-     * @throws  ConnectionPoolException
-     *          If a database access error occurs
-     * */
+     * @throws ConnectionPoolException If a database access error occurs
+     */
     public void destroyPool() throws ConnectionPoolException {
         for (int i = 0; i < POOL_SIZE; i++) {
             try {
