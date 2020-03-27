@@ -36,16 +36,16 @@ public enum SqlBetRepository implements BetRepository {
     @Override
     public void add(Bet bet) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
-             ResultSet generatedKeys = statement.getGeneratedKeys()) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, bet.getUserId());
             statement.setBigDecimal(2, bet.getSum());
             statement.setInt(3, bet.getOddsId());
             statement.executeUpdate();
-
-            if (generatedKeys.next()) {
-                bet.setId(generatedKeys.getInt(ColumnLabel.BET_ID.getValue()));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    bet.setId(generatedKeys.getInt(1));
+                }
             }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add bet", e);

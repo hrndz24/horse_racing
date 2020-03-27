@@ -13,6 +13,7 @@ src/main/java/buyanova/Todo.java
 *.iws
 *.ipr
 .idea/
+out/
 
 # Eclipse project file
 .settings/

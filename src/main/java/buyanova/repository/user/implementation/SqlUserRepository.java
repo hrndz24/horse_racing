@@ -39,8 +39,7 @@ public enum SqlUserRepository implements UserRepository {
     @Override
     public void add(User user) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
-             ResultSet generatedKeys = statement.getGeneratedKeys()) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getName());
             statement.setString(2, user.getLogin());
@@ -51,8 +50,10 @@ public enum SqlUserRepository implements UserRepository {
             statement.setBigDecimal(7, user.getBalance());
             statement.executeUpdate();
 
-            if (generatedKeys.next()) {
-                user.setId(generatedKeys.getInt(ColumnLabel.USER_ID.getValue()));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    user.setId(generatedKeys.getInt(1));
+                }
             }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add user", e);

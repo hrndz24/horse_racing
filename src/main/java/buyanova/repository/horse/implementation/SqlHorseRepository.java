@@ -38,8 +38,7 @@ public enum SqlHorseRepository implements HorseRepository {
     @Override
     public void add(Horse horse) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
-             ResultSet generatedKeys = statement.getGeneratedKeys()) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, horse.getJockeyId());
             statement.setString(2, horse.getName());
@@ -50,8 +49,10 @@ public enum SqlHorseRepository implements HorseRepository {
             statement.setInt(7, horse.getRacesLostNumber());
             statement.executeUpdate();
 
-            if (generatedKeys.next()) {
-                horse.setId(generatedKeys.getInt(ColumnLabel.HORSE_ID.getValue()));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    horse.setId(generatedKeys.getInt(1));
+                }
             }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add horse", e);

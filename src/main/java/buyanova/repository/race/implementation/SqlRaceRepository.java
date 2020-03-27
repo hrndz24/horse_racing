@@ -38,8 +38,7 @@ public enum SqlRaceRepository implements RaceRepository {
     @Override
     public void add(Race race) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
-             ResultSet generatedKeys = statement.getGeneratedKeys()) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
             statement.setInt(2, race.getHorseWinnerId());
@@ -47,8 +46,10 @@ public enum SqlRaceRepository implements RaceRepository {
             statement.setInt(4, race.getDistance());
             statement.executeUpdate();
 
-            if (generatedKeys.next()) {
-                race.setId(generatedKeys.getInt(ColumnLabel.RACE_ID.getValue()));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    race.setId(generatedKeys.getInt(1));
+                }
             }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add race", e);

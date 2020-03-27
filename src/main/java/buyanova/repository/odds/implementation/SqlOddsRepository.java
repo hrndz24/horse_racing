@@ -39,8 +39,7 @@ public enum SqlOddsRepository implements OddsRepository {
     @Override
     public void add(Odds odds) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS);
-             ResultSet generatedKeys = statement.getGeneratedKeys()) {
+             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, odds.getRaceId());
             statement.setInt(2, odds.getBookmakerId());
@@ -49,8 +48,10 @@ public enum SqlOddsRepository implements OddsRepository {
             statement.setInt(5, odds.getOddsAgainst());
             statement.executeUpdate();
 
-            if (generatedKeys.next()) {
-                odds.setId(generatedKeys.getInt(ColumnLabel.ODDS_ID.getValue()));
+            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    odds.setId(generatedKeys.getInt(1));
+                }
             }
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add odds", e);
