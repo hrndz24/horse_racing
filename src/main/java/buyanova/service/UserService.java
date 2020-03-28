@@ -4,7 +4,8 @@ import buyanova.entity.User;
 import buyanova.factory.RepositoryFactory;
 import buyanova.repository.user.UserRepository;
 
-public class UserService {
+public enum UserService {
+    INSTANCE;
 
     private RepositoryFactory factory = RepositoryFactory.INSTANCE;
     private UserRepository userRepository = factory.getUserRepository();
