@@ -1,6 +1,7 @@
 package buyanova.service;
 
 import buyanova.entity.Bet;
+import buyanova.entity.User;
 import buyanova.exception.RepositoryException;
 import buyanova.exception.ServiceException;
 import buyanova.factory.RepositoryFactory;
@@ -24,7 +25,12 @@ public enum BetService {
     public Bet addBet(Bet bet) throws ServiceException {
         validateBetFields(bet);
         try {
+            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
+            if (user.getBalance().compareTo(bet.getSum()) < 0) {
+                throw new ServiceException("User does not have enough money to make a bet");
+            }
             betRepository.add(bet);
+            user.setBalance(user.getBalance());
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -32,6 +38,7 @@ public enum BetService {
     }
 
     public void removeBet(Bet bet) throws ServiceException {
+        //guess it should return money to user
         validateBetFields(bet);
         try {
             betRepository.remove(bet);
@@ -41,6 +48,7 @@ public enum BetService {
     }
 
     public void updateBet(Bet bet) throws ServiceException {
+        //update user balance
         validateBetFields(bet);
         try {
             betRepository.update(bet);
@@ -55,10 +63,10 @@ public enum BetService {
         }
 
         if (bet.getSum() == null) {
-            throw new ServiceException("Null sum in bet");
+            throw new ServiceException("Null bet sum");
         }
         if (!betValidator.isSumPositive(bet.getSum())) {
-            throw new ServiceException("Negative sum in bet");
+            throw new ServiceException("Negative bet sum");
         }
 
         try {

@@ -1,4 +1,6 @@
-<%--<%@ page contentType="text/html;charset=UTF-8" language="java" %>--%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,16 +71,17 @@
     </ul>
     <!-- Links -->
 
-    <form class="form-inline">
+
       <div class="md-form my-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+        <c:out value="Hi">Hello</c:out>
       </div>
-    </form>
+
   </div>
   <!-- Collapsible content -->
 
 </nav>
 <!--/.Navbar-->
+
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/popper.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
