@@ -1,15 +1,16 @@
 package buyanova.service;
 
-import buyanova.entity.Bet;
 import buyanova.entity.User;
 import buyanova.exception.RepositoryException;
 import buyanova.exception.ServiceException;
 import buyanova.factory.RepositoryFactory;
 import buyanova.repository.user.UserRepository;
+import buyanova.specification.sql.implementation.user.FindUserByLogin;
 import buyanova.specification.sql.implementation.user.FindUserByLoginAndPassword;
 import buyanova.validator.UserValidator;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public enum UserService {
     INSTANCE;
@@ -21,6 +22,7 @@ public enum UserService {
 
     public User signUp(User user) throws ServiceException {
         validateUserFields(user);
+        checkLoginIsUnique(user);
 
         user.setActive(true);
         user.setBalance(new BigDecimal(0));
@@ -55,8 +57,22 @@ public enum UserService {
 
     public void updateUser(User user) throws ServiceException {
         validateUserFields(user);
+        checkLoginIsUnique(user);
         try {
             userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void checkLoginIsUnique(User user) throws ServiceException {
+        try {
+            List<User> users = userRepository.query(new FindUserByLogin(user.getLogin()));
+            if (!users.isEmpty()) {
+                if (users.get(0).getId() != user.getId()) {
+                    throw new ServiceException("Login already taken");
+                }
+            }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

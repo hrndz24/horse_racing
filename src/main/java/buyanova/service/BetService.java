@@ -8,9 +8,12 @@ import buyanova.factory.RepositoryFactory;
 import buyanova.repository.bet.BetRepository;
 import buyanova.repository.odds.OddsRepository;
 import buyanova.repository.user.UserRepository;
+import buyanova.specification.sql.implementation.bet.FindBetById;
 import buyanova.specification.sql.implementation.odds.FindOddsById;
 import buyanova.specification.sql.implementation.user.FindUserById;
 import buyanova.validator.BetValidator;
+
+import java.math.BigDecimal;
 
 public enum BetService {
     INSTANCE;
@@ -30,7 +33,8 @@ public enum BetService {
                 throw new ServiceException("User does not have enough money to make a bet");
             }
             betRepository.add(bet);
-            user.setBalance(user.getBalance());
+            user.setBalance(user.getBalance().subtract(bet.getSum()));
+            userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -38,20 +42,37 @@ public enum BetService {
     }
 
     public void removeBet(Bet bet) throws ServiceException {
-        //guess it should return money to user
         validateBetFields(bet);
+        checkBetExists(bet);
         try {
+            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
             betRepository.remove(bet);
+            user.setBalance(user.getBalance().add(bet.getSum()));
+            userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
 
     public void updateBet(Bet bet) throws ServiceException {
-        //update user balance
         validateBetFields(bet);
+        checkBetExists(bet);
         try {
+            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
+            BigDecimal oldSum = betRepository.query(new FindBetById(bet.getId())).get(0).getSum();
             betRepository.update(bet);
+            user.setBalance(user.getBalance().add(oldSum.subtract(bet.getSum())));
+            userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void checkBetExists(Bet bet) throws ServiceException {
+        try {
+            if (betRepository.query(new FindBetById(bet.getId())).isEmpty()) {
+                throw new ServiceException("Bet with such id does not exist");
+            }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
