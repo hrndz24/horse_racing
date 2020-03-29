@@ -16,40 +16,32 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color">
 
-    <!-- Navbar brand -->
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="#">Horse Racing</a>
 
-    <!-- Collapse button -->
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- Collapsible content -->
     <div class="collapse navbar-collapse" id="basicExampleNav">
 
-        <!-- Links -->
+
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Home
-                    <span class="sr-only">(current)</span>
-                </a>
+                <a class="nav-link" href="../index.jsp">Home</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="#">Races</a>
             </li>
 
-            <!-- Dropdown -->
+            <!-- Language dropdown -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu dropdown-primary" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
+                   aria-haspopup="true" aria-expanded="false">Language</a>
+                <div class="dropdown-menu grey lighten-3" style="text-align: center"
+                     aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item font-weight-bold" href="#">English</a>
+                    <a class="dropdown-item font-weight-bold" href="#">Spanish</a>
                 </div>
             </li>
 
@@ -57,7 +49,6 @@
 
     </div>
 </nav>
-<!--/.Navbar-->
 <img src="../images/rainbow.png" alt="Smiley face" align="left">
 <div style="text-align: center; margin-top: 4rem">
     <div class="card" style="width: 23rem; display: inline-block">
