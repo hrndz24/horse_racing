@@ -37,13 +37,14 @@ public enum UserService {
 
     public User logIn(User user) throws ServiceException {
         validateUserLogInCredentials(user);
-        user.setPassword(String.valueOf(user.getPassword().hashCode())); // TODO: 29.03.2020 make normal hashing
+        user.setPassword(String.valueOf(user.getPassword().hashCode()));
+        // TODO: 29.03.2020 make normal hashing
         try {
-            userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
+            List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
+            return users.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
-        return null;
     }
 
     public void removeUser(User user) throws ServiceException {
