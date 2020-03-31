@@ -95,6 +95,9 @@ public enum UserService {
         if (!userValidator.isValidEmail(user.getEmail())) {
             throw new ServiceException("Invalid user email");
         }
+        if(user.getUserRole()==null){
+            throw new ServiceException("Null user role");
+        }
     }
 
     private void validateUserLogInCredentials(User user) throws ServiceException {

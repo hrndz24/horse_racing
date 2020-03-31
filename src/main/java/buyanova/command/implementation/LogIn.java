@@ -20,7 +20,7 @@ public class LogIn implements Command {
             request.getSession().setAttribute("userName",user.getName());
             return JSPPath.USER_PAGE;
         } catch (ServiceException e) {
-            return JSPPath.SIGN_UP;
+            return JSPPath.HOME_PAGE;
         }
     }
 }

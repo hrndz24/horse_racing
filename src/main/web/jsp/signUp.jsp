@@ -62,23 +62,24 @@
             <form action="/controller" method="post" class="md-form" style="color: #757575;">
 
                 <input placeholder="Name" type="text" id="materialRegisterFormFirstName" class="form-control"
-                       pattern="^[a-zA-Z0-9_.-]{3,16}$" required>
+                       pattern="^[a-zA-Z0-9_.-]{3,16}$" name="name" required>
 
                 <input placeholder="Login" type="text" id="materialRegisterFormLastName" class="form-control"
-                       pattern="^[a-z0-9_.@-]{3,16}$" required>
+                       pattern="^[a-z0-9_.@-]{3,16}$" name="login" required>
 
                 <input placeholder="Email" type="email" id="materialRegisterFormEmail" class="form-control"
-                       pattern="^[A-Za-z0-9+_.-]+@(.+)$" required>
+                       pattern="^[A-Za-z0-9+_.-]+@(.+)$" name="email" required>
 
                 <input placeholder="Password" type="password" id="materialRegisterFormPassword" class="form-control"
                        aria-describedby="materialRegisterFormPasswordHelpBlock"
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" required>
+                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="password" required>
 
                 <small id="materialRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
                     At least 8 characters, 1 digit and 1 upper case letter
                 </small>
 
-                <button class="btn btn-outline-elegant btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">
+                <button class="btn btn-outline-elegant btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit"
+                name="command" value="sign_up">
                     Sign up
                 </button>
 

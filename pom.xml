@@ -46,12 +46,7 @@
             </plugin>
         </plugins>
     </build>
-    <!--<build>
-        <plugins>
 
-        </plugins>
-    </build>
--->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -84,11 +79,5 @@
             <version>${servlet.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!--<dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.0</version>
-            <scope>provided</scope>
-        </dependency>-->
     </dependencies>
 </project>
