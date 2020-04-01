@@ -37,8 +37,7 @@ public enum UserService {
 
     public User logIn(User user) throws ServiceException {
         validateUserLogInCredentials(user);
-        user.setPassword(String.valueOf(user.getPassword().hashCode()));
-        // TODO: 29.03.2020 make normal hashing
+        user.setPassword(String.valueOf(user.getPassword().hashCode())); // TODO: 29.03.2020 make normal hashing
         try {
             List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
             return users.get(0);
@@ -56,7 +55,24 @@ public enum UserService {
         }
     }
 
-    public void updateUser(User user) throws ServiceException {
+    public void changeLogin(User user){
+        //should be changed by id
+        // check unique
+    }
+
+    public void changePassword(User user, String newPassword){
+        //check if login and password match
+        //set newPassword
+        //update
+    }
+
+    public void replenishAccount(User user, BigDecimal replenishmentSum){
+        //check blablabla
+        //sum is to be positive
+        //update
+    }
+
+    /*public void updateUser(User user) throws ServiceException {
         validateUserFields(user);
         checkLoginIsUnique(user);
         try {
@@ -64,7 +80,7 @@ public enum UserService {
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
-    }
+    }*/
 
     private void checkLoginIsUnique(User user) throws ServiceException {
         try {

@@ -20,7 +20,7 @@ Website visitors are provided with the following services:
 
 *Bookmaker:*
 * place odds for a race;
-* money won/lost by clients are withdrawn from/added to bookmaker's account;
+* money won/lost by clients is withdrawn from/added to bookmaker's account;
 
 *Administrator:*
 * open registration for a race;

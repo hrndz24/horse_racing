@@ -25,7 +25,7 @@ public enum BetService {
 
     private BetValidator betValidator = new BetValidator();
 
-    public Bet addBet(Bet bet) throws ServiceException {
+    public Bet makeBet(Bet bet) throws ServiceException {
         validateBetFields(bet);
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);

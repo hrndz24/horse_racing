@@ -1,5 +1,10 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="es"/>
+<fmt:setBundle basename="locale" var="locale"/>
+<fmt:requestEncoding value="UTF-8"/>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -7,17 +12,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Welcome</title>
+    <%--    <title><fmt:message bundle="${locale}" key="navbar.name"/></title>--%>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/mdb.min.css">
+    <title>Hi</title>
 
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color">
 
-    <a class="navbar-brand" href="#">Horse Racing</a>
+    <a class="navbar-brand" href="#"><fmt:message bundle="${locale}" key="navbar.name"/></a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,23 +32,31 @@
 
     <div class="collapse navbar-collapse" id="basicExampleNav">
 
-
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.jsp">Home</a>
+                <a class="nav-link" href="index.jsp"><fmt:message bundle="${locale}" key="navbar.home_button"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Races</a>
+                <a class="nav-link" href="#"><fmt:message bundle="${locale}" key="navbar.races"/></a>
             </li>
 
             <!-- Language dropdown -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Language</a>
+                   aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
+                                                                           key="navbar.language"/></a>
                 <div class="dropdown-menu grey lighten-3" style="text-align: center"
                      aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item font-weight-bold" href="#">English</a>
-                    <a class="dropdown-item font-weight-bold" href="#">Spanish</a>
+                    <form action="/en" method="get">
+                        <button class="dropdown-item font-weight-bold" type="submit"><fmt:message
+                            bundle="${locale}"
+                            key="navbar.language_english"/>
+                    </form>
+                    <form action="/es" method="get">
+                        <button class="dropdown-item font-weight-bold" type="submit"><fmt:message
+                            bundle="${locale}"
+                            key="navbar.language_spanish"/>
+                    </form>
                 </div>
             </li>
 
@@ -57,32 +71,36 @@
     <div class="card" style="width: 23rem; display: inline-block">
 
         <h5 class="card-header elegant-color white-text text-center py-4">
-            <strong>Log in</strong>
+            <strong><fmt:message bundle="${locale}" key="log_in"/></strong>
         </h5>
 
         <div class="card-body px-lg-5 pt-0">
 
             <form action="/controller" method="post" class="md-form" style="color: #757575;">
 
-                <input placeholder="Login" type="text" id="materialRegisterFormLastName" class="form-control"
+                <input placeholder=
+                       <fmt:message bundle="${locale}" key="login"/> type="text" id="materialRegisterFormLastName"
+                       class="form-control"
                        pattern="^[a-z0-9_.@-]{3,16}$" name="login" required>
 
-                <input placeholder="Password" type="password" id="materialRegisterFormPassword" class="form-control"
+                <input placeholder=
+                       <fmt:message bundle="${locale}" key="password"/> type="password"
+                       id="materialRegisterFormPassword" class="form-control"
                        aria-describedby="materialRegisterFormPasswordHelpBlock"
                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="password" required>
 
 
                 <button class="btn btn-elegant text-white btn-block my-4 waves-effect z-depth-0" type="submit"
                         name="command" value="log_in">
-                    Log In
+                    <fmt:message bundle="${locale}" key="log_in"/>
                 </button>
 
                 <div class="text-center">
-                    <p>Don't have an account yet?</p>
+                    <p><fmt:message bundle="${locale}" key="invitation_to_sign_up"/></p>
                 </div>
 
                 <a class="btn btn-outline-elegant" href="jsp/signUp.jsp">
-                    Sign up
+                    <fmt:message bundle="${locale}" key="sign_up"/>
                 </a>
 
             </form>

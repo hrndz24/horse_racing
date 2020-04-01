@@ -26,7 +26,17 @@ public class MainServlet extends HttpServlet {
         try {
             ConnectionPool.INSTANCE.init();
         } catch (ConnectionPoolException e) {
-            logger.fatal("Cannot initialize connection pool", e);
+            logger.fatal(e);
+        }
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        try {
+            ConnectionPool.INSTANCE.destroyPool();
+        } catch (ConnectionPoolException e) {
+            logger.fatal(e);
         }
     }
 
@@ -45,5 +55,4 @@ public class MainServlet extends HttpServlet {
         JSPPath jsp = command.execute(request, response);
         request.getRequestDispatcher(jsp.getPath()).forward(request, response);
     }
-
 }
