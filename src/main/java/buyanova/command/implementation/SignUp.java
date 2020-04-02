@@ -1,6 +1,7 @@
 package buyanova.command.implementation;
 
 import buyanova.command.Command;
+import buyanova.command.JSPParameter;
 import buyanova.command.JSPPath;
 import buyanova.entity.User;
 import buyanova.entity.UserRole;
@@ -14,14 +15,14 @@ public class SignUp implements Command {
     @Override
     public JSPPath execute(HttpServletRequest request, HttpServletResponse response) {
         User user = new User();
-        user.setLogin(request.getParameter("login"));
-        user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
-        user.setEmail(request.getParameter("email"));
+        user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
+        user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
+        user.setName(request.getParameter(JSPParameter.NAME.getParameter()));
+        user.setEmail(request.getParameter(JSPParameter.EMAIL.getParameter()));
         user.setUserRole(UserRole.CLIENT);
         try {
-            user = UserService.INSTANCE.signUp(user);
-            request.getSession().setAttribute("userName",user.getName());
+            UserService.INSTANCE.signUp(user);
+            request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
             return JSPPath.USER_PAGE;
         } catch (ServiceException e) {
             return JSPPath.SIGN_UP;

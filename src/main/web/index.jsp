@@ -12,12 +12,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <%--    <title><fmt:message bundle="${locale}" key="navbar.name"/></title>--%>
-
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/mdb.min.css">
-    <title>Hi</title>
-
+    <title><fmt:message bundle="${locale}" key="welcome"/></title>
 </head>
 <body>
 
@@ -49,13 +46,13 @@
                      aria-labelledby="navbarDropdownMenuLink">
                     <form action="/en" method="get">
                         <button class="dropdown-item font-weight-bold" type="submit"><fmt:message
-                            bundle="${locale}"
-                            key="navbar.language_english"/>
+                                bundle="${locale}"
+                                key="navbar.language_english"/>
                     </form>
                     <form action="/es" method="get">
                         <button class="dropdown-item font-weight-bold" type="submit"><fmt:message
-                            bundle="${locale}"
-                            key="navbar.language_spanish"/>
+                                bundle="${locale}"
+                                key="navbar.language_spanish"/>
                     </form>
                 </div>
             </li>

@@ -1,5 +1,6 @@
-package buyanova.command;
+package buyanova.factory;
 
+import buyanova.command.Command;
 import buyanova.command.implementation.LogIn;
 import buyanova.command.implementation.SignUp;
 
