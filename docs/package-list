@@ -1,4 +1,7 @@
 buyanova
+buyanova.command
+buyanova.command.implementation
+buyanova.controller
 buyanova.entity
 buyanova.exception
 buyanova.factory

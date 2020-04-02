@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <fmt:setLocale value="es"/>
 <fmt:setBundle basename="locale" var="locale"/>
-<fmt:requestEncoding value="UTF-8"/>
+<%--<fmt:requestEncoding value="UTF-8"/>--%>
 
 <!DOCTYPE html>
 <html lang="en">

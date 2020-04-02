@@ -54,7 +54,7 @@ public enum BetService {
         }
     }
 
-    public void updateBet(Bet bet) throws ServiceException {
+    public void updateBetSum(Bet bet) throws ServiceException {
         validateBetFields(bet);
         checkBetExists(bet);
         try {

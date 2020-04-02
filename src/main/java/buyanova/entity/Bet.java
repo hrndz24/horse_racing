@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * The money client stakes to a wager based on bookmaker's odds.
+ * The money client stakes based on bookmaker's odds.
  *
  * @see buyanova.entity.Odds
  * @author Natalie

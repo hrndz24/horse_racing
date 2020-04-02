@@ -21,12 +21,15 @@ public enum UserService {
     private UserValidator userValidator = new UserValidator();
 
     public User signUp(User user) throws ServiceException {
+        if (user == null) {
+            throw new ServiceException("Null user");
+        }
         validateUserFields(user);
-        checkLoginIsUnique(user);
+        checkLoginIsUnique(user.getLogin());
 
         user.setActive(true);
         user.setBalance(new BigDecimal(0));
-        user.setPassword(String.valueOf(user.getPassword().hashCode())); // TODO: 29.03.2020 make normal hashing
+        user.setPassword(String.valueOf(user.getPassword().hashCode()));
         try {
             userRepository.add(user);
         } catch (RepositoryException e) {
@@ -36,10 +39,16 @@ public enum UserService {
     }
 
     public User logIn(User user) throws ServiceException {
+        if (user == null) {
+            throw new ServiceException("Null user");
+        }
         validateUserLogInCredentials(user);
-        user.setPassword(String.valueOf(user.getPassword().hashCode())); // TODO: 29.03.2020 make normal hashing
+        user.setPassword(String.valueOf(user.getPassword().hashCode()));
         try {
             List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
+            if (users.isEmpty()) {
+                throw new ServiceException("User not found");
+            }
             return users.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
@@ -47,7 +56,9 @@ public enum UserService {
     }
 
     public void removeUser(User user) throws ServiceException {
-        validateUserFields(user);
+        if (user == null) {
+            throw new ServiceException("Null user");
+        }
         try {
             userRepository.remove(user);
         } catch (RepositoryException e) {
@@ -55,40 +66,61 @@ public enum UserService {
         }
     }
 
-    public void changeLogin(User user){
-        //should be changed by id
-        // check unique
-    }
-
-    public void changePassword(User user, String newPassword){
-        //check if login and password match
-        //set newPassword
-        //update
-    }
-
-    public void replenishAccount(User user, BigDecimal replenishmentSum){
-        //check blablabla
-        //sum is to be positive
-        //update
-    }
-
-    /*public void updateUser(User user) throws ServiceException {
-        validateUserFields(user);
-        checkLoginIsUnique(user);
+    public void changeLogin(User user, String newLogin) throws ServiceException {
+        if (user == null || newLogin == null) {
+            throw new ServiceException("Null user parameter");
+        }
+        if (!userValidator.isValidLogin(newLogin)) {
+            throw new ServiceException("Invalid user login");
+        }
+        checkLoginIsUnique(newLogin);
+        user.setLogin(newLogin);
         try {
             userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
-    }*/
+    }
 
-    private void checkLoginIsUnique(User user) throws ServiceException {
+    public void changePassword(User user, String newPassword) throws ServiceException {
+        if (user == null || newPassword == null) {
+            throw new ServiceException("Null user parameter");
+        }
+        if (!userValidator.isValidPassword(newPassword)) {
+            throw new ServiceException("Invalid user password");
+        }
         try {
-            List<User> users = userRepository.query(new FindUserByLogin(user.getLogin()));
+            List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
+            if (users.isEmpty()) {
+                throw new ServiceException("User with such login and password does not exist");
+            }
+            user.setPassword(String.valueOf(newPassword.hashCode()));
+            userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void replenishAccount(User user, BigDecimal replenishmentSum) throws ServiceException {
+        if (user == null || replenishmentSum == null) {
+            throw new ServiceException("Null user parameter");
+        }
+        if (replenishmentSum.doubleValue() <= 0) {
+            throw new ServiceException("Negative replenishment sum");
+        }
+        user.setBalance(user.getBalance().add(replenishmentSum));
+        try {
+            userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void checkLoginIsUnique(String login) throws ServiceException {
+        try {
+            List<User> users = userRepository.query(new FindUserByLogin(login));
             if (!users.isEmpty()) {
-                if (users.get(0).getId() != user.getId()) {
-                    throw new ServiceException("Login already taken");
-                }
+                throw new ServiceException("Login already taken");
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
@@ -111,16 +143,12 @@ public enum UserService {
         if (!userValidator.isValidEmail(user.getEmail())) {
             throw new ServiceException("Invalid user email");
         }
-        if(user.getUserRole()==null){
+        if (user.getUserRole() == null) {
             throw new ServiceException("Null user role");
         }
     }
 
     private void validateUserLogInCredentials(User user) throws ServiceException {
-        if (user == null) {
-            throw new ServiceException("Null user");
-        }
-
         if (user.getLogin() == null) {
             throw new ServiceException("Null user login");
         }
