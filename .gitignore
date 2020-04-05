@@ -5,8 +5,8 @@ target/
 
 # Project specific files
 logs/
-src/main/java/buyanova/Main.java
-src/main/java/buyanova/Todo.java
+src/main/java/com/buyanova/Main.java
+src/main/java/com/buyanova/Todo.java
 
 # IntelliJ project files
 *.iml
