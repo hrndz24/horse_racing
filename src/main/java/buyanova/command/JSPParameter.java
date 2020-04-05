@@ -3,7 +3,7 @@ package buyanova.command;
 public enum JSPParameter {
 
     COMMAND("command"), LOGIN("login"), PASSWORD("password"), EMAIL("email"),
-    USER_NAME("userName"), NAME("name");
+    USER_NAME("userName"), NAME("name"), LANGUAGE("language"), JSP("jsp"), LANG("lang");
 
     private String parameter;
 

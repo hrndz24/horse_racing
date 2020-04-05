@@ -2,7 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<fmt:setLocale value="es"/>
+<fmt:setLocale value="${language}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale"/>
 <!DOCTYPE html>
 <html lang="en">
@@ -42,17 +42,16 @@
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
                                                                            key="navbar.language"/></a>
-                <div class="dropdown-menu grey lighten-3" style="text-align: center"
-                     aria-labelledby="navbarDropdownMenuLink">
-                    <form action="/en" method="get">
-                        <button class="dropdown-item font-weight-bold" type="submit"><fmt:message
-                                bundle="${locale}"
-                                key="navbar.language_english"/>
-                    </form>
-                    <form action="/es" method="get">
-                        <button class="dropdown-item font-weight-bold" type="submit"><fmt:message
-                                bundle="${locale}"
-                                key="navbar.language_spanish"/>
+                <div class="dropdown-menu grey lighten-3"
+                     aria-labelledby="navbarDropdownMenuLink" style="width: 10rem;text-align: center">
+                    <form action="/controller" method="post">
+                        <input type="hidden" name="command" value="language"/>
+                        <input type="hidden" name="jsp" value="${pageContext.request.requestURI}"/>
+                        <input style="width: 10rem" type="submit" name="lang" value="EN"
+                               class="dropdown-item font-weight-bold"/>
+                        <input style="width: 10rem" type="submit" name="lang" value="ES"
+                               class="dropdown-item font-weight-bold"/>
+
                     </form>
                 </div>
             </li>

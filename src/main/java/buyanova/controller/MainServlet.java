@@ -2,9 +2,8 @@ package buyanova.controller;
 
 import buyanova.command.Command;
 import buyanova.command.JSPParameter;
-import buyanova.factory.CommandFactory;
-import buyanova.command.JSPPath;
 import buyanova.exception.ConnectionPoolException;
+import buyanova.factory.CommandFactory;
 import buyanova.pool.ConnectionPool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -53,7 +52,7 @@ public class MainServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandFactory.valueOf(request.getParameter(JSPParameter.COMMAND.getParameter()).toUpperCase()).getCommand();
-        JSPPath jsp = command.execute(request, response);
-        request.getRequestDispatcher(jsp.getPath()).forward(request, response);
+        String jsp = command.execute(request, response);
+        request.getRequestDispatcher(jsp).forward(request, response);
     }
 }

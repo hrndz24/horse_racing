@@ -41,6 +41,11 @@ public enum BetService {
         return bet;
     }
 
+    /** Checks bet exists so that to prevent replenishment of user's account
+     *
+     * @param bet bet that is to be removed and is present in the data source
+     * @throws ServiceException if smth goes wrong
+     */
     public void removeBet(Bet bet) throws ServiceException {
         validateBetFields(bet);
         checkBetExists(bet);
@@ -98,7 +103,7 @@ public enum BetService {
                 throw new ServiceException("Odds with such id do not exist");
             }
         } catch (RepositoryException e) {
-            throw new ServiceException("Failed to access users' data", e);
+            throw new ServiceException(e);
         }
     }
 }

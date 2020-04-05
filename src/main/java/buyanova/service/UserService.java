@@ -120,7 +120,7 @@ public enum UserService {
         try {
             List<User> users = userRepository.query(new FindUserByLogin(login));
             if (!users.isEmpty()) {
-                throw new ServiceException("Login already taken");
+                throw new ServiceException("Login is already taken");
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e);

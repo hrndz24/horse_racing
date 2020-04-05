@@ -1,5 +1,9 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setLocale value="${language}" scope="session"/>
+<fmt:setBundle basename="locale" var="locale"/>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -13,7 +17,7 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color">
 
-    <a class="navbar-brand" href="#">Horse Racing</a>
+    <a class="navbar-brand" href="#"><fmt:message bundle="${locale}" key="navbar.name"/></a>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,30 +26,33 @@
 
     <div class="collapse navbar-collapse" id="basicExampleNav">
 
-
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="../index.jsp">Home</a>
+                <a class="nav-link" href="../index.jsp"><fmt:message bundle="${locale}" key="navbar.home_button"/></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Races</a>
+                <a class="nav-link" href="#"><fmt:message bundle="${locale}" key="navbar.races"/></a>
             </li>
 
             <!-- Language dropdown -->
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
-                   aria-haspopup="true" aria-expanded="false">Language</a>
-                <div class="dropdown-menu grey lighten-3" style="text-align: center"
-                     aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item font-weight-bold" href="#">English</a>
-                    <a class="dropdown-item font-weight-bold" href="#">Spanish</a>
+                   aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
+                                                                           key="navbar.language"/></a>
+                <div class="dropdown-menu grey lighten-3"
+                     aria-labelledby="navbarDropdownMenuLink" style="width: 10rem;text-align: center">
+                    <form action="/controller" method="post">
+                        <input type="hidden" name="command" value="language"/>
+                        <input type="hidden" name="jsp" value="${pageContext.request.requestURI}"/>
+                        <input style="width: 10rem" type="submit" name="lang" value="EN"
+                               class="dropdown-item font-weight-bold"/>
+                        <input style="width: 10rem" type="submit" name="lang" value="ES"
+                               class="dropdown-item font-weight-bold"/>
+
+                    </form>
                 </div>
             </li>
-
         </ul>
-        <div class="md-form my-0 text-white">
-            <c:out value="${userName}"/>
-        </div>
     </div>
 </nav>
 <div class="container" style="text-align: center">
