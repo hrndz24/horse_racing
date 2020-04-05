@@ -1,4 +1,4 @@
-package buyanova.specification.sql.implementation.user;
+package buyanova.specification.sql.impl.user;
 
 import buyanova.specification.sql.SqlSpecification;
 

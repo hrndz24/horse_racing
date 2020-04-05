@@ -1,4 +1,4 @@
-package buyanova.specification.sql.implementation.odds;
+package buyanova.specification.sql.impl.horse;
 
 import buyanova.specification.sql.SqlSpecification;
 
@@ -6,25 +6,28 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FindOddsByRace implements SqlSpecification {
+public class FindHorsesPerformingInRace implements SqlSpecification {
 
     private int raceId;
+
     private static final String SQL_QUERY =
             "SELECT \n" +
-            "    odds_id,\n" +
-            "    odds.race_id,\n" +
-            "    bookmaker_id,\n" +
-            "    horse_id,\n" +
-            "    odds_in_favour,\n" +
-            "    odds_against\n" +
+            "    horses.horse_id,\n" +
+            "    jockey_id,\n" +
+            "    horse_name, \n" +
+            "    horse_breed,\n" +
+            "    horse_age,\n" +
+            "    is_performing,\n" +
+            "    races_won_number,\n" +
+            "    races_lost_number\n" +
             "FROM\n" +
-            "    odds\n" +
+            "    horses\n" +
             "        JOIN\n" +
-            "    races ON odds.race_id = races.race_id\n" +
+            "    race_horses ON horses.horse_id = race_horses.horse_id\n" +
             "WHERE\n" +
-            "    odds.race_id = ?";
+            "    race_id = ?;";
 
-    public FindOddsByRace(int raceId) {
+    public FindHorsesPerformingInRace(int raceId) {
         this.raceId = raceId;
     }
 

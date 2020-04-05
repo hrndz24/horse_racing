@@ -1,4 +1,4 @@
-package buyanova.command.implementation;
+package buyanova.command.impl;
 
 import buyanova.command.Command;
 import buyanova.command.JSPParameter;

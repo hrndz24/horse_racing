@@ -1,4 +1,4 @@
-package buyanova.specification.sql.implementation.bet;
+package buyanova.specification.sql.impl.bet;
 
 import buyanova.specification.sql.SqlSpecification;
 

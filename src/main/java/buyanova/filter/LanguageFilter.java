@@ -3,9 +3,11 @@ package buyanova.filter;
 import buyanova.command.JSPParameter;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+@WebFilter("/*")
 public class LanguageFilter implements Filter {
 
     private static final String DEFAULT_LOCALE = "es";
@@ -21,6 +23,7 @@ public class LanguageFilter implements Filter {
         if (req.getSession().getAttribute(JSPParameter.LANGUAGE.getParameter()) == null) {
             req.getSession().setAttribute(JSPParameter.LANGUAGE.getParameter(), DEFAULT_LOCALE);
         }
+        filterChain.doFilter(servletRequest, servletResponse);
     }
 
     @Override

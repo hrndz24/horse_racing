@@ -15,7 +15,7 @@ import java.sql.SQLException;
  * @author Natalie
  * @see buyanova.specification.Specification
  * @see buyanova.repository.user.implementation.SqlUserRepository#query(Specification)
- * @see buyanova.specification.sql.implementation.user.FindUserByLoginAndPassword
+ * @see buyanova.specification.sql.impl.user.FindUserByLoginAndPassword
  */
 public interface SqlSpecification extends Specification {
 

@@ -1,6 +1,6 @@
 buyanova
 buyanova.command
-buyanova.command.implementation
+buyanova.command.impl
 buyanova.controller
 buyanova.entity
 buyanova.exception
@@ -20,9 +20,9 @@ buyanova.repository.user.implementation
 buyanova.service
 buyanova.specification
 buyanova.specification.sql
-buyanova.specification.sql.implementation.bet
-buyanova.specification.sql.implementation.horse
-buyanova.specification.sql.implementation.odds
-buyanova.specification.sql.implementation.race
-buyanova.specification.sql.implementation.user
+buyanova.specification.sql.impl.bet
+buyanova.specification.sql.impl.horse
+buyanova.specification.sql.impl.odds
+buyanova.specification.sql.impl.race
+buyanova.specification.sql.impl.user
 buyanova.validator

@@ -1,4 +1,4 @@
-package buyanova.specification.sql.implementation.odds;
+package buyanova.specification.sql.impl.odds;
 
 import buyanova.specification.sql.SqlSpecification;
 

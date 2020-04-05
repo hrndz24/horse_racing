@@ -8,9 +8,9 @@ import buyanova.factory.RepositoryFactory;
 import buyanova.repository.bet.BetRepository;
 import buyanova.repository.odds.OddsRepository;
 import buyanova.repository.user.UserRepository;
-import buyanova.specification.sql.implementation.bet.FindBetById;
-import buyanova.specification.sql.implementation.odds.FindOddsById;
-import buyanova.specification.sql.implementation.user.FindUserById;
+import buyanova.specification.sql.impl.bet.FindBetById;
+import buyanova.specification.sql.impl.odds.FindOddsById;
+import buyanova.specification.sql.impl.user.FindUserById;
 import buyanova.validator.BetValidator;
 
 import java.math.BigDecimal;

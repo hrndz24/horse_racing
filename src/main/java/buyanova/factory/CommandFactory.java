@@ -1,9 +1,9 @@
 package buyanova.factory;
 
 import buyanova.command.Command;
-import buyanova.command.implementation.ChangeLanguage;
-import buyanova.command.implementation.LogIn;
-import buyanova.command.implementation.SignUp;
+import buyanova.command.impl.ChangeLanguage;
+import buyanova.command.impl.LogIn;
+import buyanova.command.impl.SignUp;
 
 public enum CommandFactory {
 

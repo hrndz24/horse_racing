@@ -5,8 +5,8 @@ import buyanova.exception.RepositoryException;
 import buyanova.exception.ServiceException;
 import buyanova.factory.RepositoryFactory;
 import buyanova.repository.user.UserRepository;
-import buyanova.specification.sql.implementation.user.FindUserByLogin;
-import buyanova.specification.sql.implementation.user.FindUserByLoginAndPassword;
+import buyanova.specification.sql.impl.user.FindUserByLogin;
+import buyanova.specification.sql.impl.user.FindUserByLoginAndPassword;
 import buyanova.validator.UserValidator;
 
 import java.math.BigDecimal;

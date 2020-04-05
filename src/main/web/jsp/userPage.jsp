@@ -9,7 +9,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Welcome</title>
+    <title><fmt:message bundle="${locale}" key="navbar.name"/></title>
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
@@ -53,10 +53,17 @@
                 </div>
             </li>
         </ul>
+        <div class="md-form my-0 text-white">
+            <c:out value="${userName}"/>
+        </div>
     </div>
 </nav>
 <div class="container" style="text-align: center">
     <c:out value="Welcome, ${userName}"/>
 </div>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script type="text/javascript" src="../js/popper.min.js"></script>
+<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../js/mdb.min.js"></script>
 </body>
 </html>

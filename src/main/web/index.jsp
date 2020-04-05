@@ -18,7 +18,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/mdb.min.css">
-    <title><fmt:message bundle="${locale}" key="welcome"/></title>
+    <title><fmt:message bundle="${locale}" key="navbar.name"/></title>
 </head>
 <body>
 

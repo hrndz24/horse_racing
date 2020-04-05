@@ -1,4 +1,4 @@
-package buyanova.specification.sql.implementation.race;
+package buyanova.specification.sql.impl.race;
 
 import buyanova.specification.sql.SqlSpecification;
 
