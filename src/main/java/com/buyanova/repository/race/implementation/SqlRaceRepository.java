@@ -75,7 +75,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
             statement.setInt(2, race.getHorseWinnerId());
-            statement.setDate(3, (java.sql.Date) race.getDate());
+            statement.setDate(3, new java.sql.Date(race.getDate().getTime()));
             statement.setInt(4, race.getDistance());
             statement.setInt(5, race.getId());
 
