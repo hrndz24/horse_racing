@@ -1,15 +1,15 @@
 package com.buyanova.factory;
 
 import com.buyanova.repository.bet.BetRepository;
-import com.buyanova.repository.bet.implementation.SqlBetRepository;
+import com.buyanova.repository.bet.impl.SqlBetRepository;
 import com.buyanova.repository.horse.HorseRepository;
-import com.buyanova.repository.horse.implementation.SqlHorseRepository;
+import com.buyanova.repository.horse.impl.SqlHorseRepository;
 import com.buyanova.repository.odds.OddsRepository;
-import com.buyanova.repository.odds.implementation.SqlOddsRepository;
+import com.buyanova.repository.odds.impl.SqlOddsRepository;
 import com.buyanova.repository.race.RaceRepository;
-import com.buyanova.repository.race.implementation.SqlRaceRepository;
+import com.buyanova.repository.race.impl.SqlRaceRepository;
 import com.buyanova.repository.user.UserRepository;
-import com.buyanova.repository.user.implementation.SqlUserRepository;
+import com.buyanova.repository.user.impl.SqlUserRepository;
 
 /**
  * {@code RepositoryFactory} class uses factory pattern to decide

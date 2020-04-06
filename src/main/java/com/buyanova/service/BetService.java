@@ -8,9 +8,9 @@ import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.bet.BetRepository;
 import com.buyanova.repository.odds.OddsRepository;
 import com.buyanova.repository.user.UserRepository;
-import com.buyanova.specification.sql.impl.bet.FindBetById;
-import com.buyanova.specification.sql.impl.odds.FindOddsById;
-import com.buyanova.specification.sql.impl.user.FindUserById;
+import com.buyanova.specification.impl.bet.FindBetById;
+import com.buyanova.specification.impl.odds.FindOddsById;
+import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.BetValidator;
 
 import java.math.BigDecimal;
@@ -26,6 +26,9 @@ public enum BetService {
     private BetValidator betValidator = new BetValidator();
 
     public Bet makeBet(Bet bet) throws ServiceException {
+        if (bet == null) {
+            throw new ServiceException("Null bet");
+        }
         validateBetFields(bet);
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
@@ -41,13 +44,21 @@ public enum BetService {
         return bet;
     }
 
-    /** Checks bet exists so that to prevent replenishment of user's account
+    /** Removes bet form the data source and
+     * returns money to the user.
+     * <p>
+     * Note: checks bet exists so that to prevent
+     * replenishment of user's account
      *
-     * @param bet bet that is to be removed and is present in the data source
-     * @throws ServiceException if smth goes wrong
+     * @param bet bet that is to be removed,
+     *            should be present in the data source
+     * @throws ServiceException if null or non-existent bet is passed
+     *                          or a data source access error occurs
      */
     public void removeBet(Bet bet) throws ServiceException {
-        validateBetFields(bet);
+        if (bet == null) {
+            throw new ServiceException("Null bet");
+        }
         checkBetExists(bet);
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
@@ -60,8 +71,11 @@ public enum BetService {
     }
 
     public void updateBetSum(Bet bet) throws ServiceException {
-        validateBetFields(bet);
+        if (bet == null) {
+            throw new ServiceException("Null bet");
+        }
         checkBetExists(bet);
+        validateBetFields(bet);
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
             BigDecimal oldSum = betRepository.query(new FindBetById(bet.getId())).get(0).getSum();
@@ -84,10 +98,6 @@ public enum BetService {
     }
 
     private void validateBetFields(Bet bet) throws ServiceException {
-        if (bet == null) {
-            throw new ServiceException("Null bet");
-        }
-
         if (bet.getSum() == null) {
             throw new ServiceException("Null bet sum");
         }

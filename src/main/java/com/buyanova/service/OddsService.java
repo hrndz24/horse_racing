@@ -8,12 +8,12 @@ import com.buyanova.repository.horse.HorseRepository;
 import com.buyanova.repository.odds.OddsRepository;
 import com.buyanova.repository.race.RaceRepository;
 import com.buyanova.repository.user.UserRepository;
-import com.buyanova.specification.sql.impl.horse.FindHorseById;
-import com.buyanova.specification.sql.impl.horse.FindHorsesPerformingInRace;
-import com.buyanova.specification.sql.impl.odds.FindOddsById;
-import com.buyanova.specification.sql.impl.odds.FindOddsByRace;
-import com.buyanova.specification.sql.impl.race.FindRaceById;
-import com.buyanova.specification.sql.impl.user.FindUserById;
+import com.buyanova.specification.impl.horse.FindHorseById;
+import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
+import com.buyanova.specification.impl.odds.FindOddsById;
+import com.buyanova.specification.impl.odds.FindOddsByRace;
+import com.buyanova.specification.impl.race.FindRaceById;
+import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.OddsValidator;
 import com.buyanova.validator.RaceValidator;
 

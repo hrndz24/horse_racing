@@ -9,13 +9,13 @@ import com.buyanova.repository.horse.HorseRepository;
 import com.buyanova.repository.odds.OddsRepository;
 import com.buyanova.repository.race.RaceRepository;
 import com.buyanova.repository.user.UserRepository;
-import com.buyanova.specification.sql.impl.bet.FindLostBetsInRaceByUserId;
-import com.buyanova.specification.sql.impl.bet.FindWonBetsInRaceByUserId;
-import com.buyanova.specification.sql.impl.horse.FindHorseById;
-import com.buyanova.specification.sql.impl.horse.FindHorsesPerformingInRace;
-import com.buyanova.specification.sql.impl.odds.FindOddsById;
-import com.buyanova.specification.sql.impl.race.FindRaceById;
-import com.buyanova.specification.sql.impl.user.FindUserById;
+import com.buyanova.specification.impl.bet.FindLostBetsInRaceByUserId;
+import com.buyanova.specification.impl.bet.FindWonBetsInRaceByUserId;
+import com.buyanova.specification.impl.horse.FindHorseById;
+import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
+import com.buyanova.specification.impl.odds.FindOddsById;
+import com.buyanova.specification.impl.race.FindRaceById;
+import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.RaceValidator;
 
 import java.math.BigDecimal;
@@ -34,6 +34,18 @@ public enum RaceService {
 
     private RaceValidator raceValidator = new RaceValidator();
 
+    public void addRace(Race race) throws ServiceException {
+        if (race == null) {
+            throw new ServiceException("Null race");
+        }
+        validateRaceFields(race);
+        try {
+            raceRepository.add(race);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     /**
      * Updates information about the race in the data source.
      * <p>
@@ -50,7 +62,7 @@ public enum RaceService {
      * @throws ServiceException if null or non-existent race is passed,
      *                          if horse winner is already specified in the data source
      *                          if horse winner did not perform in the race,
-     *                          if data source access error occurs
+     *                          if a data source access error occurs
      */
     public void setRaceResults(Race race) throws ServiceException {
         if (race == null) {
@@ -71,6 +83,18 @@ public enum RaceService {
             for (Bet bet : lostBets) {
                 withdrawMoneyFromUsersWhoLost(bet);
             }
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void removeRace(Race race) throws ServiceException {
+        if (race == null) {
+            throw new ServiceException("Null race");
+        }
+        checkRaceExists(race);
+        try {
+            raceRepository.remove(race);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -142,6 +166,24 @@ public enum RaceService {
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    private void validateRaceFields(Race race) throws ServiceException {
+        if (race.getPrizeMoney() == null) {
+            throw new ServiceException("Null race prize money");
+        }
+        if (!raceValidator.isPrizeMoneyPositive(race.getPrizeMoney())) {
+            throw new ServiceException("Negative race prize money");
+        }
+        if (race.getDate() == null) {
+            throw new ServiceException("Null race date");
+        }
+        if (!raceValidator.isDateAfterNow(race.getDate())) {
+            throw new ServiceException("Invalid race date");
+        }
+        if (!raceValidator.isDistancePositive(race.getDistance())) {
+            throw new ServiceException("Negative race distance");
         }
     }
 }

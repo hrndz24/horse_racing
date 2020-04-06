@@ -53,6 +53,13 @@
                 </div>
             </li>
         </ul>
+        <div>
+            <form action="/controller" method="post" class="nav-item my-1">
+                <button type="submit" name="command" value="log_out" class="btn btn-elegant btn-sm text-white" >
+                    <fmt:message bundle="${locale}" key="log_out"/>
+                </button>
+            </form>
+        </div>
         <div class="md-form my-0 text-white">
             <c:out value="${userName}"/>
         </div>

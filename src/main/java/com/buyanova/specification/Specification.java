@@ -6,7 +6,7 @@ package com.buyanova.specification;
  *
  * @author Natalie
  * @see com.buyanova.repository.Repository#query(Specification)
- * @see com.buyanova.specification.sql.SqlSpecification
+ * @see SqlSpecification
  */
 public interface Specification {
 }

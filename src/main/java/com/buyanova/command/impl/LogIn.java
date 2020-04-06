@@ -17,7 +17,7 @@ public class LogIn implements Command {
         user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
         user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
         try {
-             user = UserService.INSTANCE.logIn(user);
+            user = UserService.INSTANCE.logIn(user);
             request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(),user.getName());
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
