@@ -95,15 +95,15 @@
                     <fmt:message bundle="${locale}" key="log_in"/>
                 </button>
 
-                <div class="text-center">
-                    <p><fmt:message bundle="${locale}" key="invitation_to_sign_up"/></p>
-                </div>
-
-                <a class="btn btn-outline-elegant" href="jsp/signUp.jsp">
-                    <fmt:message bundle="${locale}" key="sign_up"/>
-                </a>
-
             </form>
+            <div class="text-center">
+                <p><fmt:message bundle="${locale}" key="invitation_to_sign_up"/></p>
+            </div>
+
+            <a class="btn btn-outline-elegant" href="jsp/signUp.jsp">
+                <fmt:message bundle="${locale}" key="sign_up"/>
+            </a>
+
         </div>
     </div>
 </div>

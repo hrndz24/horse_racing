@@ -49,24 +49,13 @@ public enum OddsService {
         if (odds == null) {
             throw new ServiceException("Null odds");
         }
-        checkOddsExist(odds);
+        //checkOddsExist(odds);
         if (!(oddsValidator.areOddsPositive(odds.getOddsAgainst())
                 && oddsValidator.areOddsPositive(odds.getOddsInFavour()))) {
             throw new ServiceException("Negative odds numbers");
         }
         try {
             oddsRepository.update(odds);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    public void removeOdds(Odds odds) throws ServiceException {
-        if (odds == null) {
-            throw new ServiceException("Null odds");
-        }
-        try {
-            oddsRepository.remove(odds);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -90,6 +79,15 @@ public enum OddsService {
         }
     }
 
+    /*
+    Validates all fields of odds except id, since id is to be set after
+    adding it ot the data source.
+    Checks:
+     - odds numbers are positive;
+     - bookmaker with such id exists and has UserRole.BOOKMAKER;
+     - race with provided id exists and hasn't happened yet;
+     - horse with such id exists and performs in the race.
+     */
     private void validateOddsFields(Odds odds) throws ServiceException {
         if (!oddsValidator.areOddsPositive(odds.getOddsInFavour())) {
             throw new ServiceException("Negative odds in favour");

@@ -9,11 +9,13 @@ import com.buyanova.repository.bet.BetRepository;
 import com.buyanova.repository.odds.OddsRepository;
 import com.buyanova.repository.user.UserRepository;
 import com.buyanova.specification.impl.bet.FindBetById;
+import com.buyanova.specification.impl.bet.FindBetsByUserId;
 import com.buyanova.specification.impl.odds.FindOddsById;
 import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.BetValidator;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 public enum BetService {
     INSTANCE;
@@ -44,7 +46,8 @@ public enum BetService {
         return bet;
     }
 
-    /** Removes bet form the data source and
+    /**
+     * Removes bet form the data source and
      * returns money to the user.
      * <p>
      * Note: checks bet exists so that to prevent
@@ -82,6 +85,17 @@ public enum BetService {
             betRepository.update(bet);
             user.setBalance(user.getBalance().add(oldSum.subtract(bet.getSum())));
             userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Bet> getBetsByUser(User user) throws ServiceException {
+        if (user == null) {
+            throw new ServiceException("Null user");
+        }
+        try {
+            return betRepository.query(new FindBetsByUserId(user.getId()));
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

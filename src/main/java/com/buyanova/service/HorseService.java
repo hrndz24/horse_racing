@@ -1,11 +1,15 @@
 package com.buyanova.service;
 
 import com.buyanova.entity.Horse;
+import com.buyanova.entity.Race;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.horse.HorseRepository;
+import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
 import com.buyanova.validator.HorseValidator;
+
+import java.util.List;
 
 public enum HorseService {
 
@@ -29,7 +33,18 @@ public enum HorseService {
         }
     }
 
-    private void removeHorse(Horse horse) throws ServiceException {
+    public List<Horse> getHorsesFromRace(Race race) throws ServiceException {
+        if (race == null) {
+            throw new ServiceException("Null race");
+        }
+        try {
+            return horseRepository.query(new FindHorsesPerformingInRace(race.getId()));
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void removeHorse(Horse horse) throws ServiceException {
         if (horse == null) {
             throw new ServiceException("Null horse");
         }
