@@ -1,5 +1,6 @@
 package com.buyanova.repository.race.impl;
 
+import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
@@ -34,6 +35,23 @@ public enum SqlRaceRepository implements RaceRepository {
 
     private static final String UPDATE_QUERY = "UPDATE races SET race_prize_money = ?," +
             "horse_winner_id = ?, race_date = ?, race_distance = ? WHERE race_id = ?";
+
+    private static final String ADD_HORSE_TO_RACE_QUERY = "INSERT INTO race_horses" +
+            "(race_id, horse_id) VALUES(?, ?)";
+
+    // TODO: 11.04.2020 should it be entity or id
+    @Override
+    public void addHorseToRace(Horse horse, int raceId) throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(ADD_HORSE_TO_RACE_QUERY)) {
+
+            statement.setInt(1, raceId);
+            statement.setInt(2, horse.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to add horse to the race", e);
+        }
+    }
 
     @Override
     public void add(Race race) throws RepositoryException {

@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../css/mdb.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 5rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color">
 
     <span class="navbar-brand"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
@@ -28,15 +28,12 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item elegant-color">
-                <form action="/controller" method="post" class="nav-item md-form" style="width: 8rem; font-size : 12px; height: 1rem" >
-                    <input type="hidden" name="command" value="show_races" style="height: 0"/>
-                    <button class="btn btn-elegant text-white" type="submit"><fmt:message bundle="${locale}" key="navbar.races"/></button>
-                </form>
+            <li class="nav-item">
+                <a class="nav-link" href="#"><fmt:message bundle="${locale}" key="navbar.races"/></a>
             </li>
 
             <!-- Language dropdown -->
-            <li class="nav-item dropdown md-form">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
                                                                            key="navbar.language"/></a>
@@ -54,22 +51,27 @@
                 </div>
             </li>
         </ul>
-        <div>
-            <form action="/controller" method="post" class="nav-item my-1">
-                <button type="submit" name="command" value="log_out" class="btn btn-elegant btn-sm text-white">
-                    <fmt:message bundle="${locale}" key="log_out"/>
-                </button>
-            </form>
-        </div>
-        <div class="md-form my-0 text-white">
-            <c:set var="user" value="${user}" scope="session"/>
-            <c:out value="${user.login}"/>
-        </div>
     </div>
 </nav>
-<div class="container" style="text-align: center">
-    <c:out value="Welcome, ${userName}"/>
+
+<div class="container">
+    <c:forEach var="race" items="${races}">
+        <form action="/controller" method="post">
+            <span><fmt:message bundle="${locale}" key="race.distance"/>: </span>
+            <c:out value="${race.distance}"/>.
+            <span><fmt:message bundle="${locale}" key="race.prize_money"/>: </span>
+            <c:out value="${race.prizeMoney}"/>.
+            <span><fmt:message bundle="${locale}" key="race.date"/>: </span>
+            <c:out value="${race.date}"/>.
+            <input type="hidden" name="raceId" value="${race.id}"/>
+            <input type="hidden" name="command" value="show_race"/>
+            <button class="btn btn-elegant" type="submit" value="show_race"><fmt:message bundle="${locale}"
+                                                                                         key="view_details"/></button>
+        </form>
+        <br/>
+    </c:forEach>
 </div>
+
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>

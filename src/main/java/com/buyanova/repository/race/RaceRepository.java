@@ -1,6 +1,8 @@
 package com.buyanova.repository.race;
 
+import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
+import com.buyanova.exception.RepositoryException;
 import com.buyanova.repository.Repository;
 
 /**
@@ -12,4 +14,6 @@ import com.buyanova.repository.Repository;
  */
 public interface RaceRepository extends Repository<Race> {
 
+    // TODO: 11.04.2020 javadoc
+    void addHorseToRace(Horse horse, int raceId) throws RepositoryException;
 }

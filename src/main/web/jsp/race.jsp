@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="../css/mdb.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 5rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color">
 
     <span class="navbar-brand"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
@@ -36,7 +36,7 @@
             </li>
 
             <!-- Language dropdown -->
-            <li class="nav-item dropdown md-form">
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
                                                                            key="navbar.language"/></a>
@@ -54,25 +54,25 @@
                 </div>
             </li>
         </ul>
-        <div>
-            <form action="/controller" method="post" class="nav-item my-1">
-                <button type="submit" name="command" value="log_out" class="btn btn-elegant btn-sm text-white">
-                    <fmt:message bundle="${locale}" key="log_out"/>
-                </button>
-            </form>
-        </div>
-        <div class="md-form my-0 text-white">
-            <c:set var="user" value="${user}" scope="session"/>
-            <c:out value="${user.login}"/>
-        </div>
     </div>
 </nav>
-<div class="container" style="text-align: center">
-    <c:out value="Welcome, ${userName}"/>
+
+<div class="container">
+    <c:forEach var="horse" items="${horses}">
+        <form action="/controller" method="post">
+            <span><fmt:message bundle="${locale}" key="race.distance"/>: </span>
+            <c:out value="${horse.name}"/>.
+
+<%--            <button class="btn btn-elegant" type="submit" value="show_race">View details</button>--%>
+        </form>
+        <br/>
+    </c:forEach>
 </div>
+
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/mdb.min.js"></script>
 </body>
 </html>
+
