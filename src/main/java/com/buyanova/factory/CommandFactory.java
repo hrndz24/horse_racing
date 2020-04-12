@@ -6,7 +6,8 @@ import com.buyanova.command.impl.*;
 public enum CommandFactory {
 
     SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()),
-    LANGUAGE(new ChangeLanguage()), SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace());
+    LANGUAGE(new ChangeLanguage()), SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()),
+    MAKE_BET(new MakeBet()), SUBMIT_BET(new SubmitBet());
 
     private Command command;
 

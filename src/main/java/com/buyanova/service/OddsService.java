@@ -10,6 +10,7 @@ import com.buyanova.repository.race.RaceRepository;
 import com.buyanova.repository.user.UserRepository;
 import com.buyanova.specification.impl.horse.FindHorseById;
 import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
+import com.buyanova.specification.impl.odds.FindOddsByHorseIdAndRaceId;
 import com.buyanova.specification.impl.odds.FindOddsById;
 import com.buyanova.specification.impl.odds.FindOddsByRace;
 import com.buyanova.specification.impl.race.FindRaceById;
@@ -49,7 +50,7 @@ public enum OddsService {
         if (odds == null) {
             throw new ServiceException("Null odds");
         }
-        //checkOddsExist(odds);
+
         if (!(oddsValidator.areOddsPositive(odds.getOddsAgainst())
                 && oddsValidator.areOddsPositive(odds.getOddsInFavour()))) {
             throw new ServiceException("Negative odds numbers");
@@ -64,6 +65,14 @@ public enum OddsService {
     public List<Odds> getOddsForRace(int raceId) throws ServiceException {
         try {
             return oddsRepository.query(new FindOddsByRace(raceId));
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public Odds getOddsForHorseInRace(int horseId, int raceId) throws ServiceException {
+        try {
+            return oddsRepository.query(new FindOddsByHorseIdAndRaceId(horseId, raceId)).get(0);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

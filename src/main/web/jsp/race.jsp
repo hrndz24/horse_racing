@@ -29,9 +29,11 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item elegant-color">
-                <form action="/controller" method="post" class="nav-item md-form" style="width: 8rem; font-size : 12px; height: 1rem" >
+                <form action="/controller" method="post" class="nav-item md-form"
+                      style="width: 8rem; font-size : 12px; height: 1rem">
                     <input type="hidden" name="command" value="show_races" style="height: 0"/>
-                    <button class="btn btn-elegant text-white" type="submit"><fmt:message bundle="${locale}" key="navbar.races"/></button>
+                    <button class="btn btn-elegant btn-sm text-white" type="submit"><fmt:message bundle="${locale}"
+                                                                                                 key="navbar.races"/></button>
                 </form>
             </li>
 
@@ -58,14 +60,31 @@
 </nav>
 
 <div class="container">
+    <br/>
+    <span>Info about the race at </span> <c:out value="${raceDate}"/>.
+    <br/>
     <c:forEach var="horse" items="${horses}">
-        <form action="/controller" method="post">
-            <span><fmt:message bundle="${locale}" key="race.distance"/>: </span>
-            <c:out value="${horse.name}"/>.
+        <div class="container">
+            <section class="p-md-3 mx-md-5">
+                <form action="/controller" method="post">
+                    <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out value="${horse.name}"/>.</p>
 
-<%--            <button class="btn btn-elegant" type="submit" value="show_race">View details</button>--%>
-        </form>
-        <br/>
+                    <p><fmt:message bundle="${locale}" key="horse.breed"/>: <c:out value="${horse.breed}"/>.</p>
+
+                    <p><fmt:message bundle="${locale}" key="horse.age"/>: <c:out value="${horse.age}"/>.</p>
+
+                    <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out value="${horse.racesWonNumber}"/>.</p>
+
+                    <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out value="${horse.racesLostNumber}"/>.</p>
+
+
+                    <input type="hidden" name="horseId" value="${horse.id}"/>
+                    <button class="btn btn-elegant" type="submit" name="command" value="make_bet">
+                        <fmt:message bundle="${locale}" key="make_bet"/></button>
+                </form>
+            </section>
+            <br/>
+        </div>
     </c:forEach>
 </div>
 

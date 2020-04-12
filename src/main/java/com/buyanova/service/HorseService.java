@@ -6,6 +6,7 @@ import com.buyanova.exception.RepositoryException;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.horse.HorseRepository;
+import com.buyanova.specification.impl.horse.FindHorseById;
 import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
 import com.buyanova.validator.HorseValidator;
 
@@ -50,6 +51,14 @@ public enum HorseService {
         }
         try {
             horseRepository.remove(horse);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public Horse getHorseById(int horseId) throws ServiceException {
+        try {
+            return horseRepository.query(new FindHorseById(horseId)).get(0);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

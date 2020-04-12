@@ -28,8 +28,13 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item">
-                <a class="nav-link" href="#"><fmt:message bundle="${locale}" key="navbar.races"/></a>
+            <li class="nav-item elegant-color">
+                <form action="/controller" method="post" class="nav-item md-form"
+                      style="width: 8rem; font-size : 12px; height: 1rem">
+                    <input type="hidden" name="command" value="show_races" style="height: 0"/>
+                    <button class="btn btn-elegant btn-sm text-white" type="submit"><fmt:message bundle="${locale}"
+                                                                                                 key="navbar.races"/></button>
+                </form>
             </li>
 
             <!-- Language dropdown -->
@@ -55,24 +60,26 @@
 </nav>
 
 <div class="container">
-    <c:forEach var="race" items="${races}">
-        <form action="/controller" method="post">
-            <span><fmt:message bundle="${locale}" key="race.distance"/>: </span>
-            <c:out value="${race.distance}"/>.
-            <span><fmt:message bundle="${locale}" key="race.prize_money"/>: </span>
-            <c:out value="${race.prizeMoney}"/>.
-            <span><fmt:message bundle="${locale}" key="race.date"/>: </span>
-            <c:out value="${race.date}"/>.
-            <input type="hidden" name="raceId" value="${race.id}"/>
-            <input type="hidden" name="raceDate" value="${race.date}"/>
-<%--            <input type="hidden" name="command" value="show_race"/>--%>
-            <button class="btn btn-elegant" type="submit" name="command" value="show_race"><fmt:message bundle="${locale}"
-                                                                                         key="view_details"/></button>
-        </form>
+    <section class="p-md-3 mx-md-5">
+        <span><fmt:message bundle="${locale}" key="bet_details"/>:</span>
         <br/>
-    </c:forEach>
-</div>
+        <p><fmt:message bundle="${locale}" key="horse_name"/>: <c:out value="${horse.name}"/></p>
+        <p><fmt:message bundle="${locale}" key="race_date"/>: <c:out value="${race.date}"/></p>
+        <p><fmt:message bundle="${locale}" key="odds_details"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
+                value="${odds.oddsAgainst}"/></p>
 
+        <form action="/controller" method="post" style="width: 10rem">
+            <input placeholder=
+                   <fmt:message bundle="${locale}" key="bet.sum"/> type="text" class="form-control"
+                   pattern="\d{3,10}" name="betSum" required/>
+            <input type="hidden" name="oddsId" value="${odds.id}"/>
+
+            <button class="btn btn-elegant" type="submit" name="command" value="submit_bet">
+                <fmt:message bundle="${locale}" key="submit_bet"/></button>
+        </form>
+    </section>
+    <br/>
+</div>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>

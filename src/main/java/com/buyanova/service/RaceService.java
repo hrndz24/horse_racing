@@ -109,6 +109,14 @@ public enum RaceService {
         }
     }
 
+    public Race getRaceById(int raceId) throws ServiceException {
+        try {
+            return raceRepository.query(new FindRaceById(raceId)).get(0);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private void payMoneyToUsersWhoWon(Bet bet) throws ServiceException {
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);

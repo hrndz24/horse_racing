@@ -2,7 +2,7 @@ package com.buyanova.command;
 
 public enum JSPPath {
     HOME_PAGE("/index.jsp"), USER_PAGE("/jsp/userPage.jsp"), SIGN_UP("/jsp/signUp.jsp"),
-    RACES("/jsp/races.jsp"), RACE("/jsp/race.jsp");
+    RACES("/jsp/races.jsp"), RACE("/jsp/race.jsp"), MAKE_BET("/jsp/makeBet.jsp");
 
     private String path;
 

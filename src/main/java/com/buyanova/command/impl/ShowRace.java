@@ -17,11 +17,14 @@ public class ShowRace implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
 
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
+        String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
         Race race = new Race();
         race.setId(raceId);
         try {
             List<Horse> horses = HorseService.INSTANCE.getHorsesFromRace(race);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
+            request.getSession().setAttribute(JSPParameter.RACE_DATE.getParameter(), date);
+            request.getSession().setAttribute(JSPParameter.RACE_ID.getParameter(), raceId);
             return JSPPath.RACE.getPath();
         } catch (ServiceException e) {
             return JSPPath.RACES.getPath();
