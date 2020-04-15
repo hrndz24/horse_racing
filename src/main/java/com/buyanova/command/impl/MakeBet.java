@@ -20,7 +20,6 @@ public class MakeBet implements Command {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         int raceId = (Integer) request.getSession().getAttribute(JSPParameter.RACE_ID.getParameter());
 
-
         try {
             Horse horse = HorseService.INSTANCE.getHorseById(horseId);
             Race race = RaceService.INSTANCE.getRaceById(raceId);

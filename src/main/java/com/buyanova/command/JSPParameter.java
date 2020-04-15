@@ -6,7 +6,9 @@ public enum JSPParameter {
     USER_NAME("userName"), NAME("name"), LANGUAGE("language"), JSP("jsp"), LANG("lang"),
     USER("user"), RACE_ID("raceId"), RACES("races"), HORSES("horses"),
     HORSE_ID("horseId"), RACE("race"), HORSE("horse"), ODDS("odds"), ODDS_ID("oddsId"),
-    BET_SUM("betSum"), RACE_DATE("raceDate");
+    BET_SUM("betSum"), RACE_DATE("raceDate"), ODDS_IN_FAVOUR("oddsInFavour"),
+    ODDS_AGAINST("oddsAgainst"),
+    ERROR_MESSAGE("errorMessage");
 
     private String parameter;
 

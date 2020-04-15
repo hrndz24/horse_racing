@@ -75,7 +75,7 @@
             <input type="hidden" name="oddsId" value="${odds.id}"/>
 
             <button class="btn btn-elegant" type="submit" name="command" value="submit_bet">
-                <fmt:message bundle="${locale}" key="submit_bet"/></button>
+                <fmt:message bundle="${locale}" key="submit"/></button>
         </form>
     </section>
     <br/>
