@@ -29,7 +29,8 @@ public class MakeBet implements Command {
             request.getSession().setAttribute(JSPParameter.ODDS.getParameter(), odds);
             return JSPPath.MAKE_BET.getPath();
         } catch (ServiceException e) {
-            return JSPPath.RACE.getPath();
+            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            return JSPPath.ERROR_PAGE.getPath();
         }
     }
 }

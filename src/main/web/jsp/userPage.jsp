@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="../css/mdb.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 5rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
 
-    <span class="navbar-brand"><fmt:message bundle="${locale}" key="navbar.name"/></span>
+    <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,10 +28,10 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item elegant-color">
-                <form action="/controller" method="post" class="nav-item md-form" style="width: 8rem; font-size : 12px; height: 1rem" >
-                    <input type="hidden" name="command" value="show_races" style="height: 0"/>
-                    <button class="btn btn-elegant text-white" type="submit"><fmt:message bundle="${locale}" key="navbar.races"/></button>
+            <li class="nav-item md-form">
+                <form action="/controller" method="post">
+                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="show_races">
+                        <fmt:message bundle="${locale}" key="navbar.races"/></button>
                 </form>
             </li>
 
@@ -56,7 +56,7 @@
         </ul>
         <div>
             <form action="/controller" method="post" class="nav-item my-1">
-                <button type="submit" name="command" value="log_out" class="btn btn-elegant btn-sm text-white">
+                <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm btn-elegant">
                     <fmt:message bundle="${locale}" key="log_out"/>
                 </button>
             </form>

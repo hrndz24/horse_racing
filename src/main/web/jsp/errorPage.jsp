@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="../css/mdb.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
 
-    <span class="navbar-brand"><fmt:message bundle="${locale}" key="navbar.name"/></span>
+    <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,17 +28,15 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item elegant-color">
-                <form action="/controller" method="post" class="nav-item md-form"
-                      style="width: 8rem; font-size : 12px; height: 1rem">
-                    <input type="hidden" name="command" value="show_races" style="height: 0"/>
-                    <button class="btn btn-elegant btn-sm text-white" type="submit"><fmt:message bundle="${locale}"
-                                                                                                 key="navbar.races"/></button>
+            <li class="nav-item md-form">
+                <form action="/controller" method="post">
+                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="redirect_races">
+                        <fmt:message bundle="${locale}" key="navbar.races"/></button>
                 </form>
             </li>
 
             <!-- Language dropdown -->
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown md-form">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
                                                                            key="navbar.language"/></a>
@@ -56,6 +54,17 @@
                 </div>
             </li>
         </ul>
+        <div>
+            <form action="/controller" method="post" class="nav-item my-1">
+                <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm btn-elegant">
+                    <fmt:message bundle="${locale}" key="log_out"/>
+                </button>
+            </form>
+        </div>
+        <div class="md-form my-0 text-white">
+            <c:set var="user" value="${user}" scope="session"/>
+            <c:out value="${user.login}"/>
+        </div>
     </div>
 </nav>
 

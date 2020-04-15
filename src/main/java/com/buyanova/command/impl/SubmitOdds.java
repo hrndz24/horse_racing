@@ -30,7 +30,7 @@ public class SubmitOdds implements Command {
             odds.setOddsInFavour(Integer.parseInt(oddsInFavourArray[i]));
             odds.setOddsAgainst(Integer.parseInt(oddsAgainstArray[i]));
             try {
-                OddsService.INSTANCE.placeOdds(odds);
+                OddsService.INSTANCE.addOdds(odds);
             } catch (ServiceException e) {
                 request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
                 return JSPPath.ERROR_PAGE.getPath();

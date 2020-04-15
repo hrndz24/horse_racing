@@ -35,10 +35,11 @@
 
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="index.jsp"><fmt:message bundle="${locale}" key="navbar.home_button"/></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><fmt:message bundle="${locale}" key="navbar.races"/></a>
+                <form action="/controller" method="post">
+                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="redirect_home">
+                        <fmt:message bundle="${locale}"
+                                     key="navbar.home_button"/></button>
+                </form>
             </li>
 
             <!-- Language dropdown -->
@@ -59,7 +60,6 @@
                     </form>
                 </div>
             </li>
-
         </ul>
 
     </div>
@@ -100,9 +100,11 @@
                 <p><fmt:message bundle="${locale}" key="invitation_to_sign_up"/></p>
             </div>
 
-            <a class="btn btn-outline-elegant" href="jsp/signUp.jsp">
-                <fmt:message bundle="${locale}" key="sign_up"/>
-            </a>
+            <form action="/controller" method="post">
+                <button class="btn btn-outline-elegant" type="submit" name="command" value="redirect_sign_up">
+                    <fmt:message bundle="${locale}" key="sign_up"/>
+                </button>
+            </form>
 
         </div>
     </div>

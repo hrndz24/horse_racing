@@ -15,9 +15,9 @@
     <link rel="stylesheet" href="../css/mdb.min.css">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
 
-    <span class="navbar-brand"><fmt:message bundle="${locale}" key="navbar.name"/></span>
+    <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#basicExampleNav"
             aria-controls="basicExampleNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,12 +28,15 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item">
-                <a class="nav-link" href="#"><fmt:message bundle="${locale}" key="navbar.races"/></a>
+            <li class="nav-item md-form">
+                <form action="/controller" method="post">
+                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="redirect_races">
+                        <fmt:message bundle="${locale}" key="navbar.races"/></button>
+                </form>
             </li>
 
             <!-- Language dropdown -->
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown md-form">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
                                                                            key="navbar.language"/></a>
@@ -51,28 +54,45 @@
                 </div>
             </li>
         </ul>
+        <div>
+            <form action="/controller" method="post" class="nav-item my-1">
+                <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm btn-elegant">
+                    <fmt:message bundle="${locale}" key="log_out"/>
+                </button>
+            </form>
+        </div>
+        <div class="md-form my-0 text-white">
+            <c:set var="user" value="${user}" scope="session"/>
+            <c:out value="${user.login}"/>
+        </div>
     </div>
 </nav>
 
 <div class="container">
     <c:forEach var="race" items="${races}">
-        <form action="/controller" method="post">
-            <span><fmt:message bundle="${locale}" key="race.distance"/>: </span>
-            <c:out value="${race.distance}"/>.
-            <span><fmt:message bundle="${locale}" key="race.prize_money"/>: </span>
-            <c:out value="${race.prizeMoney}"/>.
-            <span><fmt:message bundle="${locale}" key="race.date"/>: </span>
-            <c:out value="${race.date}"/>.
-            <input type="hidden" name="raceId" value="${race.id}"/>
-            <input type="hidden" name="raceDate" value="${race.date}"/>
-            <button class="btn btn-elegant" type="submit" name="command" value="show_race"><fmt:message bundle="${locale}"
-                                                                                         key="view_details"/></button>
-            <c:if test="${sessionScope.user.userRole.id==4}">
-                <button class="btn btn-elegant" type="submit" name="command" value="place_odds"><fmt:message bundle="${locale}"
-                                                                                                            key="place_odds"/></button>
-            </c:if>
-        </form>
-        <br/>
+        <div class="container">
+            <section class="p-md-3 mx-md-5 grey lighten-3">
+                <form action="/controller" method="post">
+                    <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                    <c:out value="${race.distance}"/>.</p>
+                    <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                    <c:out value="${race.prizeMoney}"/>. </p>
+                    <p><fmt:message bundle="${locale}" key="race.date"/>:
+                    <c:out value="${race.date}"/>.</p>
+                    <input type="hidden" name="raceId" value="${race.id}"/>
+                    <input type="hidden" name="raceDate" value="${race.date}"/>
+                    <button class="btn btn-elegant" type="submit" name="command" value="show_race"><fmt:message
+                            bundle="${locale}"
+                            key="view_details"/></button>
+                    <c:if test="${sessionScope.user.userRole.id==4}">
+                        <button class="btn btn-elegant" type="submit" name="command" value="place_odds"><fmt:message
+                                bundle="${locale}"
+                                key="place_odds"/></button>
+                    </c:if>
+                </form>
+            </section>
+            <br/>
+        </div>
     </c:forEach>
 </div>
 

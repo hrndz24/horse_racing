@@ -33,7 +33,7 @@ public enum OddsService {
     private OddsValidator oddsValidator = new OddsValidator();
     private RaceValidator raceValidator = new RaceValidator();
 
-    public void placeOdds(Odds odds) throws ServiceException {
+    public void addOdds(Odds odds) throws ServiceException {
         if (odds == null) {
             throw new ServiceException("Null odds");
         }
