@@ -11,7 +11,6 @@ import java.util.Objects;
 public class Horse implements Serializable {
 
     private int id;
-    private int jockeyId;
     private String name;
     private String breed;
     private int age;
@@ -21,9 +20,8 @@ public class Horse implements Serializable {
 
     public Horse(){}
 
-    public Horse(int id, int jockeyId, String name, String breed, int age, boolean isPerforming, int racesWonNumber, int racesLostNumber) {
+    public Horse(int id, String name, String breed, int age, boolean isPerforming, int racesWonNumber, int racesLostNumber) {
         this.id = id;
-        this.jockeyId = jockeyId;
         this.name = name;
         this.breed = breed;
         this.age = age;
@@ -38,14 +36,6 @@ public class Horse implements Serializable {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getJockeyId() {
-        return jockeyId;
-    }
-
-    public void setJockeyId(int jockeyId) {
-        this.jockeyId = jockeyId;
     }
 
     public String getName() {
@@ -102,7 +92,6 @@ public class Horse implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Horse horse = (Horse) o;
         return id == horse.id &&
-                jockeyId == horse.jockeyId &&
                 age == horse.age &&
                 isPerforming == horse.isPerforming &&
                 racesWonNumber == horse.racesWonNumber &&
@@ -120,7 +109,6 @@ public class Horse implements Serializable {
     public String toString() {
         return "Horse{" +
                 "id=" + id +
-                ", jockeyId=" + jockeyId +
                 ", name='" + name + '\'' +
                 ", breed='" + breed + '\'' +
                 ", age=" + age +

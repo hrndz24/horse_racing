@@ -84,7 +84,7 @@
                     <button class="btn btn-elegant" type="submit" name="command" value="show_race"><fmt:message
                             bundle="${locale}"
                             key="view_details"/></button>
-                    <c:if test="${sessionScope.user.userRole.id==4}">
+                    <c:if test="${sessionScope.user.userRole.id==3}">
                         <button class="btn btn-elegant" type="submit" name="command" value="place_odds"><fmt:message
                                 bundle="${locale}"
                                 key="place_odds"/></button>

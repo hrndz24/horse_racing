@@ -10,9 +10,8 @@ public enum UserRole {
 
     ADMINISTRATOR(1),
     CLIENT(2),
-    JOCKEY(3),
-    BOOKMAKER(4),
-    GUEST(5);
+    BOOKMAKER(3),
+    GUEST(4);
 
     private int id;
 

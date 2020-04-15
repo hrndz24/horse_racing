@@ -27,10 +27,10 @@ public enum SqlHorseRepository implements HorseRepository {
 
     INSTANCE;
 
-    private static final String INSERT_QUERY = "INSERT INTO horses(jockey_id, horse_name, horse_breed," +
-            "horse_age, is_performing, races_won_number, races_lost_number) VALUES(?, ?, ?, ?, ?, ?, ?)";
+    private static final String INSERT_QUERY = "INSERT INTO horses(horse_name, horse_breed," +
+            "horse_age, is_performing, races_won_number, races_lost_number) VALUES(?, ?, ?, ?, ?, ?)";
 
-    private static final String UPDATE_QUERY = "UPDATE horses SET jockey_id = ?, horse_name = ?," +
+    private static final String UPDATE_QUERY = "UPDATE horses SET horse_name = ?," +
             "horse_breed = ?, horse_age = ?, races_won_number = ?, races_lost_number = ? WHERE horse_id = ?";
 
     private static final String REMOVE_QUERY = "UPDATE horses SET is_performing = false WHERE horse_id = ?";
@@ -40,13 +40,12 @@ public enum SqlHorseRepository implements HorseRepository {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setInt(1, horse.getJockeyId());
-            statement.setString(2, horse.getName());
-            statement.setString(3, horse.getBreed());
-            statement.setInt(4, horse.getAge());
-            statement.setBoolean(5, horse.isPerforming());
-            statement.setInt(6, horse.getRacesWonNumber());
-            statement.setInt(7, horse.getRacesLostNumber());
+            statement.setString(1, horse.getName());
+            statement.setString(2, horse.getBreed());
+            statement.setInt(3, horse.getAge());
+            statement.setBoolean(4, horse.isPerforming());
+            statement.setInt(5, horse.getRacesWonNumber());
+            statement.setInt(6, horse.getRacesLostNumber());
             statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -76,13 +75,12 @@ public enum SqlHorseRepository implements HorseRepository {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
-            statement.setInt(1, horse.getJockeyId());
-            statement.setString(2, horse.getName());
-            statement.setString(3, horse.getBreed());
-            statement.setInt(4, horse.getAge());
-            statement.setInt(5, horse.getRacesWonNumber());
-            statement.setInt(6, horse.getRacesLostNumber());
-            statement.setInt(7, horse.getId());
+            statement.setString(1, horse.getName());
+            statement.setString(2, horse.getBreed());
+            statement.setInt(3, horse.getAge());
+            statement.setInt(4, horse.getRacesWonNumber());
+            statement.setInt(5, horse.getRacesLostNumber());
+            statement.setInt(6, horse.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -122,7 +120,6 @@ public enum SqlHorseRepository implements HorseRepository {
     private Horse buildHorse(ResultSet resultSet) throws SQLException {
         Horse horse = new Horse();
         horse.setId(resultSet.getInt(ColumnLabel.HORSE_ID.getValue()));
-        horse.setJockeyId(resultSet.getInt(ColumnLabel.JOCKEY_ID.getValue()));
         horse.setName(resultSet.getString(ColumnLabel.HORSE_NAME.getValue()));
         horse.setBreed(resultSet.getString(ColumnLabel.HORSE_BREED.getValue()));
         horse.setAge(resultSet.getInt(ColumnLabel.HORSE_AGE.getValue()));
