@@ -5,6 +5,7 @@ import com.buyanova.command.impl.*;
 import com.buyanova.command.impl.redirect.RedirectToHomePage;
 import com.buyanova.command.impl.redirect.RedirectToRacesPage;
 import com.buyanova.command.impl.redirect.RedirectToSignUpPage;
+import com.buyanova.command.impl.redirect.RedirectToUserPage;
 
 public enum CommandFactory {
 
@@ -14,7 +15,7 @@ public enum CommandFactory {
     PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()),
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
-    REDIRECT_HOME(new RedirectToHomePage());
+    REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage());
 
     private Command command;
 

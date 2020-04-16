@@ -61,9 +61,12 @@
                 </button>
             </form>
         </div>
-        <div class="md-form my-0 text-white">
-            <c:set var="user" value="${user}" scope="session"/>
-            <c:out value="${user.login}"/>
+        <div>
+            <form action="/controller" method="post" class="nav-item my-0">
+                <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm btn-elegant">
+                    <c:out value="${userName}"/>
+                </button>
+            </form>
         </div>
     </div>
 </nav>

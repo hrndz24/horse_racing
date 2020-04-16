@@ -27,7 +27,8 @@ public class PlaceOdds implements Command {
             request.getSession().setAttribute(JSPParameter.RACE_ID.getParameter(), raceId);
             return JSPPath.PLACE_ODDS.getPath();
         } catch (ServiceException e) {
-            return JSPPath.RACE.getPath();
+            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            return JSPPath.ERROR_PAGE.getPath();
         }
     }
 }
