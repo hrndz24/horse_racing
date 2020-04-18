@@ -15,7 +15,8 @@ public class FindRaceById implements SqlSpecification {
                     "    race_prize_money,\n" +
                     "    horse_winner_id,\n" +
                     "    race_date,\n" +
-                    "    race_distance\n" +
+                    "    race_distance,\n" +
+                    "    race_location\n" +
                     "FROM\n" +
                     "    races\n" +
                     "WHERE\n" +

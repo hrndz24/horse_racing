@@ -73,7 +73,11 @@
 
 <div class="container">
     <br/>
-    <span>Info about the race at </span> <c:out value="${raceDate}"/>.
+    <div class="container">
+        <p><fmt:message bundle="${locale}" key="race_info"/>:</p>
+        <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${raceLocation}"/>.</p>
+        <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${raceDate}"/>.</p>
+    </div>
     <br/>
     <br/>
     <c:forEach var="horse" items="${horses}">
@@ -86,9 +90,11 @@
 
                     <p><fmt:message bundle="${locale}" key="horse.age"/>: <c:out value="${horse.age}"/>.</p>
 
-                    <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out value="${horse.racesWonNumber}"/>.</p>
+                    <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out
+                            value="${horse.racesWonNumber}"/>.</p>
 
-                    <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out value="${horse.racesLostNumber}"/>.</p>
+                    <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out
+                            value="${horse.racesLostNumber}"/>.</p>
 
 
                     <input type="hidden" name="horseId" value="${horse.id}"/>

@@ -18,6 +18,7 @@ public class ShowRace implements Command {
 
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
+        String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
         Race race = new Race();
         race.setId(raceId);
         try {
@@ -25,6 +26,7 @@ public class ShowRace implements Command {
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             request.getSession().setAttribute(JSPParameter.RACE_DATE.getParameter(), date);
             request.getSession().setAttribute(JSPParameter.RACE_ID.getParameter(), raceId);
+            request.getSession().setAttribute(JSPParameter.RACE_LOCATION.getParameter(), location);
             return JSPPath.RACE.getPath();
         } catch (ServiceException e) {
             return JSPPath.RACES.getPath();

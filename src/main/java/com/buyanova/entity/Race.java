@@ -10,7 +10,7 @@ import java.util.Objects;
  * over a set {@code distance}, competing for {@code prizeMoney}.
  *
  * @author Natalie
- * */
+ */
 public class Race implements Serializable {
 
     private int id;
@@ -18,16 +18,18 @@ public class Race implements Serializable {
     private int horseWinnerId;
     private Date date;
     private int distance;
+    private String location;
 
     public Race() {
     }
 
-    public Race(int id, BigDecimal prizeMoney, int horseWinnerId, Date date, int distance) {
+    public Race(int id, BigDecimal prizeMoney, int horseWinnerId, Date date, int distance, String location) {
         this.id = id;
         this.prizeMoney = prizeMoney;
         this.horseWinnerId = horseWinnerId;
         this.date = date;
         this.distance = distance;
+        this.location = location;
     }
 
     public int getId() {
@@ -70,6 +72,14 @@ public class Race implements Serializable {
         this.distance = distance;
     }
 
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -79,7 +89,8 @@ public class Race implements Serializable {
                 horseWinnerId == race.horseWinnerId &&
                 distance == race.distance &&
                 prizeMoney.equals(race.prizeMoney) &&
-                date.equals(race.date);
+                date.equals(race.date) &&
+                location.equals(race.location);
     }
 
     @Override
@@ -95,6 +106,7 @@ public class Race implements Serializable {
                 ", horseWinnerId=" + horseWinnerId +
                 ", date=" + date +
                 ", distance=" + distance +
+                ", location='" + location + '\'' +
                 '}';
     }
 }

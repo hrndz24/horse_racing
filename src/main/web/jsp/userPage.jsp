@@ -98,6 +98,11 @@
             <fmt:message bundle="${locale}" key="edit"/>
         </button>
     </form>
+    <form action="/controller" method="post" style="margin-left: 3rem">
+        <button type="submit" name="command" value="view_bets" class="btn btn-elegant">
+            <fmt:message bundle="${locale}" key="view_bets"/>
+        </button>
+    </form>
 </div>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>

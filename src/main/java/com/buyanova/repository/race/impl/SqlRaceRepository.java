@@ -1,6 +1,5 @@
 package com.buyanova.repository.race.impl;
 
-import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
@@ -29,24 +28,24 @@ public enum SqlRaceRepository implements RaceRepository {
     INSTANCE;
 
     private static final String INSERT_QUERY = "INSERT INTO races(race_prize_money," +
-            "horse_winner_id, race_date, race_distance) VALUES(?,?,?,?)";
+            "race_date, race_distance, race_location) VALUES(?,?,?,?)";
 
     private static final String REMOVE_QUERY = "DELETE FROM races WHERE race_id = ?";
 
     private static final String UPDATE_QUERY = "UPDATE races SET race_prize_money = ?," +
-            "horse_winner_id = ?, race_date = ?, race_distance = ? WHERE race_id = ?";
+            "horse_winner_id = ?, race_date = ?, race_location = ?, race_distance = ? WHERE race_id = ?";
 
     private static final String ADD_HORSE_TO_RACE_QUERY = "INSERT INTO race_horses" +
             "(race_id, horse_id) VALUES(?, ?)";
 
-    // TODO: 11.04.2020 should it be entity or id
+
     @Override
-    public void addHorseToRace(Horse horse, int raceId) throws RepositoryException {
+    public void addHorseToRace(int horseId, int raceId) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_HORSE_TO_RACE_QUERY)) {
 
             statement.setInt(1, raceId);
-            statement.setInt(2, horse.getId());
+            statement.setInt(2, horseId);
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add horse to the race", e);
@@ -59,9 +58,9 @@ public enum SqlRaceRepository implements RaceRepository {
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
-            statement.setInt(2, race.getHorseWinnerId());
-            statement.setDate(3, new java.sql.Date(race.getDate().getTime()));
-            statement.setInt(4, race.getDistance());
+            statement.setDate(2, new java.sql.Date(race.getDate().getTime()));
+            statement.setInt(3, race.getDistance());
+            statement.setString(4, race.getLocation());
             statement.executeUpdate();
 
             try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
@@ -94,8 +93,9 @@ public enum SqlRaceRepository implements RaceRepository {
             statement.setBigDecimal(1, race.getPrizeMoney());
             statement.setInt(2, race.getHorseWinnerId());
             statement.setDate(3, new java.sql.Date(race.getDate().getTime()));
-            statement.setInt(4, race.getDistance());
-            statement.setInt(5, race.getId());
+            statement.setString(4, race.getLocation());
+            statement.setInt(5, race.getDistance());
+            statement.setInt(6, race.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -139,6 +139,7 @@ public enum SqlRaceRepository implements RaceRepository {
         race.setHorseWinnerId(resultSet.getInt(ColumnLabel.HORSE_WINNER_ID.getValue()));
         race.setDate(resultSet.getDate(ColumnLabel.RACE_DATE.getValue()));
         race.setDistance(resultSet.getInt(ColumnLabel.RACE_DISTANCE.getValue()));
+        race.setLocation(resultSet.getString(ColumnLabel.RACE_LOCATION.getValue()));
         return race;
     }
 }

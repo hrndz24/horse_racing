@@ -4,6 +4,7 @@ public enum JSPPath {
     HOME_PAGE("/index.jsp"), USER_PAGE("/jsp/userPage.jsp"), SIGN_UP("/jsp/signUp.jsp"),
     RACES("/jsp/races.jsp"), RACE("/jsp/race.jsp"), MAKE_BET("/jsp/makeBet.jsp"),
     PLACE_ODDS("/jsp/placeOddsForRace.jsp"),
+    ADD_RACE("/jsp/addRace.jsp"),
     ERROR_PAGE("/jsp/errorPage.jsp");
 
     private String path;

@@ -77,7 +77,7 @@
         <br/>
         <p><fmt:message bundle="${locale}" key="horse_name"/>: <c:out value="${horse.name}"/></p>
         <p><fmt:message bundle="${locale}" key="race_date"/>: <c:out value="${race.date}"/></p>
-        <p><fmt:message bundle="${locale}" key="odds_details"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
+        <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
                 value="${odds.oddsAgainst}"/></p>
 
         <form action="/controller" method="post" style="width: 10rem">

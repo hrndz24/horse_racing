@@ -22,7 +22,7 @@ public enum ColumnLabel {
     ODDS_AGAINST("odds_against"),
 
     RACE_ID("race_id"), RACE_PRIZE_MONEY("race_prize_money"), RACE_DISTANCE("race_distance"),
-    RACE_DATE("race_date"), HORSE_WINNER_ID("horse_winner_id");
+    RACE_DATE("race_date"), HORSE_WINNER_ID("horse_winner_id"), RACE_LOCATION("race_location");
 
     private String value;
 

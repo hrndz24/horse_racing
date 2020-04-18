@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="C" uri="http://java.sun.com/jsp/jstl/core" %>
 <fmt:setLocale value="${language}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale"/>
 <html>
@@ -71,59 +72,59 @@
     </div>
 </nav>
 
-<%--add race--%>
 <br/>
-<div class="container">
-        <form action="/controller" method="post" style="margin-left: 5rem">
-            <c:if test="${sessionScope.user.userRole.id==1}">
-                <button class="btn btn-elegant" type="submit" name="command" value="add_race"><fmt:message
-                        bundle="${locale}"
-                        key="add_race"/></button>
-            </c:if>
-        </form>
-</div>
-<br/>
+<form action="/controller" method="post" class="md-form">
+    <div class="container">
+        <div class="card" style="width: 23rem; display: inline-block; text-align: center; height: 20rem;padding: 2rem">
+            <div class="card-body px-lg-5 pt-0">
 
-<%--races--%>
-<div class="container">
-    <c:forEach var="race" items="${races}">
-        <div class="container">
-            <section class="p-md-3 mx-md-5 grey lighten-3">
-                <form action="/controller" method="post">
-                    <p><fmt:message bundle="${locale}" key="race.distance"/>:
-                        <c:out value="${race.distance}"/>.</p>
-                    <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
-                        <c:out value="${race.prizeMoney}"/>. </p>
-                    <p><fmt:message bundle="${locale}" key="race.date"/>:
-                        <c:out value="${race.date}"/>.</p>
-                    <p><fmt:message bundle="${locale}" key="race.location"/>:
-                        <c:out value="${race.location}"/>.</p>
-                    <input type="hidden" name="raceId" value="${race.id}"/>
-                    <input type="hidden" name="raceDate" value="${race.date}"/>
-                    <input type="hidden" name="raceLocation" value="${race.location}"/>
-                    <button class="btn btn-elegant" type="submit" name="command" value="show_race"><fmt:message
-                            bundle="${locale}"
-                            key="view_details"/></button>
-                    <c:if test="${sessionScope.user.userRole.id==3}">
-                        <button class="btn btn-elegant" type="submit" name="command" value="place_odds"><fmt:message
-                                bundle="${locale}"
-                                key="place_odds"/></button>
-                    </c:if>
-                    <c:if test="${sessionScope.user.userRole.id==1}">
-                        <button class="btn btn-elegant" type="submit" name="command" value="edit_race"><fmt:message
-                                bundle="${locale}"
-                                key="edit"/></button>
-                    </c:if>
-                </form>
-            </section>
-            <br/>
+                <input placeholder=
+                       <fmt:message bundle="${locale}" key="race.location"/> type="text"
+                       class="form-control" pattern="[\w\d_-]+" name="location" required>
+                <input placeholder=
+                       <fmt:message bundle="${locale}" key="race.prize_money"/> type="text"
+                       class="form-control" pattern="^[0-9]+(\.[0-9]{1,2})?$" name="prizeMoney" required>
+                <%--        date--%>
+                <div class="md-form">
+                    <input placeholder=<fmt:message bundle="${locale}" key="race.date"/> type="text" data-provide="datepicker" id="date-picker-example"
+                           class="form-control datepicker">
+                </div>
+                <input placeholder=
+                       <fmt:message bundle="${locale}" key="race.distance"/> type="text"
+                       class="form-control" pattern="\d{3,}" name="distance" required>
+
+
+            </div>
         </div>
-    </c:forEach>
-</div>
+    </div>
+    <div class="container">
+        <div style="position: absolute; right: 750px; top: 20px">
+            <fmt:message bundle="${locale}" key="select_horses"/>
+            <br/>
+            <br/>
+            <c:forEach var="horse" items="${performingHorses}">
+                <p>
+                    <input type="checkbox" name="horseId" value="${horse.id}">
+                    <c:out value="${horse.name}"/>
+                </p>
+            </c:forEach>
+            <br/>
+            <button type="submit" value="submit_race" name="command" class="btn btn-elegant">
+                <fmt:message bundle="${locale}" key="submit"/>
+            </button>
+        </div>
+    </div>
+</form>
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/mdb.min.js"></script>
+<script>
+    $('.datepicker').pickadate({
+        weekdaysShort: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+        showMonthsShort: true
+    })</script>
+
 </body>
 </html>

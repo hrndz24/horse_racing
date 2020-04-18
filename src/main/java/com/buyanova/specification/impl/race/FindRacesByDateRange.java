@@ -3,9 +3,9 @@ package com.buyanova.specification.impl.race;
 import com.buyanova.specification.SqlSpecification;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.sql.Date;
 
 public class FindRacesByDateRange implements SqlSpecification {
 
@@ -13,16 +13,17 @@ public class FindRacesByDateRange implements SqlSpecification {
     private Date to;
 
     private static final String SQL_QUERY =
-            "SELECT \n" +
-            "    race_id,\n" +
-            "    race_prize_money,\n" +
-            "    horse_winner_id,\n" +
-            "    race_date,\n" +
-            "    race_distance\n" +
-            "FROM\n" +
-            "    races\n" +
-            "WHERE\n" +
-            "    race_date BETWEEN ? AND ?";
+                    "SELECT \n" +
+                    "    race_id,\n" +
+                    "    race_prize_money,\n" +
+                    "    horse_winner_id,\n" +
+                    "    race_date,\n" +
+                    "    race_distance,\n" +
+                    "    race_location\n" +
+                    "FROM\n" +
+                    "    races\n" +
+                    "WHERE\n" +
+                    "    race_date BETWEEN ? AND ?";
 
     public FindRacesByDateRange(Date from, Date to) {
         this.from = from;
