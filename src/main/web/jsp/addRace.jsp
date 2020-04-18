@@ -80,20 +80,20 @@
 
                 <input placeholder=
                        <fmt:message bundle="${locale}" key="race.location"/> type="text"
-                       class="form-control" pattern="[\w\d_-]+" name="location" required>
+                       class="form-control" pattern="[\w\d_-\s]+" name="raceLocation" required>
                 <input placeholder=
                        <fmt:message bundle="${locale}" key="race.prize_money"/> type="text"
-                       class="form-control" pattern="^[0-9]+(\.[0-9]{1,2})?$" name="prizeMoney" required>
+                       class="form-control" pattern="^[0-9]+(\.[0-9]{1,2})?$" name="racePrizeMoney" required>
                 <%--        date--%>
                 <div class="md-form">
-                    <input placeholder=<fmt:message bundle="${locale}" key="race.date"/> type="text" data-provide="datepicker" id="date-picker-example"
-                           class="form-control datepicker">
+                    <input placeholder=
+                           <fmt:message bundle="${locale}" key="race.date"/> type="text" data-provide="datepicker"
+                           id="date-picker-example"
+                           class="form-control datepicker" name="raceDate">
                 </div>
                 <input placeholder=
                        <fmt:message bundle="${locale}" key="race.distance"/> type="text"
-                       class="form-control" pattern="\d{3,}" name="distance" required>
-
-
+                       class="form-control" pattern="\d{3,}" name="raceDistance" required>
             </div>
         </div>
     </div>

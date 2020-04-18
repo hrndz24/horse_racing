@@ -79,6 +79,9 @@
                 <button class="btn btn-elegant" type="submit" name="command" value="add_race"><fmt:message
                         bundle="${locale}"
                         key="add_race"/></button>
+                <button class="btn btn-elegant" type="submit" name="command" value="show_races_without_results"><fmt:message
+                        bundle="${locale}"
+                        key="races_without_results"/></button>
             </c:if>
         </form>
 </div>

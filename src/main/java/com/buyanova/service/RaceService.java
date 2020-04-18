@@ -69,7 +69,7 @@ public enum RaceService {
         if (race == null) {
             throw new ServiceException("Null race");
         }
-        checkRaceExists(race);
+        checkRaceExists(race.getId()); // not really needed
         checkHorseWinnerIsNotSet(race);
         checkHorseWinnerPerformedInRace(race);
 
@@ -93,11 +93,31 @@ public enum RaceService {
         if (race == null) {
             throw new ServiceException("Null race");
         }
-        checkRaceExists(race);
         try {
             raceRepository.remove(race);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    public void addHorseToRace(int horseId, int raceId) throws ServiceException {
+        try {
+            raceRepository.addHorseToRace(horseId, raceId);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void addHorsesToRace(List<Horse> horses, int raceId) throws ServiceException {
+        if (horses == null) {
+            throw new ServiceException("Null horses");
+        }
+        for (Horse horse : horses) {
+            try {
+                raceRepository.addHorseToRace(horse.getId(), raceId);
+            } catch (RepositoryException e) {
+                throw new ServiceException(e);
+            }
         }
     }
 
@@ -149,9 +169,9 @@ public enum RaceService {
         }
     }
 
-    private void checkRaceExists(Race race) throws ServiceException {
+    private void checkRaceExists(int raceId) throws ServiceException {
         try {
-            if (raceRepository.query(new FindRaceById(race.getId())).isEmpty()) {
+            if (raceRepository.query(new FindRaceById(raceId)).isEmpty()) {
                 throw new ServiceException("Race with such id does not exist");
             }
         } catch (RepositoryException e) {
@@ -201,6 +221,9 @@ public enum RaceService {
         }
         if (!raceValidator.isDistancePositive(race.getDistance())) {
             throw new ServiceException("Negative race distance");
+        }
+        if (race.getLocation() == null || race.getLocation().isEmpty()) {
+            throw new ServiceException("No location in race");
         }
     }
 }
