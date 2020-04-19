@@ -6,9 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FindRacesAfterCurrentDate implements SqlSpecification {
+public class FindRacesWithoutResults implements SqlSpecification {
 
-    private static final String SQL_QUERY = "SELECT \n" +
+    private static final String SQL_QUERY =
+            "SELECT \n" +
             "    race_id,\n" +
             "    race_prize_money,\n" +
             "    horse_winner_id,\n" +
@@ -18,12 +19,10 @@ public class FindRacesAfterCurrentDate implements SqlSpecification {
             "FROM\n" +
             "    races\n" +
             "WHERE\n" +
-            "    race_date > now()";
-
+            "    horse_winner_id IS NULL AND race_date< now()";
 
     @Override
     public PreparedStatement toSqlStatement(Connection connection) throws SQLException {
-        //        statement.setDate(1, new java.sql.Date(new java.util.Date().getTime()));
         return connection.prepareStatement(SQL_QUERY);
     }
 }

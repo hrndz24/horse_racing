@@ -14,7 +14,8 @@ public enum CommandFactory {
     MAKE_BET(new MakeBet()), SUBMIT_BET(new SubmitBet()),
     PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()),
     ADD_RACE(new AddRace()), SUBMIT_RACE(new SubmitRace()),
-    SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()),
+    SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()), SET_RESULTS(new SetRaceResults()),
+    SUBMIT_WINNER(new SubmitWinner()),
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
     REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage());

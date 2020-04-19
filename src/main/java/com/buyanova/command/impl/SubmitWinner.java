@@ -11,10 +11,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowRacesWithoutResults implements Command {
+public class SubmitWinner implements Command {
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
+        int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
+        int raceId = (Integer) request.getSession().getAttribute(JSPParameter.RACE_ID.getParameter());
+
         try {
+            Race race =RaceService.INSTANCE.getRaceById(raceId);
+            race.setHorseWinnerId(horseId);
+            RaceService.INSTANCE.setRaceResults(race);
             List<Race> racesWithoutResults = RaceService.INSTANCE.getRacesWithoutResults();
             request.getSession().setAttribute("racesWithoutResults", racesWithoutResults);
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();

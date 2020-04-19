@@ -16,6 +16,7 @@ import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
 import com.buyanova.specification.impl.odds.FindOddsById;
 import com.buyanova.specification.impl.race.FindRaceById;
 import com.buyanova.specification.impl.race.FindRacesAfterCurrentDate;
+import com.buyanova.specification.impl.race.FindRacesWithoutResults;
 import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.RaceValidator;
 
@@ -72,7 +73,6 @@ public enum RaceService {
         checkRaceExists(race.getId()); // not really needed
         checkHorseWinnerIsNotSet(race);
         checkHorseWinnerPerformedInRace(race);
-
         try {
             raceRepository.update(race);
             List<Bet> wonBets = betRepository.query(new FindWonBetsInRaceByUserId(race.getId()));
@@ -95,6 +95,14 @@ public enum RaceService {
         }
         try {
             raceRepository.remove(race);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Race> getRacesWithoutResults() throws ServiceException {
+        try {
+            return raceRepository.query(new FindRacesWithoutResults());
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -159,7 +167,7 @@ public enum RaceService {
             Odds odds = oddsRepository.query(new FindOddsById(bet.getOddsId())).get(0);
             User bookmaker = userRepository.query(new FindUserById(odds.getBookmakerId())).get(0);
             int oddsAgainst = odds.getOddsAgainst();
-            BigDecimal userLoss = bet.getSum().multiply(new BigDecimal(oddsAgainst));
+            BigDecimal userLoss = bet.getSum().multiply(new BigDecimal(oddsAgainst - 1));
             user.setBalance(user.getBalance().subtract(userLoss));
             bookmaker.setBalance(bookmaker.getBalance().add(userLoss));
             userRepository.update(user);
