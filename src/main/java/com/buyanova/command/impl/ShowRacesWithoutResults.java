@@ -16,7 +16,7 @@ public class ShowRacesWithoutResults implements Command {
     public String execute(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<Race> racesWithoutResults = RaceService.INSTANCE.getRacesWithoutResults();
-            request.getSession().setAttribute("racesWithoutResults", racesWithoutResults);
+            request.getSession().setAttribute(JSPParameter.RACES_WITHOUT_RESULTS.getParameter(), racesWithoutResults);
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();
         } catch (ServiceException e) {
             request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());

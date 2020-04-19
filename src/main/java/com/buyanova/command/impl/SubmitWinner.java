@@ -22,7 +22,7 @@ public class SubmitWinner implements Command {
             race.setHorseWinnerId(horseId);
             RaceService.INSTANCE.setRaceResults(race);
             List<Race> racesWithoutResults = RaceService.INSTANCE.getRacesWithoutResults();
-            request.getSession().setAttribute("racesWithoutResults", racesWithoutResults);
+            request.getSession().setAttribute(JSPParameter.RACES_WITHOUT_RESULTS.getParameter(), racesWithoutResults);
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();
         } catch (ServiceException e) {
             request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());

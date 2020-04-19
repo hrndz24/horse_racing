@@ -59,7 +59,7 @@
         </ul>
     </div>
 </nav>
-<img src="../images/rainbow.png" alt="Smiley face" align="left">
+<img src="../images/rainbow_to_attack.png" alt="Smiley face" align="left">
 <div style="text-align: center; margin-top: 4rem">
     <div class="card" style="width: 23rem; display: inline-block">
 

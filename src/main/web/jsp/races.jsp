@@ -70,20 +70,20 @@
         </div>
     </div>
 </nav>
-
+<img src="../images/rainbow_standing.png" alt="Smiley face" align="left">
 <%--add race--%>
 <br/>
 <div class="container">
-        <form action="/controller" method="post" style="margin-left: 5rem">
-            <c:if test="${sessionScope.user.userRole.id==1}">
-                <button class="btn btn-elegant" type="submit" name="command" value="add_race"><fmt:message
-                        bundle="${locale}"
-                        key="add_race"/></button>
-                <button class="btn btn-elegant" type="submit" name="command" value="show_races_without_results"><fmt:message
-                        bundle="${locale}"
-                        key="races_without_results"/></button>
-            </c:if>
-        </form>
+    <form action="/controller" method="post" style="margin-left: 28rem;padding-left: 10rem">
+        <c:if test="${sessionScope.user.userRole.id==1}">
+            <button class="btn red darken-4 text-white" type="submit" name="command" value="add_race"><fmt:message
+                    bundle="${locale}"
+                    key="add_race"/></button>
+            <button class="btn btn-elegant" type="submit" name="command" value="show_races_without_results"><fmt:message
+                    bundle="${locale}"
+                    key="races_without_results"/></button>
+        </c:if>
+    </form>
 </div>
 <br/>
 
@@ -91,7 +91,7 @@
 <div class="container">
     <c:forEach var="race" items="${races}">
         <div class="container">
-            <section class="p-md-3 mx-md-5 grey lighten-3">
+            <section class="p-md-3 mx-md-5 green lighten-5" style="width: 27rem;display: inline-block">
                 <form action="/controller" method="post">
                     <p><fmt:message bundle="${locale}" key="race.distance"/>:
                         <c:out value="${race.distance}"/>.</p>
@@ -104,7 +104,7 @@
                     <input type="hidden" name="raceId" value="${race.id}"/>
                     <input type="hidden" name="raceDate" value="${race.date}"/>
                     <input type="hidden" name="raceLocation" value="${race.location}"/>
-                    <button class="btn btn-elegant" type="submit" name="command" value="show_race"><fmt:message
+                    <button class="btn special-color text-white" type="submit" name="command" value="show_race"><fmt:message
                             bundle="${locale}"
                             key="view_details"/></button>
                     <c:if test="${sessionScope.user.userRole.id==3}">
@@ -118,7 +118,9 @@
                                 key="edit"/></button>
                     </c:if>
                 </form>
+
             </section>
+            <br/>
             <br/>
         </div>
     </c:forEach>

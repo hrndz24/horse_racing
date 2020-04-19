@@ -30,7 +30,7 @@
 
             <li class="nav-item md-form">
                 <form action="/controller" method="post">
-                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="redirect_races">
+                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="show_races">
                         <fmt:message bundle="${locale}" key="navbar.races"/></button>
                 </form>
             </li>
@@ -71,6 +71,7 @@
     </div>
 </nav>
 
+<br/>
 <%--races--%>
 <div class="container">
     <c:forEach var="race" items="${racesWithoutResults}">
