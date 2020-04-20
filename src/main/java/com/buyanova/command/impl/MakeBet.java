@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class MakeBet implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         int raceId = (Integer) request.getSession().getAttribute(JSPParameter.RACE_ID.getParameter());
 

@@ -6,6 +6,7 @@ public enum JSPPath {
     PLACE_ODDS("/jsp/placeOddsForRace.jsp"),
     ADD_RACE("/jsp/addRace.jsp"), RACES_WITHOUT_RESULTS("/jsp/racesWithoutResults.jsp"),
     SET_RACE_RESULTS("/jsp/setRaceResults.jsp"),
+    USER_BETS("/jsp/userBets.jsp"),
     ERROR_PAGE("/jsp/errorPage.jsp");
 
     private String path;

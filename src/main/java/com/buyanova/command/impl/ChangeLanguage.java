@@ -12,7 +12,7 @@ public class ChangeLanguage implements Command {
     private static final String SPANISH_LOCALE = "es";
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         if (request.getParameter(JSPParameter.LANG.getParameter()).equals(ENGLISH_LOCALE.toUpperCase())) {
             request.getSession().setAttribute(JSPParameter.LANGUAGE.getParameter(), ENGLISH_LOCALE);
         } else {

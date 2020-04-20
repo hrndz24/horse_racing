@@ -13,7 +13,7 @@ import java.util.List;
 
 public class ShowRacesWithoutResults implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<Race> racesWithoutResults = RaceService.INSTANCE.getRacesWithoutResults();
             request.getSession().setAttribute(JSPParameter.RACES_WITHOUT_RESULTS.getParameter(), racesWithoutResults);

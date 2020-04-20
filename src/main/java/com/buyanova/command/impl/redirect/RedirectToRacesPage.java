@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RedirectToRacesPage implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         if (user == null) {
             return JSPPath.HOME_PAGE.getPath();

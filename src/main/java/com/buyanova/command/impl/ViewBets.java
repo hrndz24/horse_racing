@@ -10,26 +10,19 @@ import com.buyanova.service.BetService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.math.BigDecimal;
+import java.util.List;
 
-public class SubmitBet implements Command {
+public class ViewBets implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        int oddsId = Integer.parseInt(request.getParameter(JSPParameter.ODDS_ID.getParameter()));
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
-        int userId = user.getId();
-        BigDecimal sum = new BigDecimal(request.getParameter(JSPParameter.BET_SUM.getParameter()));
-
-        Bet bet = new Bet();
-        bet.setOddsId(oddsId);
-        bet.setSum(sum);
-        bet.setUserId(userId);
-
         try {
-            BetService.INSTANCE.makeBet(bet);
-            return JSPPath.USER_PAGE.getPath();
+            List<Bet> bets = BetService.INSTANCE.getBetsByUser(user);
+            request.getSession().setAttribute("bets", bets);
+            return JSPPath.USER_BETS.getPath();
         } catch (ServiceException e) {
-            return JSPPath.MAKE_BET.getPath();
+            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            return JSPPath.ERROR_PAGE.getPath();
         }
     }
 }

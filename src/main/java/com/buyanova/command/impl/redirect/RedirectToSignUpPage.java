@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class RedirectToSignUpPage implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         return JSPPath.SIGN_UP.getPath();
     }
 }

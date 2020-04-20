@@ -5,5 +5,5 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface Command {
 
-    String execute(HttpServletRequest request, HttpServletResponse response);
+    String getJSP(HttpServletRequest request, HttpServletResponse response);
 }

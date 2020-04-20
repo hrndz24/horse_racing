@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class SubmitOdds implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         User bookmaker = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         int bookmakerId = bookmaker.getId();

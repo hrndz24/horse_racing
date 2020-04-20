@@ -52,7 +52,7 @@ public class MainServlet extends HttpServlet {
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Command command = CommandFactory.valueOf(request.getParameter(JSPParameter.COMMAND.getParameter()).toUpperCase()).getCommand();
-        String jsp = command.execute(request, response);
+        String jsp = command.getJSP(request, response);
         request.getRequestDispatcher(jsp).forward(request, response);
     }
 }

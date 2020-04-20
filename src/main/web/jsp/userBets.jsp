@@ -70,42 +70,30 @@
         </div>
     </div>
 </nav>
-<br/>
-<div class="container" style="text-align: center">
-    <c:out value="Welcome, ${userName}"/>
-</div>
-<br/>
-<div style="display: flex;align-items: center; justify-content: center">
-    <div style="text-align: center;display: inline-block">
-        <section class="p-md-3 mx-md-5 grey lighten-3" style="width: 30rem;text-align: center">
 
-            <p><fmt:message bundle="${locale}" key="name"/>: <c:out value="${userName}"/>.</p>
-
-            <p><fmt:message bundle="${locale}" key="login"/>: <c:out value="${user.login}"/>.</p>
-
-            <p><fmt:message bundle="${locale}" key="email"/>: <c:out value="${user.email}"/>.</p>
-
-            <p><fmt:message bundle="${locale}" key="balance"/>: <c:out value="${user.balance}"/>.
-            <form action="/controller" method="post">
-                <button type="submit" name="command" value="replenish_account" class="btn btn-elegant">
-                    <fmt:message bundle="${locale}" key="replenish"/>
-                </button>
-            </form>
-            </p>
-
-        </section>
-        <br/>
-        <form action="/controller" method="post" >
-            <button type="submit" name="command" value="edit_user" class="btn btn-elegant">
-                <fmt:message bundle="${locale}" key="edit"/>
-            </button>
-        </form>
-        <form action="/controller" method="post" >
-            <button type="submit" name="command" value="view_bets" class="btn btn-elegant">
-                <fmt:message bundle="${locale}" key="view_bets"/>
-            </button>
-        </form>
+<div class="container">
+    <br/>
+    <%--<div class="container">
+        <p><fmt:message bundle="${locale}" key="race_info"/>:</p>
+        <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${raceLocation}"/>.</p>
+        <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${raceDate}"/>.</p>
     </div>
+    <br/>
+    <br/>--%>
+    <c:forEach var="bet" items="${bets}">
+        <div class="container">
+            <section class="p-md-3 mx-md-5 grey lighten-3">
+                <form action="/controller" method="post">
+                    <p><fmt:message bundle="${locale}" key="bet.sum"/>: <c:out value="${bet.sum}"/>.</p>
+
+                    <%--<input type="hidden" name="horseId" value="${horse.id}"/>--%>
+                    <button class="btn btn-elegant" type="submit" name="command" value="make_bet">
+                        <fmt:message bundle="${locale}" key="view_details"/></button>
+                </form>
+            </section>
+            <br/>
+        </div>
+    </c:forEach>
 </div>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
@@ -113,3 +101,4 @@
 <script type="text/javascript" src="../js/mdb.min.js"></script>
 </body>
 </html>
+

@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class SubmitRace implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
         String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
         int distance = Integer.parseInt(request.getParameter(JSPParameter.RACE_DISTANCE.getParameter()));

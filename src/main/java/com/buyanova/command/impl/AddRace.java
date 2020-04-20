@@ -13,7 +13,7 @@ import java.util.List;
 
 public class AddRace implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         try {
             List<Horse> performingHorses = HorseService.INSTANCE.getPerformingHorses();
             request.getSession().setAttribute(JSPParameter.PERFORMING_HORSES.getParameter(), performingHorses);

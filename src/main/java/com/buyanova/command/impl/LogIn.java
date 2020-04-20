@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 public class LogIn implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         User user = new User();
         user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
         user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));

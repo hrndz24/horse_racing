@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LogOut implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         request.getSession().invalidate();
         return JSPPath.HOME_PAGE.getPath();
     }

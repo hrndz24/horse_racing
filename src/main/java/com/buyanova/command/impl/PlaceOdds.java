@@ -14,7 +14,7 @@ import java.util.List;
 
 public class PlaceOdds implements Command {
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
 
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());

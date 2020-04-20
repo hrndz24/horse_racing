@@ -14,7 +14,7 @@ import java.util.List;
 public class ShowRaces implements Command {
 
     @Override
-    public String execute(HttpServletRequest request, HttpServletResponse response) {
+    public String getJSP(HttpServletRequest request, HttpServletResponse response) {
 
         try {
             List<Race> races = RaceService.INSTANCE.getUpcomingRaces();
