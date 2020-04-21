@@ -13,7 +13,7 @@ public class LanguageFilter implements Filter {
     private static final String DEFAULT_LOCALE = "es";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig){
 
     }
 

@@ -75,20 +75,25 @@
         </h5>
 
         <div class="card-body px-lg-5 pt-0">
-
+            <br/>
             <form action="/controller" method="post" class="md-form" style="color: #757575;">
-
-                <input placeholder=
-                       <fmt:message bundle="${locale}" key="login"/> type="text" id="materialRegisterFormLastName"
-                       class="form-control"
-                       pattern="^[a-z0-9_.@-]{3,16}$" name="login" required>
-
-                <input placeholder=
+                <div class="md-form">
+                    <input id="form1" type="text" class="form-control"
+                           pattern="^[a-z0-9_.@-]{3,16}$" name="login" required>
+                    <label for="form1"><fmt:message bundle="${locale}" key="login"/></label>
+                </div>
+                <div class="md-form">
+                    <input type="password" id="inputValidationEx2" class="form-control validate"
+                           pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="password" required>
+                    <label for="inputValidationEx2" data-error="wrong" data-success="right"><fmt:message
+                            bundle="${locale}" key="password"/></label>
+                </div>
+                <%--<input placeholder=
                        <fmt:message bundle="${locale}" key="password"/> type="password"
                        id="materialRegisterFormPassword" class="form-control"
                        aria-describedby="materialRegisterFormPasswordHelpBlock"
                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="password" required>
-
+--%>
 
                 <button class="btn btn-elegant text-white btn-block my-4 waves-effect z-depth-0" type="submit"
                         name="command" value="log_in">

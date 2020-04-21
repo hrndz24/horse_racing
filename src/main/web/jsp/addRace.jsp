@@ -103,10 +103,10 @@
             <br/>
             <br/>
             <c:forEach var="horse" items="${performingHorses}">
-                <p>
-                    <input type="checkbox" name="horseId" value="${horse.id}">
-                    <c:out value="${horse.name}"/>
-                </p>
+                    <p>
+                        <input type="checkbox" name="horseId" value="${horse.id}">
+                        <c:out value="${horse.name}"/>
+                    </p>
             </c:forEach>
             <br/>
             <button type="submit" value="submit_race" name="command" class="btn btn-elegant">

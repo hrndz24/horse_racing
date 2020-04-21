@@ -9,7 +9,7 @@ import com.buyanova.command.impl.redirect.RedirectToUserPage;
 
 public enum CommandFactory {
 
-    SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()),
+    SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()), EDIT_USER(new EditUser()),
     LANGUAGE(new ChangeLanguage()), SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()),
     MAKE_BET(new MakeBet()), SUBMIT_BET(new SubmitBet()),
     PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()),

@@ -82,7 +82,7 @@
 
         <form action="/controller" method="post" style="width: 10rem">
             <input placeholder=
-                   <fmt:message bundle="${locale}" key="bet.sum"/> type="text" class="form-control"
+                   <fmt:message bundle="${locale}" key="sum"/> type="text" class="form-control"
                    pattern="\d{3,10}" name="betSum" required/>
             <input type="hidden" name="oddsId" value="${odds.id}"/>
 

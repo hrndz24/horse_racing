@@ -91,7 +91,7 @@
 <div class="container">
     <c:forEach var="race" items="${races}">
         <div class="container">
-            <section class="p-md-3 mx-md-5 green lighten-5" style="width: 27rem;display: inline-block">
+            <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 27rem;display: inline-block">
                 <form action="/controller" method="post">
                     <p><fmt:message bundle="${locale}" key="race.distance"/>:
                         <c:out value="${race.distance}"/>.</p>

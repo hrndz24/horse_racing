@@ -18,7 +18,7 @@ public class ViewBets implements Command {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
             List<Bet> bets = BetService.INSTANCE.getBetsByUser(user);
-            request.getSession().setAttribute("bets", bets);
+            request.getSession().setAttribute(JSPParameter.BETS.getParameter(), bets);
             return JSPPath.USER_BETS.getPath();
         } catch (ServiceException e) {
             request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());

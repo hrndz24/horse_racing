@@ -27,7 +27,7 @@ public enum BetService {
 
     private BetValidator betValidator = new BetValidator();
 
-    public Bet makeBet(Bet bet) throws ServiceException {
+    public void addBet(Bet bet) throws ServiceException {
         if (bet == null) {
             throw new ServiceException("Null bet");
         }
@@ -43,7 +43,6 @@ public enum BetService {
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
-        return bet;
     }
 
     /**

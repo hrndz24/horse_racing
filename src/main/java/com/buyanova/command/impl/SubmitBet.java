@@ -26,7 +26,7 @@ public class SubmitBet implements Command {
         bet.setUserId(userId);
 
         try {
-            BetService.INSTANCE.makeBet(bet);
+            BetService.INSTANCE.addBet(bet);
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             return JSPPath.MAKE_BET.getPath();

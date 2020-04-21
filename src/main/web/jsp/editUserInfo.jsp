@@ -70,30 +70,31 @@
         </div>
     </div>
 </nav>
+<br/>
+<div class="container" style="text-align: center">
+    <c:out value="Welcome, ${userName}"/>
+</div>
+<br/>
+<div style="display: flex;align-items: center; justify-content: center">
+    <div style="text-align: center;display: inline-block">
+        <section class="p-md-3 mx-md-5 grey lighten-3" style="width: 30rem;text-align: center;display: inline-block">
 
-<div class="container">
-    <br/>
-    <%--<div class="container">
-        <p><fmt:message bundle="${locale}" key="race_info"/>:</p>
-        <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${raceLocation}"/>.</p>
-        <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${raceDate}"/>.</p>
+            <input type="text" class="form-control" style="width: 15rem" placeholder=<c:out value="${userName}"/>>
+
+            <p><fmt:message bundle="${locale}" key="login"/>: <c:out value="${user.login}"/>.</p>
+
+            <p><fmt:message bundle="${locale}" key="email"/>: <c:out value="${user.email}"/>.</p>
+
+            <p><fmt:message bundle="${locale}" key="balance"/>: <c:out value="${user.balance}"/>.
+            <%--<form action="/controller" method="post">
+                <button type="submit" name="command" value="replenish_account" class="btn btn-elegant">
+                    <fmt:message bundle="${locale}" key="replenish"/>
+                </button>
+            </form>--%>
+        </section>
+        <br/>
+        <br/>
     </div>
-    <br/>
-    <br/>--%>
-    <c:forEach var="bet" items="${bets}">
-        <div class="container">
-            <section class="p-md-3 mx-md-5 grey lighten-3">
-                <form action="/controller" method="post">
-                    <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.</p>
-
-                    <%--<input type="hidden" name="horseId" value="${horse.id}"/>--%>
-                    <button class="btn btn-elegant" type="submit" name="command" value="make_bet">
-                        <fmt:message bundle="${locale}" key="view_details"/></button>
-                </form>
-            </section>
-            <br/>
-        </div>
-    </c:forEach>
 </div>
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
@@ -101,4 +102,3 @@
 <script type="text/javascript" src="../js/mdb.min.js"></script>
 </body>
 </html>
-

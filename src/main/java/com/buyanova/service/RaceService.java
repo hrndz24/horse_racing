@@ -70,7 +70,7 @@ public enum RaceService {
         if (race == null) {
             throw new ServiceException("Null race");
         }
-        checkRaceExists(race.getId()); // not really needed
+
         checkHorseWinnerIsNotSet(race);
         checkHorseWinnerPerformedInRace(race);
         try {
@@ -113,19 +113,6 @@ public enum RaceService {
             raceRepository.addHorseToRace(horseId, raceId);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
-        }
-    }
-
-    public void addHorsesToRace(List<Horse> horses, int raceId) throws ServiceException {
-        if (horses == null) {
-            throw new ServiceException("Null horses");
-        }
-        for (Horse horse : horses) {
-            try {
-                raceRepository.addHorseToRace(horse.getId(), raceId);
-            } catch (RepositoryException e) {
-                throw new ServiceException(e);
-            }
         }
     }
 
