@@ -110,7 +110,7 @@
         <br/>
         <br/>
         <form action="/controller" method="post" style="float: right; margin-right: 5rem">
-            <button style="float: right" type="submit" name="command" value="change_password" class="btn btn-elegant"
+            <button style="float: right" type="button" name="command" value="change_password" class="btn btn-elegant"
                     data-toggle="modal"
                     data-target="#changePasswordModal">
                 <fmt:message bundle="${locale}" key="change_password"/>
@@ -142,7 +142,97 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
                             bundle="${locale}" key="close"/></button>
-                    <button type="submit" class="btn btn-elegant" name="command" value="edit_login"><fmt:message
+                    <button type="submit" class="btn btn-elegant" name="command" value="change_login"><fmt:message
+                            bundle="${locale}"
+                            key="submit"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- change name popup window -->
+<div class="modal fade" id="changeNameModal" tabindex="-1" role="dialog" aria-labelledby="nameModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="nameModalLabel"><fmt:message bundle="${locale}"
+                                                                         key="change_name"/></h5>
+            </div>
+            <form action="/controller" method="post">
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="name" pattern="^[a-z0-9_.@-]{3,16}$" required
+                           placeholder=
+                    <fmt:message bundle="${locale}" key="name"/>>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                            bundle="${locale}" key="close"/></button>
+                    <button type="submit" class="btn btn-elegant" name="command" value="change_name"><fmt:message
+                            bundle="${locale}"
+                            key="submit"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- change email popup window -->
+<div class="modal fade" id="changeEmailModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="emailModalLabel"><fmt:message bundle="${locale}"
+                                                                          key="change_email"/></h5>
+            </div>
+            <form action="/controller" method="post">
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="email" pattern="^[A-Za-z0-9+_.-]+@(.+)$" required
+                           placeholder=<fmt:message bundle="${locale}" key="email"/>>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                            bundle="${locale}" key="close"/></button>
+                    <button type="submit" class="btn btn-elegant" name="command" value="change_email"><fmt:message
+                            bundle="${locale}"
+                            key="submit"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- change password popup window -->
+<div class="modal fade" id="changePasswordModal" tabindex="-1" role="dialog" aria-labelledby="passwordModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="passwordModalLabel"><fmt:message bundle="${locale}"
+                                                                             key="change_password"/></h5>
+            </div>
+            <form action="/controller" method="post">
+                <div class="modal-body">
+                    <div class="md-form">
+                        <input type="password" id="oldPassword" class="form-control" name="oldPassword"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" required>
+                        <label for="oldPassword"><fmt:message bundle="${locale}" key="old_password"/></label>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    <div class="md-form">
+                        <input type="password" id="newPassword" class="form-control" name="newPassword"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" required>
+                        <label for="newPassword"><fmt:message bundle="${locale}" key="new_password"/></label>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                            bundle="${locale}" key="close"/></button>
+                    <button type="submit" class="btn btn-elegant" name="command" value="change_password"><fmt:message
                             bundle="${locale}"
                             key="submit"/></button>
                 </div>

@@ -88,12 +88,6 @@
                     <label for="inputValidationEx2" data-error="wrong" data-success="right"><fmt:message
                             bundle="${locale}" key="password"/></label>
                 </div>
-                <%--<input placeholder=
-                       <fmt:message bundle="${locale}" key="password"/> type="password"
-                       id="materialRegisterFormPassword" class="form-control"
-                       aria-describedby="materialRegisterFormPasswordHelpBlock"
-                       pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="password" required>
---%>
 
                 <button class="btn btn-elegant text-white btn-block my-4 waves-effect z-depth-0" type="submit"
                         name="command" value="log_in">
