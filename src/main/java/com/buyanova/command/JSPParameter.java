@@ -12,6 +12,7 @@ public enum JSPParameter {
     ODDS_AGAINST("oddsAgainst"), RACE_LOCATION("raceLocation"), RACE_PRIZE_MONEY("racePrizeMoney"),
     RACE_DISTANCE("raceDistance"), RACES_WITHOUT_RESULTS("racesWithoutResults"),
     BETS("bets"),
+    SUM("sum"),
     ERROR_MESSAGE("errorMessage");
 
     private String parameter;

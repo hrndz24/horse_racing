@@ -90,6 +90,7 @@ public enum UserService {
             throw new ServiceException("Invalid user password");
         }
         try {
+            user.setPassword(String.valueOf(user.getPassword().hashCode()));
             List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
             if (users.isEmpty()) {
                 throw new ServiceException("User with such login and password does not exist");

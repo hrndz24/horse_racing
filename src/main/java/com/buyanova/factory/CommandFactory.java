@@ -10,13 +10,18 @@ import com.buyanova.command.impl.redirect.RedirectToUserPage;
 public enum CommandFactory {
 
     SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()), EDIT_USER(new EditUser()),
-    LANGUAGE(new ChangeLanguage()), SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()),
-    MAKE_BET(new MakeBet()), SUBMIT_BET(new SubmitBet()),
-    PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()),
+    VIEW_BETS(new ViewBets()),
+    REPLENISH_ACCOUNT(new ReplenishAccount()),
+
+    LANGUAGE(new ChangeLanguage()),
+    SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()),
     ADD_RACE(new AddRace()), SUBMIT_RACE(new SubmitRace()),
     SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()), SET_RESULTS(new SetRaceResults()),
     SUBMIT_WINNER(new SubmitWinner()),
-    VIEW_BETS(new ViewBets()),
+
+    MAKE_BET(new MakeBet()), SUBMIT_BET(new SubmitBet()),
+
+    PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()),
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
     REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage());
