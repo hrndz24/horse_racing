@@ -1,4 +1,4 @@
-package com.buyanova.command.impl;
+package com.buyanova.command.impl.bookmaker;
 
 import com.buyanova.command.Command;
 import com.buyanova.command.JSPParameter;

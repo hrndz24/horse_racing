@@ -1,15 +1,19 @@
 package com.buyanova.factory;
 
 import com.buyanova.command.Command;
-import com.buyanova.command.impl.*;
+import com.buyanova.command.impl.admin.*;
+import com.buyanova.command.impl.bookmaker.PlaceOdds;
+import com.buyanova.command.impl.bookmaker.SubmitOdds;
 import com.buyanova.command.impl.redirect.RedirectToHomePage;
 import com.buyanova.command.impl.redirect.RedirectToRacesPage;
 import com.buyanova.command.impl.redirect.RedirectToSignUpPage;
 import com.buyanova.command.impl.redirect.RedirectToUserPage;
+import com.buyanova.command.impl.user.*;
+import com.buyanova.command.impl.language.ChangeLanguage;
 
 public enum CommandFactory {
 
-    SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()), EDIT_USER(new EditUser()),
+    SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()),
     VIEW_BETS(new ViewBets()),
     REPLENISH_ACCOUNT(new ReplenishAccount()),
 

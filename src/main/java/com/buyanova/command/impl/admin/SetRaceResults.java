@@ -1,4 +1,4 @@
-package com.buyanova.command.impl;
+package com.buyanova.command.impl.admin;
 
 import com.buyanova.command.Command;
 import com.buyanova.command.JSPParameter;
@@ -12,10 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowRace implements Command {
+public class SetRaceResults implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
         String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
@@ -27,9 +26,10 @@ public class ShowRace implements Command {
             request.getSession().setAttribute(JSPParameter.RACE_DATE.getParameter(), date);
             request.getSession().setAttribute(JSPParameter.RACE_ID.getParameter(), raceId);
             request.getSession().setAttribute(JSPParameter.RACE_LOCATION.getParameter(), location);
-            return JSPPath.RACE.getPath();
+            return JSPPath.SET_RACE_RESULTS.getPath();
         } catch (ServiceException e) {
-            return JSPPath.RACES.getPath();
+            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            return JSPPath.ERROR_PAGE.getPath();
         }
     }
 }
