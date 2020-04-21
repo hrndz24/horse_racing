@@ -15,7 +15,7 @@ public enum CommandFactory {
 
     SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()),
     VIEW_BETS(new ViewBets()),
-    REPLENISH_ACCOUNT(new ReplenishAccount()),
+    REPLENISH_ACCOUNT(new ReplenishAccount()), CHANGE_LOGIN(new ChangeLogin()),
 
     LANGUAGE(new ChangeLanguage()),
     SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()),
