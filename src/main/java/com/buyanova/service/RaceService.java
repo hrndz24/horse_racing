@@ -89,6 +89,19 @@ public enum RaceService {
         }
     }
 
+    public void updateRace(Race race) throws ServiceException {
+        if (race == null) {
+            throw new ServiceException("Null race");
+        }
+        validateRaceFields(race);
+
+        try {
+            raceRepository.update(race);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public void removeRace(Race race) throws ServiceException {
         if (race == null) {
             throw new ServiceException("Null race");

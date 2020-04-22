@@ -14,26 +14,23 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class SubmitRace implements Command {
+public class EditRace implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
+        Race race = (Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter());
         String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
-        String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
         int distance = Integer.parseInt(request.getParameter(JSPParameter.RACE_DISTANCE.getParameter()));
+        String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
         BigDecimal prizeMoney = new BigDecimal(request.getParameter(JSPParameter.RACE_PRIZE_MONEY.getParameter()));
+
         try {
             Date raceDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(date);
-            Race race = new Race();
             race.setLocation(location);
             race.setDistance(distance);
             race.setDate(raceDate);
             race.setPrizeMoney(prizeMoney);
-            RaceService.INSTANCE.addRace(race);
-            String[] horses = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
-            for (String horse : horses) {
-                RaceService.INSTANCE.addHorseToRace(Integer.parseInt(horse), race.getId());
-            }
-            return JSPPath.RACES.getPath();
+            RaceService.INSTANCE.updateRace(race);
+            return JSPPath.EDIT_RACE.getPath();
         } catch (ParseException | ServiceException e) {
             request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();

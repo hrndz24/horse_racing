@@ -85,7 +85,7 @@
                 <div class="md-form">
                     <input type="password" id="inputValidationEx2" class="form-control validate"
                            pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$" name="password" required>
-                    <label for="inputValidationEx2" data-error="wrong" data-success="right"><fmt:message
+                    <label for="inputValidationEx2"><fmt:message
                             bundle="${locale}" key="password"/></label>
                 </div>
 

@@ -76,7 +76,7 @@
 <div class="container">
     <form action="/controller" method="post" style="margin-left: 28rem;padding-left: 10rem">
         <c:if test="${sessionScope.user.userRole.id==1}">
-            <button class="btn red darken-4 text-white" type="submit" name="command" value="add_race"><fmt:message
+            <button class="btn red darken-4 text-white" type="submit" name="command" value="redirect_add_race"><fmt:message
                     bundle="${locale}"
                     key="add_race"/></button>
             <button class="btn btn-elegant" type="submit" name="command" value="show_races_without_results"><fmt:message
@@ -113,7 +113,7 @@
                                 key="place_odds"/></button>
                     </c:if>
                     <c:if test="${sessionScope.user.userRole.id==1}">
-                        <button class="btn btn-elegant" type="submit" name="command" value="edit_race"><fmt:message
+                        <button class="btn btn-elegant" type="submit" name="command" value="redirect_edit_race"><fmt:message
                                 bundle="${locale}"
                                 key="edit"/></button>
                     </c:if>

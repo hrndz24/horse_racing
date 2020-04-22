@@ -11,6 +11,7 @@ import com.buyanova.specification.SqlSpecification;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -104,7 +105,11 @@ public enum SqlRaceRepository implements RaceRepository {
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
-            statement.setInt(2, race.getHorseWinnerId());
+            if (race.getHorseWinnerId() == 0) {
+                statement.setNull(2, Types.INTEGER);
+            } else {
+                statement.setInt(2, race.getHorseWinnerId());
+            }
             statement.setTimestamp(3, new Timestamp(race.getDate().getTime()));
             statement.setString(4, race.getLocation());
             statement.setInt(5, race.getDistance());
@@ -150,7 +155,7 @@ public enum SqlRaceRepository implements RaceRepository {
         race.setId(resultSet.getInt(ColumnLabel.RACE_ID.getValue()));
         race.setPrizeMoney(resultSet.getBigDecimal(ColumnLabel.RACE_PRIZE_MONEY.getValue()));
         race.setHorseWinnerId(resultSet.getInt(ColumnLabel.HORSE_WINNER_ID.getValue()));
-        race.setDate(resultSet.getDate(ColumnLabel.RACE_DATE.getValue()));
+        race.setDate(new Date(resultSet.getTimestamp(ColumnLabel.RACE_DATE.getValue()).getTime()));
         race.setDistance(resultSet.getInt(ColumnLabel.RACE_DISTANCE.getValue()));
         race.setLocation(resultSet.getString(ColumnLabel.RACE_LOCATION.getValue()));
         return race;

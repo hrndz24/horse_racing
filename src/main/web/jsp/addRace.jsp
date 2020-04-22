@@ -109,7 +109,7 @@
                     </p>
             </c:forEach>
             <br/>
-            <button type="submit" value="submit_race" name="command" class="btn btn-elegant">
+            <button type="submit" value="add_race" name="command" class="btn btn-elegant">
                 <fmt:message bundle="${locale}" key="submit"/>
             </button>
         </div>
