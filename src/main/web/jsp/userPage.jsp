@@ -162,7 +162,7 @@
             </div>
             <form action="/controller" method="post">
                 <div class="modal-body">
-                    <input type="text" class="form-control" name="name" pattern="^[a-z0-9_.@-]{3,16}$" required
+                    <input type="text" class="form-control" name="name" pattern="^[a-zA-Z0-9_.-]{3,16}$" required
                            placeholder=
                     <fmt:message bundle="${locale}" key="name"/>>
                 </div>

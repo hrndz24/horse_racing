@@ -13,7 +13,7 @@ public enum CommandFactory {
     SIGN_UP(new SignUp()), LOG_IN(new LogIn()), LOG_OUT(new LogOut()),
     VIEW_BETS(new ViewBets()),
     REPLENISH_ACCOUNT(new ReplenishAccount()), CHANGE_LOGIN(new ChangeLogin()),
-    CHANGE_PASSWORD(new ChangePassword()),
+    CHANGE_PASSWORD(new ChangePassword()), CHANGE_NAME(new ChangeName()), CHANGE_EMAIL(new ChangeEmail()),
 
     LANGUAGE(new ChangeLanguage()),
 

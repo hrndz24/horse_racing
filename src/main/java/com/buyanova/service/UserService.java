@@ -102,6 +102,38 @@ public enum UserService {
         }
     }
 
+    public void changeName(User user, String name) throws ServiceException {
+        if (user == null || name == null) {
+            throw new ServiceException("Null user parameter");
+        }
+        if (!userValidator.isValidName(name)) {
+            throw new ServiceException("Invalid user name");
+        }
+
+        user.setName(name);
+        try {
+            userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public void changeEmail(User user, String email) throws ServiceException {
+        if (user == null || email == null) {
+            throw new ServiceException("Null user parameter");
+        }
+        if (!userValidator.isValidEmail(email)) {
+            throw new ServiceException("Invalid user email");
+        }
+
+        user.setEmail(email);
+        try {
+            userRepository.update(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public void replenishAccount(User user, BigDecimal replenishmentSum) throws ServiceException {
         if (user == null || replenishmentSum == null) {
             throw new ServiceException("Null user parameter");
