@@ -13,6 +13,7 @@ import com.buyanova.repository.Repository;
  */
 public interface RaceRepository extends Repository<Race> {
 
-    // TODO: 11.04.2020 javadoc
     void addHorseToRace(int horseId, int raceId) throws RepositoryException;
+
+    void removeHorseFromRace(int horseId, int raceId) throws RepositoryException;
 }

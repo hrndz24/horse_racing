@@ -116,6 +116,14 @@ public enum RaceService {
         }
     }
 
+    public void removeHorseFromRace(int horseId, int raceId) throws ServiceException {
+        try {
+            raceRepository.removeHorseFromRace(horseId, raceId);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public List<Race> getUpcomingRaces() throws ServiceException {
         try {
             return raceRepository.query(new FindRacesAfterCurrentDate());
