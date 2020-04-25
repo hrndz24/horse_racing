@@ -120,6 +120,11 @@
             <button style="float: right" type="submit" name="command" value="view_bets" class="btn btn-elegant">
                 <fmt:message bundle="${locale}" key="view_bets"/>
             </button>
+            <br/>
+            <br/>
+            <button style="float: right" type="submit" name="command" value="deactivate_account" class="btn btn-elegant">
+                <fmt:message bundle="${locale}" key="deactivate_account"/>
+            </button>
         </form>
     </div>
 </div>
