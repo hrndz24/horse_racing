@@ -30,7 +30,7 @@
 
             <li class="nav-item md-form">
                 <form action="/controller" method="post">
-                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="redirect_races">
+                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="show_races">
                         <fmt:message bundle="${locale}" key="navbar.races"/></button>
                 </form>
             </li>
@@ -73,10 +73,26 @@
 
 <div class="container">
     <br/>
-    <div class="container">
-        <p><fmt:message bundle="${locale}" key="race_info"/>:</p>
-        <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${raceLocation}"/>.</p>
-        <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${raceDate}"/>.</p>
+    <div style="display: flex;align-items: center; justify-content: center">
+        <div style="clear:both;">
+            <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 32rem;">
+
+                <p><fmt:message bundle="${locale}" key="race_info"/>:</p>
+
+                <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                    <c:out value="${race.distance}"/>.</p>
+
+                <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                    <c:out value="${race.prizeMoney}"/>. </p>
+
+                <p><fmt:message bundle="${locale}" key="race.date"/>:
+                    <c:out value="${race.date}"/>.</p>
+
+                <p><fmt:message bundle="${locale}" key="race.location"/>:
+                    <c:out value="${race.location}"/>.</p>
+
+            </section>
+        </div>
     </div>
     <br/>
     <br/>

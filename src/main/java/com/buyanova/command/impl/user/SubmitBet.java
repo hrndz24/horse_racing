@@ -27,6 +27,7 @@ public class SubmitBet implements Command {
 
         try {
             BetService.INSTANCE.addBet(bet);
+            user.setBalance(user.getBalance().subtract(bet.getSum()));
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             return JSPPath.MAKE_BET.getPath();

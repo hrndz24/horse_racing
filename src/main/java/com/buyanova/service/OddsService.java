@@ -78,6 +78,14 @@ public enum OddsService {
         }
     }
 
+    public Odds getOddsById(int oddsId) throws ServiceException {
+        try {
+            return oddsRepository.query(new FindOddsById(oddsId)).get(0);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private void checkOddsExist(Odds odds) throws ServiceException {
         try {
             if (oddsRepository.query(new FindOddsById(odds.getId())).isEmpty()) {

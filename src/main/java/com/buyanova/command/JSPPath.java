@@ -8,7 +8,7 @@ public enum JSPPath {
     ADD_RACE("/jsp/addRace.jsp"), RACES_WITHOUT_RESULTS("/jsp/racesWithoutResults.jsp"),
     EDIT_RACE("/jsp/editRace.jsp"),
     SET_RACE_RESULTS("/jsp/setRaceResults.jsp"),
-    USER_BETS("/jsp/userBets.jsp"),
+    USER_BETS("/jsp/userBets.jsp"), BET("/jsp/bet.jsp"),
     ERROR_PAGE("/jsp/errorPage.jsp");
 
     private String path;

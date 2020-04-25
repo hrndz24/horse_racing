@@ -46,7 +46,7 @@ public enum UserService {
         user.setPassword(String.valueOf(user.getPassword().hashCode()));
         try {
             List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
-            if (users.isEmpty()) {
+            if (users.isEmpty() || !users.get(0).isActive()) {
                 throw new ServiceException("User not found");
             }
             return users.get(0);

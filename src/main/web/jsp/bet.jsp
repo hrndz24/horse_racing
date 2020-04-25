@@ -70,60 +70,77 @@
         </div>
     </div>
 </nav>
-<img src="../images/rainbow_standing.png" alt="Smiley face" align="left">
-<%--add race--%>
-<br/>
-<div class="container">
-    <form action="/controller" method="post" style="margin-left: 28rem;padding-left: 10rem">
-        <c:if test="${sessionScope.user.userRole.id==1}">
-            <button class="btn red darken-4 text-white" type="submit" name="command" value="redirect_add_race"><fmt:message
-                    bundle="${locale}"
-                    key="add_race"/></button>
-            <button class="btn btn-elegant" type="submit" name="command" value="show_races_without_results"><fmt:message
-                    bundle="${locale}"
-                    key="races_without_results"/></button>
-        </c:if>
-    </form>
-</div>
-<br/>
 
-<%--races--%>
-<div class="container">
-    <c:forEach var="race" items="${races}">
-        <div class="container">
-            <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 27rem;display: inline-block">
-                <form action="/controller" method="post">
-                    <p><fmt:message bundle="${locale}" key="race.distance"/>:
-                        <c:out value="${race.distance}"/>.</p>
-                    <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
-                        <c:out value="${race.prizeMoney}"/>. </p>
-                    <p><fmt:message bundle="${locale}" key="race.date"/>:
-                        <c:out value="${race.date}"/>.</p>
-                    <p><fmt:message bundle="${locale}" key="race.location"/>:
-                        <c:out value="${race.location}"/>.</p>
-                    <input type="hidden" name="raceId" value="${race.id}"/>
-                    <input type="hidden" name="raceDate" value="${race.date}"/>
-                    <input type="hidden" name="raceLocation" value="${race.location}"/>
-                    <button class="btn special-color text-white" type="submit" name="command" value="show_race"><fmt:message
-                            bundle="${locale}"
-                            key="view_details"/></button>
-                    <c:if test="${sessionScope.user.userRole.id==3}">
-                        <button class="btn btn-elegant" type="submit" name="command" value="place_odds"><fmt:message
-                                bundle="${locale}"
-                                key="place_odds"/></button>
-                    </c:if>
-                    <c:if test="${sessionScope.user.userRole.id==1}">
-                        <button class="btn btn-elegant" type="submit" name="command" value="redirect_edit_race"><fmt:message
-                                bundle="${locale}"
-                                key="edit"/></button>
-                    </c:if>
-                </form>
+<br/>
+<br/>
+<br/>
+<div style="display: flex;align-items: center; justify-content: center">
+    <div style="clear:both;">
+        <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 32rem;">
 
-            </section>
+            <div style="text-align: center">
+                <p><fmt:message bundle="${locale}" key="race_info"/></p>
+            </div>
+            <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${race.location}"/>.</p>
+            <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${race.date}"/>.</p>
+            <p><fmt:message bundle="${locale}" key="race.distance"/>: <c:out value="${race.distance}"/>.</p>
+
+            <div style="text-align: center">
+                <p><fmt:message bundle="${locale}" key="odds_details"/></p>
+            </div>
+            <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
+                    value="${odds.oddsAgainst}"/>.</p>
+            <div style="text-align: center">
+                <p><fmt:message bundle="${locale}" key="bet_details"/></p>
+            </div>
+            <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.
+                <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
+                        data-target="#changeBetModal">
+                    <fmt:message bundle="${locale}" key="edit"/>
+                </button>
+            </p>
             <br/>
-            <br/>
+        </section>
+        <br/>
+        <br/>
+        <div style="display: flex;align-items: center; justify-content: center">
+            <form action="/controller" method="post">
+                <button type="submit" name="command" value="delete_bet"
+                        class="btn btn-elegant"
+                        data-toggle="modal"
+                        data-target="#changePasswordModal">
+                    <fmt:message bundle="${locale}" key="delete_bet"/>
+                </button>
+            </form>
         </div>
-    </c:forEach>
+    </div>
+</div>
+
+<!-- change login popup window -->
+<div class="modal fade" id="changeBetModal" tabindex="-1" role="dialog" aria-labelledby="betModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="betModalLabel"><fmt:message bundle="${locale}"
+                                                                        key="change_sum"/></h5>
+            </div>
+            <form action="/controller" method="post">
+                <div class="modal-body">
+                    <input type="text" class="form-control" name="sum" pattern="\d{3,10}" required
+                           placeholder=
+                    <fmt:message bundle="${locale}" key="sum"/>>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                            bundle="${locale}" key="close"/></button>
+                    <button type="submit" class="btn btn-elegant" name="command" value="change_bet_sum"><fmt:message
+                            bundle="${locale}"
+                            key="submit"/></button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>

@@ -34,9 +34,7 @@ public enum BetService {
         validateBetFields(bet);
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
-            if (user.getBalance().compareTo(bet.getSum()) < 0) {
-                throw new ServiceException("User does not have enough money to make a bet");
-            }
+            checkUserHasEnoughMoneyToBet(user, bet.getSum());
             betRepository.add(bet);
             user.setBalance(user.getBalance().subtract(bet.getSum()));
             userRepository.update(user);
@@ -46,7 +44,7 @@ public enum BetService {
     }
 
     /**
-     * Removes bet form the data source and
+     * Removes bet from the data source and
      * returns money to the user.
      * <p>
      * Note: checks bet exists so that to prevent
@@ -78,11 +76,14 @@ public enum BetService {
         }
         checkBetExists(bet);
         validateBetFields(bet);
+
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
             BigDecimal oldSum = betRepository.query(new FindBetById(bet.getId())).get(0).getSum();
+            BigDecimal sumDifference = bet.getSum().subtract(oldSum);
+            checkUserHasEnoughMoneyToBet(user, sumDifference);
             betRepository.update(bet);
-            user.setBalance(user.getBalance().add(oldSum.subtract(bet.getSum())));
+            user.setBalance(user.getBalance().subtract(sumDifference));
             userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
@@ -100,6 +101,14 @@ public enum BetService {
         }
     }
 
+    public Bet getBetById(int betId) throws ServiceException {
+        try {
+            return betRepository.query(new FindBetById(betId)).get(0);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     private void checkBetExists(Bet bet) throws ServiceException {
         try {
             if (betRepository.query(new FindBetById(bet.getId())).isEmpty()) {
@@ -107,6 +116,12 @@ public enum BetService {
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
+        }
+    }
+
+    private void checkUserHasEnoughMoneyToBet(User user, BigDecimal sum) throws ServiceException {
+        if (user.getBalance().compareTo(sum) < 0) {
+            throw new ServiceException("User does not have enough money to make a bet");
         }
     }
 
