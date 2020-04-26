@@ -12,6 +12,7 @@ public enum JSPParameter {
     BET_SUM("betSum"), RACE_DATE("raceDate"), ODDS_IN_FAVOUR("oddsInFavour"),
     ODDS_AGAINST("oddsAgainst"), RACE_LOCATION("raceLocation"), RACE_PRIZE_MONEY("racePrizeMoney"),
     RACE_DISTANCE("raceDistance"), RACES_WITHOUT_RESULTS("racesWithoutResults"),
+    HORSES_TYPE("horsesType"),
     BETS("bets"), BET_ID("betId"), BET("bet"),
     SUM("sum"),
     ERROR_MESSAGE("errorMessage");

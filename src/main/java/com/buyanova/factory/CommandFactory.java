@@ -29,6 +29,7 @@ public enum CommandFactory {
 
     PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()),
 
+    SHOW_HORSES(new ShowHorses()), CHANGE_HORSES(new ChangeHorses()),
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
     REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage()),
     REDIRECT_EDIT_RACE(new RedirectToEditRacePage());

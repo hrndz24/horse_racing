@@ -6,9 +6,7 @@ import com.buyanova.exception.RepositoryException;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.horse.HorseRepository;
-import com.buyanova.specification.impl.horse.FindAllPerformingHorses;
-import com.buyanova.specification.impl.horse.FindHorseById;
-import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
+import com.buyanova.specification.impl.horse.*;
 import com.buyanova.validator.HorseValidator;
 
 import java.util.List;
@@ -38,6 +36,22 @@ public enum HorseService {
     public List<Horse> getPerformingHorses() throws ServiceException {
         try {
             return horseRepository.query(new FindAllPerformingHorses());
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Horse> getNonPerformingHorses() throws ServiceException {
+        try {
+            return horseRepository.query(new FindAllNonPerformingHorses());
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Horse> getAllHorses() throws ServiceException {
+        try {
+            return horseRepository.query(new FindAllHorses());
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

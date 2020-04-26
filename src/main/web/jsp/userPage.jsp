@@ -34,6 +34,15 @@
                         <fmt:message bundle="${locale}" key="navbar.races"/></button>
                 </form>
             </li>
+            <c:if test="${sessionScope.user.userRole.id==1}">
+                <li class="nav-item md-form">
+                    <form action="/controller" method="post">
+                        <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command"
+                                value="show_horses">
+                            <fmt:message bundle="${locale}" key="navbar.horses"/></button>
+                    </form>
+                </li>
+            </c:if>
 
             <!-- Language dropdown -->
             <li class="nav-item dropdown md-form">
@@ -122,7 +131,8 @@
             </button>
             <br/>
             <br/>
-            <button style="float: right" type="submit" name="command" value="deactivate_account" class="btn btn-elegant">
+            <button style="float: right" type="submit" name="command" value="deactivate_account"
+                    class="btn btn-elegant">
                 <fmt:message bundle="${locale}" key="deactivate_account"/>
             </button>
         </form>
