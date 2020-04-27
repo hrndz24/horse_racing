@@ -14,9 +14,18 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
 
     <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
@@ -75,9 +84,12 @@
 <br/>
 <form action="/controller" method="post" class="md-form">
     <div class="container">
-        <div class="card" style="width: 23rem; display: inline-block; text-align: center; height: 20rem;padding: 2rem">
+        <div class="card" style="width: 33rem; display: inline-block; text-align: center; height: 22rem;padding: 2rem">
             <div class="card-body px-lg-5 pt-0">
-
+                <div class="text-center font-weight-bold">
+                    <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                </div>
+                <hr>
                 <input placeholder=
                        <fmt:message bundle="${locale}" key="race.location"/> type="text"
                        class="form-control" pattern="[\w\d_-\s]+" name="raceLocation" required>
@@ -98,18 +110,19 @@
         </div>
     </div>
     <div class="container">
-        <div style="position: absolute; right: 750px; top: 20px">
-            <fmt:message bundle="${locale}" key="select_horses"/>
-            <br/>
-            <br/>
+        <div style="position: absolute; right: 550px; top: 20px">
+            <p class="font-weight-bold h4"><fmt:message bundle="${locale}" key="select_horses"/></p>
             <c:forEach var="horse" items="${performingHorses}">
-                    <p>
-                        <input type="checkbox" name="horseId" value="${horse.id}">
-                        <c:out value="${horse.name}"/>
-                    </p>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="${horse.id}" name="horseId"
+                           value="${horse.id}">
+                    <label class="custom-control-label text-dark" for="${horse.id}"><c:out
+                            value="${horse.name}"/></label>
+                </div>
+                <br/>
             </c:forEach>
             <br/>
-            <button type="submit" value="add_race" name="command" class="btn btn-elegant">
+            <button type="submit" value="add_race" name="command" class="btn elegant-color-dark text-white">
                 <fmt:message bundle="${locale}" key="submit"/>
             </button>
         </div>

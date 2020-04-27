@@ -13,9 +13,18 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
 
     <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
@@ -79,60 +88,71 @@
         </div>
     </div>
 </nav>
-<img src="../images/twilight.png" alt="Smiley face" align="left">
+<img src="../images/rarity.png" alt="Smiley face" align="left">
 
 <br/>
 <br/>
 <br/>
 <div style="display: flex;align-items: center; justify-content: center">
     <div style="clear:both;">
-        <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 32rem;">
-
-            <p><fmt:message bundle="${locale}" key="name"/>: <c:out value="${userName}"/>.
-                <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
-                        data-target="#changeNameModal">
-                    <fmt:message bundle="${locale}" key="change_name"/>
-                </button>
-            </p>
-            <br/>
-            <p><fmt:message bundle="${locale}" key="login"/>: <c:out value="${user.login}"/>.
-                <button style="float: right" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
-                        data-target="#changeLoginModal">
-                    <fmt:message bundle="${locale}" key="change_login"/>
-                </button>
-            </p>
-            <br/>
-            <p><fmt:message bundle="${locale}" key="email"/>: <c:out value="${user.email}"/>.
-                <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
-                        data-target="#changeEmailModal">
-                    <fmt:message bundle="${locale}" key="change_email"/>
-                </button>
-            </p>
-            <br/>
-            <p><fmt:message bundle="${locale}" key="balance"/>: <c:out value="${user.balance}"/>.
-                <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
-                        data-target="#replenishAccountModal">
-                    <fmt:message bundle="${locale}" key="replenish"/>
-                </button>
-            </p>
-        </section>
+        <div class="card white"
+             style="width: 27rem; display: inline-block;padding-top: 2rem;margin: 1rem">
+            <div class="card-body px-lg-5 pt-0">
+                <p><fmt:message bundle="${locale}" key="name"/>: <c:out value="${userName}"/>.
+                    <button style="float: right;" type="button" class="btn elegant-color-dark text-white btn-sm"
+                            data-toggle="modal"
+                            data-target="#changeNameModal">
+                        <fmt:message bundle="${locale}" key="change_name"/>
+                    </button>
+                </p>
+                <br/>
+                <p><fmt:message bundle="${locale}" key="login"/>: <c:out value="${user.login}"/>.
+                    <button style="float: right" type="button" class="btn elegant-color-dark text-white btn-sm"
+                            data-toggle="modal"
+                            data-target="#changeLoginModal">
+                        <fmt:message bundle="${locale}" key="change_login"/>
+                    </button>
+                </p>
+                <br/>
+                <p><fmt:message bundle="${locale}" key="email"/>: <c:out value="${user.email}"/>.
+                    <button style="float: right;" type="button" class="btn elegant-color-dark text-white btn-sm"
+                            data-toggle="modal"
+                            data-target="#changeEmailModal">
+                        <fmt:message bundle="${locale}" key="change_email"/>
+                    </button>
+                </p>
+                <br/>
+                <p><fmt:message bundle="${locale}" key="balance"/>: <c:out value="${user.balance}"/>.
+                    <button style="float: right;" type="button" class="btn elegant-color-dark text-white btn-sm"
+                            data-toggle="modal"
+                            data-target="#replenishAccountModal">
+                        <fmt:message bundle="${locale}" key="replenish"/>
+                    </button>
+                </p>
+            </div>
+        </div>
         <br/>
-        <br/>
-        <form action="/controller" method="post" style="float: right; margin-right: 5rem">
-            <button style="float: right" type="button" name="command" value="change_password" class="btn btn-elegant"
+        <form action="/controller" method="post" style="float: right; margin-right: 2rem">
+            <button style="float: right" type="button" name="command" value="change_password"
+                    class="btn btn-light font-weight-bolder"
                     data-toggle="modal"
                     data-target="#changePasswordModal">
                 <fmt:message bundle="${locale}" key="change_password"/>
             </button>
             <br/>
             <br/>
-            <button style="float: right" type="submit" name="command" value="view_bets" class="btn btn-elegant">
+            <br/>
+            <button style="float: right" type="submit" name="command" value="view_bets"
+                    class="btn btn-light font-weight-bolder">
                 <fmt:message bundle="${locale}" key="view_bets"/>
             </button>
             <br/>
             <br/>
+            <br/>
+            <br/>
+            <br/>
             <button style="float: right" type="submit" name="command" value="deactivate_account"
-                    class="btn btn-elegant">
+                    class="btn elegant-color-dark text-white">
                 <fmt:message bundle="${locale}" key="deactivate_account"/>
             </button>
         </form>

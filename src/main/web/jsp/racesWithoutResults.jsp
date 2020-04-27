@@ -13,9 +13,18 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
 
     <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
@@ -74,29 +83,41 @@
 <br/>
 <%--races--%>
 <div class="container">
+
     <c:forEach var="race" items="${racesWithoutResults}">
-        <div class="container">
-            <section class="p-md-3 mx-md-5 grey lighten-3">
-                <form action="/controller" method="post">
-                    <p><fmt:message bundle="${locale}" key="race.distance"/>:
-                        <c:out value="${race.distance}"/>.</p>
-                    <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
-                        <c:out value="${race.prizeMoney}"/>. </p>
-                    <p><fmt:message bundle="${locale}" key="race.date"/>:
-                        <c:out value="${race.date}"/>.</p>
-                    <p><fmt:message bundle="${locale}" key="race.location"/>:
-                        <c:out value="${race.location}"/>.</p>
-                    <input type="hidden" name="raceId" value="${race.id}"/>
-                    <input type="hidden" name="raceDate" value="${race.date}"/>
-                    <input type="hidden" name="raceLocation" value="${race.location}"/>
-                    <c:if test="${sessionScope.user.userRole.id==1}">
-                        <button class="btn btn-elegant" type="submit" name="command" value="set_results"><fmt:message
-                                bundle="${locale}"
-                                key="set_results"/></button>
-                    </c:if>
-                </form>
-            </section>
+        <div style="display: flex;align-items: center; justify-content: center">
+            <div class="card white"
+                 style="width: 33rem; display: inline-block;padding-top: 2rem;margin: 1rem">
+                <div class="card-body px-lg-5 pt-0">
+                    <form action="/controller" method="post">
+                        <div class="text-center font-weight-bold">
+                            <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                        </div>
+                        <hr>
+                        <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                            <c:out value="${race.distance}"/>.</p>
+                        <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                            <c:out value="${race.prizeMoney}"/>. </p>
+                        <p><fmt:message bundle="${locale}" key="race.date"/>:
+                            <c:out value="${race.date}"/>.</p>
+                        <p><fmt:message bundle="${locale}" key="race.location"/>:
+                            <c:out value="${race.location}"/>.</p>
+                        <input type="hidden" name="raceId" value="${race.id}"/>
+                        <input type="hidden" name="raceDate" value="${race.date}"/>
+                        <input type="hidden" name="raceLocation" value="${race.location}"/>
+                        <c:if test="${sessionScope.user.userRole.id==1}">
+                            <div style="display: flex;align-items: center; justify-content: center">
+                                <button class="btn elegant-color-dark text-white" type="submit" name="command" value="set_results">
+                                    <fmt:message
+                                            bundle="${locale}"
+                                            key="set_results"/></button>
+                            </div>
+                        </c:if>
+                    </form>
+                </div>
+            </div>
             <br/>
+
         </div>
     </c:forEach>
 </div>

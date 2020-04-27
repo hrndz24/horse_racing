@@ -13,9 +13,18 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color" style="height: 4rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
 
     <span class="navbar-brand md-form"><fmt:message bundle="${locale}" key="navbar.name"/></span>
 
@@ -75,152 +84,167 @@
     <br/>
     <div style="display: flex;align-items: center; justify-content: center">
         <div style="clear:both;">
-            <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 32rem;">
+            <div class="card white"
+                 style="width: 33rem; display: inline-block;  height: 19rem;padding: 2rem">
+                <div class="card-body px-lg-5 pt-0">
+                    <div class="text-center font-weight-bold">
+                        <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                    </div>
+                    <hr>
+                    <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                        <c:out value="${race.distance}"/>.</p>
 
-                <p><fmt:message bundle="${locale}" key="race_info"/>:</p>
+                    <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                        <c:out value="${race.prizeMoney}"/>. </p>
 
-                <p><fmt:message bundle="${locale}" key="race.distance"/>:
-                    <c:out value="${race.distance}"/>.</p>
+                    <p><fmt:message bundle="${locale}" key="race.date"/>:
+                        <c:out value="${race.date}"/>.</p>
 
-                <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
-                    <c:out value="${race.prizeMoney}"/>. </p>
-
-                <p><fmt:message bundle="${locale}" key="race.date"/>:
-                    <c:out value="${race.date}"/>.</p>
-
-                <p><fmt:message bundle="${locale}" key="race.location"/>:
-                    <c:out value="${race.location}"/>.</p>
-
-                <div style="display: flex;align-items: center; justify-content: center">
-                    <button type="button" class="btn btn-elegant" data-toggle="modal"
-                            data-target="#changeRaceModal">
-                        <fmt:message bundle="${locale}" key="edit"/>
-                    </button>
+                    <p><fmt:message bundle="${locale}" key="race.location"/>:
+                        <c:out value="${race.location}"/>.</p>
+                    <div style="display: flex;align-items: center; justify-content: center">
+                        <button type="button" class="btn elegant-color-dark text-white btn-sm" data-toggle="modal"
+                                data-target="#changeRaceModal">
+                            <fmt:message bundle="${locale}" key="edit"/>
+                        </button>
+                    </div>
                 </div>
-
-            </section>
+            </div>
         </div>
     </div>
     <br/>
-    <br/>
     <form action="/controller" method="post" style="margin-left: 10rem;margin-right: 15rem">
-        <button style="margin-left: 5rem" type="button" class="btn btn-elegant" data-toggle="modal"
+        <button style="margin-left: 5rem" type="button" class="btn light-blue darken-4 text-white" data-toggle="modal"
                 data-target="#addHorsesModal">
             <fmt:message bundle="${locale}" key="add_horses"/>
         </button>
 
-        <button style="float: right" type="submit" class="btn btn-elegant" name="command" value="delete_race">
+        <button style="float: right" type="submit" class="btn red accent-4 text-white" name="command"
+                value="delete_race">
             <fmt:message bundle="${locale}" key="delete_race"/>
         </button>
     </form>
     <br/>
-    <br/>
-    <c:forEach var="horse" items="${horses}">
-        <div class="container">
-            <section class="p-md-3 mx-md-5 grey lighten-3">
+    <div class="text-center font-italic font-weight-bold h2 text-dark blue lighten-5" style="margin-left: 2rem">
+        <p><fmt:message bundle="${locale}" key="participants"/>:</p>
+    </div>
+    <div class="container">
+        <div class="row">
+            <c:forEach var="horse" items="${horses}">
+                <div class="col-md-4">
+                    <div class="card white"
+                         style="width: 20rem; display: inline-block;  height: 22rem;padding-top: 2rem;padding-bottom: 2rem;margin: 2rem">
+                        <div class="card-body px-lg-5 pt-0">
+                            <form action="/controller" method="post">
+                                <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out
+                                        value="${horse.name}"/>.</p>
+
+                                <p><fmt:message bundle="${locale}" key="horse.breed"/>: <c:out
+                                        value="${horse.breed}"/>.</p>
+
+                                <p><fmt:message bundle="${locale}" key="horse.age"/>: <c:out value="${horse.age}"/>.</p>
+
+                                <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out
+                                        value="${horse.racesWonNumber}"/>.</p>
+
+                                <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out
+                                        value="${horse.racesLostNumber}"/>.</p>
+
+
+                                <input type="hidden" name="horseId" value="${horse.id}"/>
+                                <div style="display: flex;align-items: center; justify-content: center">
+                                    <button class="btn elegant-color-dark text-white" type="submit" name="command"
+                                            value="remove_horse_from_race">
+                                        <fmt:message bundle="${locale}" key="exclude"/></button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
+    </div>
+
+    <!-- change race's info popup window -->
+    <div class="modal fade" id="changeRaceModal" tabindex="-1" role="dialog" aria-labelledby="raceModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align: center;display: inline-block">
+                    <h5 class="modal-title" id="raceModalLabel"><fmt:message bundle="${locale}"
+                                                                             key="edit_race"/></h5>
+                </div>
+
                 <form action="/controller" method="post">
-                    <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out value="${horse.name}"/>.</p>
+                    <div class="modal-body">
+                        <div class="md-form">
+                            <input id="distance" type="text" class="form-control" name="raceDistance" value=
+                                    "<c:out value="${race.distance}"/>" required>
+                            <label for="distance"><fmt:message bundle="${locale}" key="race.distance"/></label>
+                        </div>
+                        <div class="md-form">
+                            <input id="prizeMoney" type="text" class="form-control" name="racePrizeMoney" value=
+                                    "<c:out value="${race.prizeMoney}"/>" required>
+                            <label for="prizeMoney"><fmt:message bundle="${locale}" key="race.prize_money"/></label>
+                        </div>
+                        <div class="md-form">
+                            <input id="date" type="text" class="form-control" name="raceDate" value=
+                                    "<c:out value="${race.date}"/>" required>
+                            <label for="date"><fmt:message bundle="${locale}" key="race.date"/></label>
+                        </div>
+                        <div class="md-form">
+                            <input id="location" type="text" class="form-control" name="raceLocation" value=
+                                    "<c:out value="${race.location}"/>" required>
+                            <label for="location"><fmt:message bundle="${locale}" key="race.location"/></label>
+                        </div>
+                    </div>
 
-                    <p><fmt:message bundle="${locale}" key="horse.breed"/>: <c:out value="${horse.breed}"/>.</p>
-
-                    <p><fmt:message bundle="${locale}" key="horse.age"/>: <c:out value="${horse.age}"/>.</p>
-
-                    <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out
-                            value="${horse.racesWonNumber}"/>.</p>
-
-                    <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out
-                            value="${horse.racesLostNumber}"/>.</p>
-
-
-                    <input type="hidden" name="horseId" value="${horse.id}"/>
-                    <button class="btn btn-elegant" type="submit" name="command" value="remove_horse_from_race">
-                        <fmt:message bundle="${locale}" key="exclude"/></button>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                                bundle="${locale}" key="close"/></button>
+                        <button type="submit" class="btn btn-elegant" name="command" value="edit_race"><fmt:message
+                                bundle="${locale}"
+                                key="submit"/></button>
+                    </div>
                 </form>
-            </section>
-            <br/>
-        </div>
-    </c:forEach>
-</div>
-
-<!-- change race's info popup window -->
-<div class="modal fade" id="changeRaceModal" tabindex="-1" role="dialog" aria-labelledby="raceModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="text-align: center;display: inline-block">
-                <h5 class="modal-title" id="raceModalLabel"><fmt:message bundle="${locale}"
-                                                                         key="edit_race"/></h5>
             </div>
-
-            <form action="/controller" method="post">
-                <div class="modal-body">
-                    <div class="md-form">
-                        <input id="distance" type="text" class="form-control" name="raceDistance" value=
-                                "<c:out value="${race.distance}"/>" required>
-                        <label for="distance"><fmt:message bundle="${locale}" key="race.distance"/></label>
-                    </div>
-                    <div class="md-form">
-                        <input id="prizeMoney" type="text" class="form-control" name="racePrizeMoney" value=
-                                "<c:out value="${race.prizeMoney}"/>" required>
-                        <label for="prizeMoney"><fmt:message bundle="${locale}" key="race.prize_money"/></label>
-                    </div>
-                    <div class="md-form">
-                        <input id="date" type="text" class="form-control" name="raceDate" value=
-                                "<c:out value="${race.date}"/>" required>
-                        <label for="date"><fmt:message bundle="${locale}" key="race.date"/></label>
-                    </div>
-                    <div class="md-form">
-                        <input id="location" type="text" class="form-control" name="raceLocation" value=
-                                "<c:out value="${race.location}"/>" required>
-                        <label for="location"><fmt:message bundle="${locale}" key="race.location"/></label>
-                    </div>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
-                            bundle="${locale}" key="close"/></button>
-                    <button type="submit" class="btn btn-elegant" name="command" value="edit_race"><fmt:message
-                            bundle="${locale}"
-                            key="submit"/></button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
 
-<!-- add horses popup window -->
-<div class="modal fade" id="addHorsesModal" tabindex="-1" role="dialog" aria-labelledby="addHorsesModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header" style="text-align: center;display: inline-block">
-                <h5 class="modal-title" id="addHorsesModalLabel"><fmt:message bundle="${locale}"
-                                                                              key="add_horses"/></h5>
+    <!-- add horses popup window -->
+    <div class="modal fade" id="addHorsesModal" tabindex="-1" role="dialog" aria-labelledby="addHorsesModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header" style="text-align: center;display: inline-block">
+                    <h5 class="modal-title" id="addHorsesModalLabel"><fmt:message bundle="${locale}"
+                                                                                  key="add_horses"/></h5>
+                </div>
+                <form action="/controller" method="post">
+                    <div class="modal-body">
+                        <c:forEach var="horse" items="${performingHorses}">
+                            <p>
+                                <input type="checkbox" name="horseId" value="${horse.id}">
+                                <c:out value="${horse.name}"/>
+                            </p>
+                        </c:forEach>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                                bundle="${locale}" key="close"/></button>
+                        <button type="submit" class="btn btn-elegant" name="command" value="add_horse_to_race">
+                            <fmt:message
+                                    bundle="${locale}"
+                                    key="submit"/></button>
+                    </div>
+                </form>
             </div>
-            <form action="/controller" method="post">
-                <div class="modal-body">
-                    <c:forEach var="horse" items="${performingHorses}">
-                        <p>
-                            <input type="checkbox" name="horseId" value="${horse.id}">
-                            <c:out value="${horse.name}"/>
-                        </p>
-                    </c:forEach>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
-                            bundle="${locale}" key="close"/></button>
-                    <button type="submit" class="btn btn-elegant" name="command" value="add_horse_to_race"><fmt:message
-                            bundle="${locale}"
-                            key="submit"/></button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
-<script type="text/javascript" src="../js/jquery.min.js"></script>
-<script type="text/javascript" src="../js/popper.min.js"></script>
-<script type="text/javascript" src="../js/bootstrap.min.js"></script>
-<script type="text/javascript" src="../js/mdb.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/popper.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/mdb.min.js"></script>
 </body>
 </html>
 
