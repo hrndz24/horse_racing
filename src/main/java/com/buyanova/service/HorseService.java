@@ -68,6 +68,18 @@ public enum HorseService {
         }
     }
 
+    public void updateHorse(Horse horse) throws ServiceException {
+        if (horse == null) {
+            throw new ServiceException("Null horse");
+        }
+        validateHorseFields(horse);
+        try {
+            horseRepository.update(horse);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
     public void removeHorse(Horse horse) throws ServiceException {
         if (horse == null) {
             throw new ServiceException("Null horse");

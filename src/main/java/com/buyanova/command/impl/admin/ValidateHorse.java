@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class InvalidateHorse implements Command {
+public class ValidateHorse implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         try {
             Horse horse = HorseService.INSTANCE.getHorseById(horseId);
-            horse.setPerforming(false);
-            HorseService.INSTANCE.removeHorse(horse);
+            horse.setPerforming(true);
+            HorseService.INSTANCE.updateHorse(horse);
             List<Horse> horses = HorseService.INSTANCE.getPerformingHorses();
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             return JSPPath.HORSES.getPath();

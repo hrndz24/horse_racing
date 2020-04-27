@@ -31,7 +31,7 @@ public enum SqlHorseRepository implements HorseRepository {
             "horse_age, is_performing, races_won_number, races_lost_number) VALUES(?, ?, ?, ?, ?, ?)";
 
     private static final String UPDATE_QUERY = "UPDATE horses SET horse_name = ?," +
-            "horse_breed = ?, horse_age = ?, races_won_number = ?, races_lost_number = ? WHERE horse_id = ?";
+            "horse_breed = ?, horse_age = ?, races_won_number = ?, races_lost_number = ?, is_performing = ? WHERE horse_id = ?";
 
     private static final String REMOVE_QUERY = "UPDATE horses SET is_performing = false WHERE horse_id = ?";
 
@@ -80,7 +80,8 @@ public enum SqlHorseRepository implements HorseRepository {
             statement.setInt(3, horse.getAge());
             statement.setInt(4, horse.getRacesWonNumber());
             statement.setInt(5, horse.getRacesLostNumber());
-            statement.setInt(6, horse.getId());
+            statement.setBoolean(6, horse.isPerforming());
+            statement.setInt(7, horse.getId());
 
             statement.executeUpdate();
         } catch (SQLException e) {
