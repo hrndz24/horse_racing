@@ -37,27 +37,38 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="nav-item md-form">
-                <form action="/controller" method="post">
-                    <button class="nav-link btn btn-sm btn-elegant" type="submit" name="command" value="show_races">
+            <li class="md-form align-items-center">
+                <form action="/controller" method="post" class="nav-item">
+                    <button class="nav-link btn btn-sm" type="submit" name="command" value="show_races">
                         <fmt:message bundle="${locale}" key="navbar.races"/></button>
                 </form>
             </li>
+            <c:if test="${sessionScope.user.userRole.id==1}">
+                <li class="nav-item md-form">
+                    <form action="/controller" method="post">
+                        <button class="nav-link btn btn-sm" type="submit" name="command"
+                                value="show_horses">
+                            <fmt:message bundle="${locale}" key="navbar.horses"/></button>
+                    </form>
+                </li>
+            </c:if>
 
             <!-- Language dropdown -->
             <li class="nav-item dropdown md-form">
                 <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false"><fmt:message bundle="${locale}"
                                                                            key="navbar.language"/></a>
-                <div class="dropdown-menu grey lighten-3"
+                <div class="dropdown-menu"
                      aria-labelledby="navbarDropdownMenuLink" style="width: 10rem;text-align: center">
                     <form action="/controller" method="post">
                         <input type="hidden" name="command" value="language"/>
                         <input type="hidden" name="jsp" value="${pageContext.request.requestURI}"/>
-                        <input style="width: 10rem" type="submit" name="lang" value="EN"
-                               class="dropdown-item font-weight-bold"/>
-                        <input style="width: 10rem" type="submit" name="lang" value="ES"
-                               class="dropdown-item font-weight-bold"/>
+                        <button style="width: 10rem" type="submit" name="lang" value="EN"
+                                class="dropdown-item text-uppercase font-weight-bold"><fmt:message bundle="${locale}"
+                                                                                                   key="navbar.language_english"/></button>
+                        <button style="width: 10rem" type="submit" name="lang" value="ES"
+                                class="dropdown-item text-uppercase font-weight-bold"><fmt:message bundle="${locale}"
+                                                                                                   key="navbar.language_spanish"/></button>
 
                     </form>
                 </div>
@@ -65,14 +76,14 @@
         </ul>
         <div>
             <form action="/controller" method="post" class="nav-item my-1">
-                <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm btn-elegant">
+                <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm text-white">
                     <fmt:message bundle="${locale}" key="log_out"/>
                 </button>
             </form>
         </div>
         <div>
             <form action="/controller" method="post" class="nav-item my-0">
-                <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm btn-elegant">
+                <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm text-white">
                     <c:out value="${userName}"/>
                 </button>
             </form>
@@ -83,21 +94,26 @@
 <div class="container">
     <br/>
     <br/>
+    <%--    Horse types dropdown--%>
     <div class="nav-item dropdown md-form" style="margin-left: 5rem">
         <h1 class="btn nav-link dropdown-toggle font-weight-bold" id="horsesDropdownMenuLink" data-toggle="dropdown"
             aria-haspopup="true" aria-expanded="false" style="width: 12rem"><fmt:message bundle="${locale}"
                                                                                          key="navbar.horses"/></h1>
-        <div class="dropdown-menu blue lighten-5"
+        <div class="dropdown-menu light-blue lighten-5"
              aria-labelledby="horsesDropdownMenuLink" style="text-align: center">
             <form action="/controller" method="post">
                 <input type="hidden" name="command" value="change_horses"/>
                 <input type="hidden" name="jsp" value="${pageContext.request.requestURI}"/>
-                <input type="submit" name="horsesType" value="ALL"
-                       class="dropdown-item font-weight-bold"/>
-                <input type="submit" name="horsesType" value="PERFORMING"
-                       class="dropdown-item font-weight-bold"/>
-                <input type="submit" name="horsesType" value="NON-PERFORMING"
-                       class="dropdown-item font-weight-bold"/>
+                <button style="width: 12rem" type="submit" name="horsesType" value="ALL"
+                        class="dropdown-item text-uppercase text-dark font-weight-bold"><fmt:message
+                        bundle="${locale}" key="horses.all"/>
+                </button>
+                <button style="width: 12rem" type="submit" name="horsesType" value="PERFORMING"
+                        class="dropdown-item text-uppercase text-dark font-weight-bold"><fmt:message bundle="${locale}"
+                                                                                                     key="horses.performing"/></button>
+                <button style="width: 12rem" type="submit" name="horsesType" value="NON-PERFORMING"
+                        class="dropdown-item text-uppercase text-dark font-weight-bold"><fmt:message bundle="${locale}"
+                                                                                                     key="horses.non_performing"/></button>
 
             </form>
         </div>
@@ -134,14 +150,14 @@
                                     </button>
                                     <c:if test="${horse.performing eq true}">
                                         <button style="margin: 1rem" type="submit"
-                                                class="btn elegant-color-dark text-white" name="command"
+                                                class="btn danger-color-dark text-white" name="command"
                                                 value="invalidate_horse">
                                             <fmt:message bundle="${locale}" key="invalidate"/>
                                         </button>
                                     </c:if>
                                     <c:if test="${horse.performing ne true}">
                                         <button style="margin: 1rem" type="submit"
-                                                class="btn elegant-color-dark text-white" name="command"
+                                                class="btn danger-color-dark text-white" name="command"
                                                 value="validate_horse">
                                             <fmt:message bundle="${locale}" key="validate"/>
                                         </button>
