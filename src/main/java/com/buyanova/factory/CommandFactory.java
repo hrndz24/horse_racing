@@ -31,11 +31,11 @@ public enum CommandFactory {
 
     SHOW_HORSES(new ShowHorses()), CHANGE_HORSES(new ChangeHorses()),
     INVALIDATE_HORSE(new InvalidateHorse()), VALIDATE_HORSE(new ValidateHorse()),
-    ADD_HORSE(new AddHorse()),
+    ADD_HORSE(new AddHorse()), EDIT_HORSE(new EditHorse()),
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
     REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage()),
-    REDIRECT_EDIT_RACE(new RedirectToEditRacePage());
+    REDIRECT_EDIT_RACE(new RedirectToEditRacePage()), REDIRECT_EDIT_HORSE(new RedirectToEditHorsePage());
 
     private Command command;
 
