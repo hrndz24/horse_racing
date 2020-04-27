@@ -13,8 +13,9 @@ public enum JSPParameter {
     ODDS_AGAINST("oddsAgainst"), RACE_LOCATION("raceLocation"), RACE_PRIZE_MONEY("racePrizeMoney"),
     RACE_DISTANCE("raceDistance"), RACES_WITHOUT_RESULTS("racesWithoutResults"),
     HORSES_TYPE("horsesType"),
-    BETS("bets"), BET_ID("betId"), BET("bet"),
-    SUM("sum"),
+    BETS("bets"), BET_ID("betId"), BET("bet"), SUM("sum"),
+    HORSE_NAME("horseName"), HORSE_BREED("horseBreed"), HORSE_AGE("horseAge"),
+    HORSE_WON_RACES("horseWonRaces"), HORSE_LOST_RACES("horseLostRaces"),
     ERROR_MESSAGE("errorMessage");
 
     private String parameter;

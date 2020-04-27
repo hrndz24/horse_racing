@@ -31,6 +31,7 @@ public enum CommandFactory {
 
     SHOW_HORSES(new ShowHorses()), CHANGE_HORSES(new ChangeHorses()),
     INVALIDATE_HORSE(new InvalidateHorse()), VALIDATE_HORSE(new ValidateHorse()),
+    ADD_HORSE(new AddHorse()),
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
     REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage()),
