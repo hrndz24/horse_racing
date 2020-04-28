@@ -3,6 +3,7 @@ package com.buyanova.factory;
 import com.buyanova.command.Command;
 import com.buyanova.command.impl.admin.*;
 import com.buyanova.command.impl.bookmaker.PlaceOdds;
+import com.buyanova.command.impl.bookmaker.ShowRacesWithoutOdds;
 import com.buyanova.command.impl.bookmaker.SubmitOdds;
 import com.buyanova.command.impl.language.ChangeLanguage;
 import com.buyanova.command.impl.redirect.*;
@@ -23,7 +24,7 @@ public enum CommandFactory {
     SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()), SET_RESULTS(new SetRaceResults()),
     SUBMIT_WINNER(new SubmitWinner()), EDIT_RACE(new EditRace()),
     ADD_HORSE_TO_RACE(new AddHorseToRace()), REMOVE_HORSE_FROM_RACE(new RemoveHorseFromRace()),
-    DELETE_RACE(new DeleteRace()),
+    DELETE_RACE(new DeleteRace()), SHOW_RACES_WITHOUT_ODDS(new ShowRacesWithoutOdds()),
 
     SUBMIT_BET(new SubmitBet()), MAKE_BET(new MakeBet()),
 

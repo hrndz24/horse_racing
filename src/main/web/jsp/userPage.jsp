@@ -153,10 +153,12 @@
             <br/>
             <br/>
             <br/>
-            <button style="float: right" type="submit" name="command" value="deactivate_account"
-                    class="btn elegant-color-dark text-white">
-                <fmt:message bundle="${locale}" key="deactivate_account"/>
-            </button>
+            <c:if test="${sessionScope.user.userRole.id==2}">
+                <button style="float: right" type="submit" name="command" value="deactivate_account"
+                        class="btn elegant-color-dark text-white">
+                    <fmt:message bundle="${locale}" key="deactivate_account"/>
+                </button>
+            </c:if>
         </form>
     </div>
 </div>

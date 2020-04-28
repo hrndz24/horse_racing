@@ -13,6 +13,15 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
@@ -84,45 +93,86 @@
 
 <div class="container">
     <br/>
-    <span>Info about the race at </span> <c:out value="${raceDate}"/>.
+    <div style="display: flex;align-items: center; justify-content: center">
+        <div style="clear:both;">
+            <div class="card white"
+                 style="width: 33rem; display: inline-block;  height: 18rem;padding: 2rem">
+                <div class="card-body px-lg-5 pt-0">
+                    <div class="text-center font-weight-bold">
+                        <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                    </div>
+                    <hr>
+                    <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                        <c:out value="${race.distance}"/>.</p>
+
+                    <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                        <c:out value="${race.prizeMoney}"/>. </p>
+
+                    <p><fmt:message bundle="${locale}" key="race.date"/>:
+                        <c:out value="${race.date}"/>.</p>
+
+                    <p><fmt:message bundle="${locale}" key="race.location"/>:
+                        <c:out value="${race.location}"/>.</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <br/>
+    <div class="text-center font-italic font-weight-bold h2 text-dark blue lighten-5" style="margin-left: 2rem">
+        <p><fmt:message bundle="${locale}" key="participants"/>:</p>
+    </div>
     <form action="/controller" method="post">
         <input type="hidden" name="raceId" value="${raceId}"/>
-        <c:forEach var="horse" items="${horses}">
-            <div class="container">
-                <section class="p-md-3 mx-md-5 grey lighten-3">
+        <div class="container">
+            <div class="row">
+                <c:forEach var="horse" items="${horses}">
+                    <div class="col-md-4">
+                        <div class="card white"
+                             style="width: 20rem; display: inline-block;  height: 27rem;padding-top: 2rem;padding-bottom: 2rem;margin: 2rem">
+                            <div class="card-body px-lg-5 pt-0">
 
-                    <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out value="${horse.name}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out
+                                        value="${horse.name}"/>.</p>
 
-                    <p><fmt:message bundle="${locale}" key="horse.breed"/>: <c:out value="${horse.breed}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="horse.breed"/>: <c:out
+                                        value="${horse.breed}"/>.</p>
 
-                    <p><fmt:message bundle="${locale}" key="horse.age"/>: <c:out value="${horse.age}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="horse.age"/>: <c:out value="${horse.age}"/>.</p>
 
-                    <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out
-                            value="${horse.racesWonNumber}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="horse.races_won_number"/>: <c:out
+                                        value="${horse.racesWonNumber}"/>.</p>
 
-                    <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out
-                            value="${horse.racesLostNumber}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="horse.races_lost_number"/>: <c:out
+                                        value="${horse.racesLostNumber}"/>.</p>
 
-                    <input type="hidden" name="horseId" value="${horse.id}"/>
-                    <br/>
-                    <label for="oddsInFavour">
-                        <fmt:message bundle="${locale}" key="odds_in_favour"/>
-                        <input id="oddsInFavour" style="width: 5rem" type="text" class="form-control"
-                               pattern="\d{1,3}" name="oddsInFavour" required/>
+                                <input type="hidden" name="horseId" value="${horse.id}"/>
 
-                        <label for="oddsAgainst">
-                            <fmt:message bundle="${locale}" key="odds_against"/>
-                        </label>
-                        <input id="oddsAgainst" style="width: 5rem" type="text" class="form-control"
-                               pattern="\d{1,3}" name="oddsAgainst" required/>
+                                <div class="md-form">
+                                    <label for="oddsInFavour">
+                                        <fmt:message bundle="${locale}" key="odds_in_favour"/> </label>
+                                    <input id="oddsInFavour" style="width: 10rem" type="text"
+                                           class="form-control"
+                                           pattern="\d{1,3}" name="oddsInFavour" required/>
+                                </div>
 
-                </section>
-                <br/>
+                                <div class="md-form">
+                                    <label for="oddsAgainst">
+                                        <fmt:message bundle="${locale}" key="odds_against"/>
+                                    </label>
+                                    <input id="oddsAgainst" style="width: 10rem" type="text" class="form-control"
+                                           pattern="\d{1,3}" name="oddsAgainst" required/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
             </div>
-        </c:forEach>
-        <button class="btn btn-elegant" type="submit" name="command" value="submit_odds" style="margin-left: 5rem">
-            <fmt:message bundle="${locale}" key="submit"/></button>
+        </div>
+        <div style="display: flex;align-items: center; justify-content: center">
+            <button class="btn btn-elegant" type="submit" name="command" value="submit_odds" style="margin-left: 5rem">
+                <fmt:message bundle="${locale}" key="submit"/></button>
+        </div>
     </form>
 </div>
 

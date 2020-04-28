@@ -13,6 +13,15 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
@@ -87,43 +96,49 @@
 <br/>
 <div style="display: flex;align-items: center; justify-content: center">
     <div style="clear:both;">
-        <section class="p-md-3 mx-md-5 grey lighten-4" style="width: 32rem;">
+        <div class="card white"
+             style="width: 33rem; display: inline-block;  height: 19rem;padding: 2rem">
+            <div class="card-body px-lg-5 pt-0">
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="race_info"/></p>
+                </div>
+                <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${race.location}"/>.</p>
+                <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${race.date}"/>.</p>
+                <p><fmt:message bundle="${locale}" key="race.distance"/>: <c:out value="${race.distance}"/>.</p>
 
-            <div style="text-align: center">
-                <p><fmt:message bundle="${locale}" key="race_info"/></p>
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="odds_details"/></p>
+                </div>
+                <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
+                        value="${odds.oddsAgainst}"/>.</p>
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="horse_info"/></p>
+                </div>
+                <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out value="${horse.name}"/>.</p>
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="bet_details"/></p>
+                </div>
+                <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.
+                    <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
+                            data-target="#changeBetModal">
+                        <fmt:message bundle="${locale}" key="edit"/>
+                    </button>
+                </p>
+                <br/>
             </div>
-            <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${race.location}"/>.</p>
-            <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${race.date}"/>.</p>
-            <p><fmt:message bundle="${locale}" key="race.distance"/>: <c:out value="${race.distance}"/>.</p>
-
-            <div style="text-align: center">
-                <p><fmt:message bundle="${locale}" key="odds_details"/></p>
-            </div>
-            <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
-                    value="${odds.oddsAgainst}"/>.</p>
-            <div style="text-align: center">
-                <p><fmt:message bundle="${locale}" key="bet_details"/></p>
-            </div>
-            <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.
-                <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
-                        data-target="#changeBetModal">
-                    <fmt:message bundle="${locale}" key="edit"/>
-                </button>
-            </p>
-            <br/>
-        </section>
-        <br/>
-        <br/>
-        <div style="display: flex;align-items: center; justify-content: center">
-            <form action="/controller" method="post">
-                <button type="submit" name="command" value="delete_bet"
-                        class="btn btn-elegant"
-                        data-toggle="modal"
-                        data-target="#changePasswordModal">
-                    <fmt:message bundle="${locale}" key="delete_bet"/>
-                </button>
-            </form>
         </div>
+    </div>
+    <br/>
+    <br/>
+    <div style="display: flex;align-items: center; justify-content: center">
+        <form action="/controller" method="post">
+            <button type="submit" name="command" value="delete_bet"
+                    class="btn btn-elegant"
+                    data-toggle="modal"
+                    data-target="#changePasswordModal">
+                <fmt:message bundle="${locale}" key="delete_bet"/>
+            </button>
+        </form>
     </div>
 </div>
 

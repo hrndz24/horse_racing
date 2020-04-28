@@ -90,28 +90,44 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="row">
-        <c:forEach var="bet" items="${bets}">
-            <div class="col-md-4">
-                <div class="card white"
-                     style="width: 28rem; display: inline-block;  height: 22rem;padding-top: 2rem;padding-bottom: 2rem;margin: 2rem">
-                    <div class="card-body px-lg-5 pt-0">
-                        <form action="/controller" method="post">
-                            <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.</p>
 
-                            <input type="hidden" name="betId" value="${bet.id}"/>
+<br/>
+<%--races--%>
+<div class="container">
+    <c:forEach var="race" items="${racesWithoutOdds}">
+        <div style="display: flex;align-items: center; justify-content: center">
+            <div class="card white"
+                 style="width: 33rem; display: inline-block;padding-top: 2rem;margin: 1rem">
+                <div class="card-body px-lg-5 pt-0">
+                    <form action="/controller" method="post">
+                        <div class="text-center font-weight-bold">
+                            <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                        </div>
+                        <hr>
+                        <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                            <c:out value="${race.distance}"/>.</p>
+                        <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                            <c:out value="${race.prizeMoney}"/>. </p>
+                        <p><fmt:message bundle="${locale}" key="race.date"/>:
+                            <c:out value="${race.date}"/>.</p>
+                        <p><fmt:message bundle="${locale}" key="race.location"/>:
+                            <c:out value="${race.location}"/>.</p>
+                        <input type="hidden" name="raceId" value="${race.id}"/>
+
+                        <c:if test="${sessionScope.user.userRole.id==3}">
                             <div style="display: flex;align-items: center; justify-content: center">
-                                <button class="btn btn-elegant" type="submit" name="command" value="show_bet">
-                                    <fmt:message bundle="${locale}" key="view_details"/></button>
+                                <button class="btn elegant-color-dark text-white" type="submit" name="command" value="place_odds">
+                                    <fmt:message
+                                            bundle="${locale}"
+                                            key="place_odds"/></button>
                             </div>
-                        </form>
-                    </div>
+                        </c:if>
+                    </form>
                 </div>
             </div>
             <br/>
-        </c:forEach>
-    </div>
+        </div>
+    </c:forEach>
 </div>
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>

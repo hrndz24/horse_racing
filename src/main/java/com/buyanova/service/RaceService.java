@@ -16,6 +16,7 @@ import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
 import com.buyanova.specification.impl.odds.FindOddsById;
 import com.buyanova.specification.impl.race.FindRaceById;
 import com.buyanova.specification.impl.race.FindRacesAfterCurrentDate;
+import com.buyanova.specification.impl.race.FindRacesAfterCurrentDateWithoutOdds;
 import com.buyanova.specification.impl.race.FindRacesWithoutResults;
 import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.RaceValidator;
@@ -140,6 +141,14 @@ public enum RaceService {
     public List<Race> getUpcomingRaces() throws ServiceException {
         try {
             return raceRepository.query(new FindRacesAfterCurrentDate());
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    public List<Race> getUpcomingRacesWithoutOdds() throws ServiceException {
+        try {
+            return raceRepository.query(new FindRacesAfterCurrentDateWithoutOdds());
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

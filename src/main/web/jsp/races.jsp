@@ -100,10 +100,17 @@
                 <fmt:message
                         bundle="${locale}"
                         key="add_race"/></button>
+
             <button class="btn elegant-color-dark text-white" type="submit" name="command"
                     value="show_races_without_results"><fmt:message
                     bundle="${locale}"
                     key="races_without_results"/></button>
+        </c:if>
+        <c:if test="${sessionScope.user.userRole.id==3}">
+            <button class="btn elegant-color-dark text-white" type="submit" name="command"
+                    value="show_races_without_odds"><fmt:message
+                    bundle="${locale}"
+                    key="races_without_odds"/></button>
         </c:if>
     </form>
 </div>
@@ -112,7 +119,7 @@
     <c:forEach var="race" items="${races}">
         <div class="container">
             <div class="card white"
-                 style="width: 27rem; display: inline-block;padding-top: 2rem;margin: 1rem">
+                 style="width: 30rem; display: inline-block;padding-top: 2rem;margin: 1rem">
                 <div class="card-body px-lg-5 pt-0">
                     <form action="/controller" method="post">
                         <p><fmt:message bundle="${locale}" key="race.distance"/>:
@@ -126,22 +133,28 @@
                         <input type="hidden" name="raceId" value="${race.id}"/>
                         <input type="hidden" name="raceDate" value="${race.date}"/>
                         <input type="hidden" name="raceLocation" value="${race.location}"/>
-                        <button class="btn special-color text-white" type="submit" name="command" value="show_race">
-                            <fmt:message
-                                    bundle="${locale}"
-                                    key="view_details"/></button>
-                        <c:if test="${sessionScope.user.userRole.id==3}">
-                            <button class="btn elegant-color-dark text-white" type="submit" name="command"
-                                    value="place_odds"><fmt:message
-                                    bundle="${locale}"
-                                    key="place_odds"/></button>
-                        </c:if>
-                        <c:if test="${sessionScope.user.userRole.id==1}">
-                            <button class="btn elegant-color-dark text-white" type="submit" name="command"
-                                    value="redirect_edit_race"><fmt:message
-                                    bundle="${locale}"
-                                    key="edit"/></button>
-                        </c:if>
+                        <div style="display: flex;align-items: center; justify-content: center">
+                            <button class="btn special-color text-white" type="submit" name="command" value="show_race">
+                                <fmt:message
+                                        bundle="${locale}"
+                                        key="view_details"/></button>
+                            <c:if test="${sessionScope.user.userRole.id==3}">
+                                <button style="margin-left: 2rem" class="btn elegant-color-dark text-white"
+                                        type="submit"
+                                        name="command"
+                                        value="edit_odds"><fmt:message
+                                        bundle="${locale}"
+                                        key="edit_odds"/></button>
+                            </c:if>
+                            <c:if test="${sessionScope.user.userRole.id==1}">
+                                <button style="margin-left: 2rem" class="btn elegant-color-dark text-white"
+                                        type="submit"
+                                        name="command"
+                                        value="redirect_edit_race"><fmt:message
+                                        bundle="${locale}"
+                                        key="edit"/></button>
+                            </c:if>
+                        </div>
                     </form>
 
                 </div>
