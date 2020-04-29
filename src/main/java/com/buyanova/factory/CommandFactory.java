@@ -37,7 +37,8 @@ public enum CommandFactory {
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
     REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage()),
-    REDIRECT_EDIT_RACE(new RedirectToEditRacePage()), REDIRECT_EDIT_HORSE(new RedirectToEditHorsePage());
+    REDIRECT_EDIT_RACE(new RedirectToEditRacePage()), REDIRECT_EDIT_HORSE(new RedirectToEditHorsePage()),
+    REDIRECT_EDIT_ODDS(new RedirectToEditOddsPage());
 
     private Command command;
 

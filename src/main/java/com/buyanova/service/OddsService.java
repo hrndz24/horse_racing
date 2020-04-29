@@ -98,7 +98,7 @@ public enum OddsService {
 
     /*
     Validates all fields of odds except id, since id is to be set after
-    adding it ot the data source.
+    adding it to the data source.
     Checks:
      - odds numbers are positive;
      - bookmaker with such id exists and has UserRole.BOOKMAKER;
