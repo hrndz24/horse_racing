@@ -95,11 +95,11 @@
         <c:forEach var="bet" items="${bets}">
             <div class="col-md-4">
                 <div class="card white"
-                     style="width: 28rem; display: inline-block;  height: 22rem;padding-top: 2rem;padding-bottom: 2rem;margin: 2rem">
+                     style="width: 20rem; display: inline-block;  height: 15rem;padding-top: 2rem;padding-bottom: 2rem;margin: 2rem">
                     <div class="card-body px-lg-5 pt-0">
                         <form action="/controller" method="post">
                             <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.</p>
-
+                            <br/>
                             <input type="hidden" name="betId" value="${bet.id}"/>
                             <div style="display: flex;align-items: center; justify-content: center">
                                 <button class="btn btn-elegant" type="submit" name="command" value="show_bet">

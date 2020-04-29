@@ -92,16 +92,15 @@
 </nav>
 
 <br/>
-<br/>
-<br/>
 <div style="display: flex;align-items: center; justify-content: center">
     <div style="clear:both;">
         <div class="card white"
-             style="width: 33rem; display: inline-block;  height: 19rem;padding: 2rem">
+             style="width: 33rem; display: inline-block;  height: 33rem;padding: 2rem">
             <div class="card-body px-lg-5 pt-0">
                 <div style="text-align: center">
                     <p><fmt:message bundle="${locale}" key="race_info"/></p>
                 </div>
+                <hr>
                 <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${race.location}"/>.</p>
                 <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${race.date}"/>.</p>
                 <p><fmt:message bundle="${locale}" key="race.distance"/>: <c:out value="${race.distance}"/>.</p>
@@ -109,15 +108,18 @@
                 <div style="text-align: center">
                     <p><fmt:message bundle="${locale}" key="odds_details"/></p>
                 </div>
+                <hr>
                 <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
                         value="${odds.oddsAgainst}"/>.</p>
                 <div style="text-align: center">
                     <p><fmt:message bundle="${locale}" key="horse_info"/></p>
                 </div>
+                <hr>
                 <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out value="${horse.name}"/>.</p>
                 <div style="text-align: center">
                     <p><fmt:message bundle="${locale}" key="bet_details"/></p>
                 </div>
+                <hr>
                 <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.
                     <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
                             data-target="#changeBetModal">
@@ -127,22 +129,20 @@
                 <br/>
             </div>
         </div>
-    </div>
-    <br/>
-    <br/>
-    <div style="display: flex;align-items: center; justify-content: center">
-        <form action="/controller" method="post">
-            <button type="submit" name="command" value="delete_bet"
-                    class="btn btn-elegant"
-                    data-toggle="modal"
-                    data-target="#changePasswordModal">
-                <fmt:message bundle="${locale}" key="delete_bet"/>
-            </button>
-        </form>
+        <br/>
+        <br/>
+        <div style="display: flex;align-items: center; justify-content: center">
+            <form action="/controller" method="post">
+                <button type="submit" name="command" value="delete_bet"
+                        class="btn btn-elegant">
+                    <fmt:message bundle="${locale}" key="delete_bet"/>
+                </button>
+            </form>
+        </div>
     </div>
 </div>
 
-<!-- change login popup window -->
+<!-- change bet sum popup window -->
 <div class="modal fade" id="changeBetModal" tabindex="-1" role="dialog" aria-labelledby="betModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

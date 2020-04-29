@@ -13,6 +13,15 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
@@ -81,27 +90,50 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <section class="p-md-3 mx-md-5">
-        <span><fmt:message bundle="${locale}" key="bet_details"/>:</span>
-        <br/>
-        <p><fmt:message bundle="${locale}" key="horse_name"/>: <c:out value="${horse.name}"/></p>
-        <p><fmt:message bundle="${locale}" key="race_date"/>: <c:out value="${race.date}"/></p>
-        <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
-                value="${odds.oddsAgainst}"/></p>
+<br/>
+<div style="display: flex;align-items: center; justify-content: center">
+    <div style="clear:both;">
+        <div class="card white"
+             style="width: 33rem; display: inline-block;  height: 35rem;padding: 2rem">
+            <div class="card-body px-lg-5 pt-0">
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="race_info"/></p>
+                </div>
+                <hr>
+                <p><fmt:message bundle="${locale}" key="race.location"/>: <c:out value="${race.location}"/>.</p>
+                <p><fmt:message bundle="${locale}" key="race.date"/>: <c:out value="${race.date}"/>.</p>
+                <p><fmt:message bundle="${locale}" key="race.distance"/>: <c:out value="${race.distance}"/>.</p>
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="horse_info"/></p>
+                </div>
+                <hr>
+                <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out value="${horse.name}"/>.</p>
+                <div style="text-align: center">
+                    <p><fmt:message bundle="${locale}" key="odds_details"/></p>
+                </div>
+                <hr>
+                <p><fmt:message bundle="${locale}" key="odds"/>: <c:out value="${odds.oddsInFavour}"/>/<c:out
+                        value="${odds.oddsAgainst}"/>.</p>
 
-        <form action="/controller" method="post" style="width: 10rem">
-            <input placeholder=
-                   <fmt:message bundle="${locale}" key="sum"/> type="text" class="form-control"
-                   pattern="\d{3,10}" name="betSum" required/>
-            <input type="hidden" name="oddsId" value="${odds.id}"/>
-
-            <button class="btn btn-elegant" type="submit" name="command" value="submit_bet">
-                <fmt:message bundle="${locale}" key="submit"/></button>
-        </form>
-    </section>
-    <br/>
+                <div style="display: flex;align-items: center; justify-content: center">
+                    <form action="/controller" method="post">
+                        <div class="md-form">
+                            <input id="sum" type="text" class="form-control" name="betSum" pattern="\d{3,10}" required>
+                            <label for="sum"><fmt:message bundle="${locale}" key="sum"/></label>
+                        </div>
+                        <div style="display: flex;align-items: center; justify-content: center">
+                            <button type="submit" name="command" value="submit_bet"
+                                    class="btn btn-elegant">
+                                <fmt:message bundle="${locale}" key="submit"/>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>

@@ -4,6 +4,7 @@ import com.buyanova.command.Command;
 import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Bet;
+import com.buyanova.entity.Odds;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.service.BetService;
@@ -15,7 +16,7 @@ import java.math.BigDecimal;
 public class SubmitBet implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        int oddsId = Integer.parseInt(request.getParameter(JSPParameter.ODDS_ID.getParameter()));
+        int oddsId = ((Odds) request.getSession().getAttribute(JSPParameter.ODDS.getParameter())).getId();
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         int userId = user.getId();
         BigDecimal sum = new BigDecimal(request.getParameter(JSPParameter.BET_SUM.getParameter()));
