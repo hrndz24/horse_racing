@@ -7,6 +7,7 @@ import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.user.UserRepository;
 import com.buyanova.specification.impl.user.FindUserByLogin;
 import com.buyanova.specification.impl.user.FindUserByLoginAndPassword;
+import com.buyanova.util.PasswordEncryptor;
 import com.buyanova.validator.UserValidator;
 
 import java.math.BigDecimal;
@@ -26,16 +27,29 @@ public enum UserService {
         }
         validateUserFields(user);
         checkLoginIsUnique(user.getLogin());
+        setDefaultUserValues(user);
+        encryptUserPassword(user);
+        tryAddUserToDataSource(user);
+        return user;
+    }
 
+    private void setDefaultUserValues(User user) {
         user.setActive(true);
         user.setBalance(new BigDecimal(0));
-        user.setPassword(String.valueOf(user.getPassword().hashCode()));
+    }
+
+    private void encryptUserPassword(User user) {
+        String unencryptedPassword = user.getPassword();
+        String encryptedPassword = PasswordEncryptor.INSTANCE.encryptPassword(unencryptedPassword);
+        user.setPassword(encryptedPassword);
+    }
+
+    private void tryAddUserToDataSource(User user) throws ServiceException {
         try {
             userRepository.add(user);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to sign up due to data source problems", e);
         }
-        return user;
     }
 
     public User logIn(User user) throws ServiceException {
@@ -43,7 +57,11 @@ public enum UserService {
             throw new ServiceException("Null user");
         }
         validateUserLogInCredentials(user);
-        user.setPassword(String.valueOf(user.getPassword().hashCode()));
+        encryptUserPassword(user);
+        return getFirstUserFoundByLoginAndPassword(user);
+    }
+
+    private User getFirstUserFoundByLoginAndPassword(User user) throws ServiceException {
         try {
             List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
             if (users.isEmpty() || !users.get(0).isActive()) {
@@ -51,7 +69,7 @@ public enum UserService {
             }
             return users.get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to find user due to data source problems", e);
         }
     }
 
@@ -59,10 +77,14 @@ public enum UserService {
         if (user == null) {
             throw new ServiceException("Null user");
         }
+        tryToRemoveUserFromDataSource(user);
+    }
+
+    private void tryToRemoveUserFromDataSource(User user) throws ServiceException {
         try {
             userRepository.remove(user);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to remove user due to data source problems", e);
         }
     }
 
@@ -75,11 +97,7 @@ public enum UserService {
         }
         checkLoginIsUnique(newLogin);
         user.setLogin(newLogin);
-        try {
-            userRepository.update(user);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
+        tryToUpdateUserInDataSource(user);
     }
 
     public void changePassword(User user, String newPassword) throws ServiceException {
@@ -89,17 +107,11 @@ public enum UserService {
         if (!userValidator.isValidPassword(newPassword)) {
             throw new ServiceException("Invalid user password");
         }
-        try {
-            user.setPassword(String.valueOf(user.getPassword().hashCode()));
-            List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
-            if (users.isEmpty()) {
-                throw new ServiceException("User with such login and password does not exist");
-            }
-            user.setPassword(String.valueOf(newPassword.hashCode()));
-            userRepository.update(user);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
+        encryptUserPassword(user);
+        getFirstUserFoundByLoginAndPassword(user);
+        user.setPassword(newPassword);
+        encryptUserPassword(user);
+        tryToUpdateUserInDataSource(user);
     }
 
     public void changeName(User user, String name) throws ServiceException {
@@ -109,13 +121,8 @@ public enum UserService {
         if (!userValidator.isValidName(name)) {
             throw new ServiceException("Invalid user name");
         }
-
         user.setName(name);
-        try {
-            userRepository.update(user);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
+        tryToUpdateUserInDataSource(user);
     }
 
     public void changeEmail(User user, String email) throws ServiceException {
@@ -125,13 +132,8 @@ public enum UserService {
         if (!userValidator.isValidEmail(email)) {
             throw new ServiceException("Invalid user email");
         }
-
         user.setEmail(email);
-        try {
-            userRepository.update(user);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
+        tryToUpdateUserInDataSource(user);
     }
 
     public void replenishAccount(User user, BigDecimal replenishmentSum) throws ServiceException {
@@ -142,10 +144,14 @@ public enum UserService {
             throw new ServiceException("Negative replenishment sum");
         }
         user.setBalance(user.getBalance().add(replenishmentSum));
+        tryToUpdateUserInDataSource(user);
+    }
+
+    private void tryToUpdateUserInDataSource(User user) throws ServiceException {
         try {
             userRepository.update(user);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to change information due to data source problems", e);
         }
     }
 
@@ -163,36 +169,27 @@ public enum UserService {
     private void validateUserFields(User user) throws ServiceException {
         validateUserLogInCredentials(user);
 
-        if (user.getName() == null) {
-            throw new ServiceException("Null user name");
-        }
-        if (!userValidator.isValidName(user.getName())) {
+        String name = user.getName();
+        if (name == null || !userValidator.isValidName(name)) {
             throw new ServiceException("Invalid user name");
         }
-
-        if (user.getEmail() == null) {
-            throw new ServiceException("Null user email");
-        }
-        if (!userValidator.isValidEmail(user.getEmail())) {
+        String email = user.getEmail();
+        if (email == null || !userValidator.isValidEmail(email)) {
             throw new ServiceException("Invalid user email");
         }
+
         if (user.getUserRole() == null) {
             throw new ServiceException("Null user role");
         }
     }
 
     private void validateUserLogInCredentials(User user) throws ServiceException {
-        if (user.getLogin() == null) {
-            throw new ServiceException("Null user login");
-        }
-        if (!userValidator.isValidLogin(user.getLogin())) {
+        String login = user.getLogin();
+        if (login == null || !userValidator.isValidLogin(login)) {
             throw new ServiceException("Invalid user login");
         }
-
-        if (user.getPassword() == null) {
-            throw new ServiceException("Null user password");
-        }
-        if (!userValidator.isValidPassword(user.getPassword())) {
+        String password = user.getPassword();
+        if (password == null || !userValidator.isValidPassword(password)) {
             throw new ServiceException("Invalid user password");
         }
     }

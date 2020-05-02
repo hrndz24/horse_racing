@@ -121,7 +121,7 @@
                 </form>
             </div>
         </div>
-        <button style="float:left;" type="button" class="btn light-blue darken-4 text-white"
+        <button style="float:left;" type="button" class="btn unique-color text-white"
                 data-toggle="modal"
                 data-target="#addHorseModal">
             <fmt:message bundle="${locale}" key="add_horse"/>
@@ -159,7 +159,7 @@
                                     </button>
                                     <c:if test="${horse.performing eq true}">
                                         <button style="margin: 1rem" type="submit"
-                                                class="btn danger-color-dark text-white" name="command"
+                                                class="btn light-blue darken-4 text-white" name="command"
                                                 value="invalidate_horse">
                                             <fmt:message bundle="${locale}" key="invalidate"/>
                                         </button>
