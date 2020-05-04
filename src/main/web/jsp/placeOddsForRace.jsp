@@ -153,7 +153,7 @@
                                         <fmt:message bundle="${locale}" key="odds_in_favour"/> </label>
                                     <input id="oddsInFavour" style="width: 10rem" type="text"
                                            class="form-control"
-                                           pattern="\d{1,3}" name="oddsInFavour" required/>
+                                           pattern="[1-9]{1,3}" name="oddsInFavour" required/>
                                 </div>
 
                                 <div class="md-form">
@@ -161,7 +161,7 @@
                                         <fmt:message bundle="${locale}" key="odds_against"/>
                                     </label>
                                     <input id="oddsAgainst" style="width: 10rem" type="text" class="form-control"
-                                           pattern="\d{1,3}" name="oddsAgainst" required/>
+                                           pattern="[1-9]{1,3}" name="oddsAgainst" required/>
                                 </div>
                             </div>
                         </div>

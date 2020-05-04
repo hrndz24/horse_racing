@@ -159,14 +159,14 @@
                                     </button>
                                     <c:if test="${horse.performing eq true}">
                                         <button style="margin: 1rem" type="submit"
-                                                class="btn light-blue darken-4 text-white" name="command"
+                                                class="btn danger-color-dark text-white" name="command"
                                                 value="invalidate_horse">
                                             <fmt:message bundle="${locale}" key="invalidate"/>
                                         </button>
                                     </c:if>
                                     <c:if test="${horse.performing ne true}">
                                         <button style="margin: 1rem" type="submit"
-                                                class="btn danger-color-dark text-white" name="command"
+                                                class="btn light-blue darken-4 text-white" name="command"
                                                 value="validate_horse">
                                             <fmt:message bundle="${locale}" key="validate"/>
                                         </button>

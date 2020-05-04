@@ -234,10 +234,13 @@
                 <form action="/controller" method="post">
                     <div class="modal-body">
                         <c:forEach var="horse" items="${performingHorses}">
-                            <p>
-                                <input type="checkbox" name="horseId" value="${horse.id}">
-                                <c:out value="${horse.name}"/>
-                            </p>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="${horse.id}" name="horseId"
+                                       value="${horse.id}">
+                                <label class="custom-control-label text-dark" for="${horse.id}"><c:out
+                                        value="${horse.name}"/></label>
+                            </div>
+                            <br/>
                         </c:forEach>
                     </div>
                     <div class="modal-footer">

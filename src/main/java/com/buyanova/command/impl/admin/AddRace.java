@@ -15,6 +15,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AddRace implements Command {
+
+    private static final String DATE_PATTERN = "yyyy-MM-dd hh:mm aa";
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
@@ -22,7 +25,7 @@ public class AddRace implements Command {
         int distance = Integer.parseInt(request.getParameter(JSPParameter.RACE_DISTANCE.getParameter()));
         BigDecimal prizeMoney = new BigDecimal(request.getParameter(JSPParameter.RACE_PRIZE_MONEY.getParameter()));
         try {
-            Date raceDate = new SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(date);
+            Date raceDate = new SimpleDateFormat(DATE_PATTERN).parse(date);
             Race race = new Race();
             race.setLocation(location);
             race.setDistance(distance);

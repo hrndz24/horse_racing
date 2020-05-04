@@ -14,7 +14,15 @@
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
-
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 
@@ -57,9 +65,10 @@
         </ul>
     </div>
 </nav>
-<img src="../images/rainbow_to_attack.png" alt="Smiley face" align="left">
-<div style="text-align: center; margin-top: 4rem">
-    <div class="card" style="width: 23rem; display: inline-block">
+
+<div style="text-align: center; margin-top: 2rem">
+    <h1><strong><fmt:message bundle="${locale}" key="welcome"/></strong></h1>
+    <div class="card" style="width: 28rem; display: inline-block; margin-top: 2rem">
 
         <h5 class="card-header elegant-color white-text text-center py-4">
             <strong><fmt:message bundle="${locale}" key="sign_up"/></strong>
