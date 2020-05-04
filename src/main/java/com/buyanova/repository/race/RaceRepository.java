@@ -16,4 +16,6 @@ public interface RaceRepository extends Repository<Race> {
     void addHorseToRace(int horseId, int raceId) throws RepositoryException;
 
     void removeHorseFromRace(int horseId, int raceId) throws RepositoryException;
+
+    void setRaceResults(Race race) throws RepositoryException;
 }

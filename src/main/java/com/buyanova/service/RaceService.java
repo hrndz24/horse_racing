@@ -1,27 +1,20 @@
 package com.buyanova.service;
 
-import com.buyanova.entity.*;
+import com.buyanova.entity.Horse;
+import com.buyanova.entity.Race;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.factory.RepositoryFactory;
-import com.buyanova.repository.bet.BetRepository;
 import com.buyanova.repository.horse.HorseRepository;
-import com.buyanova.repository.odds.OddsRepository;
 import com.buyanova.repository.race.RaceRepository;
-import com.buyanova.repository.user.UserRepository;
-import com.buyanova.specification.impl.bet.FindLostBetsInRaceByUserId;
-import com.buyanova.specification.impl.bet.FindWonBetsInRaceByUserId;
 import com.buyanova.specification.impl.horse.FindHorseById;
 import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
-import com.buyanova.specification.impl.odds.FindOddsById;
 import com.buyanova.specification.impl.race.FindRaceById;
 import com.buyanova.specification.impl.race.FindRacesAfterCurrentDate;
 import com.buyanova.specification.impl.race.FindRacesAfterCurrentDateWithoutOdds;
 import com.buyanova.specification.impl.race.FindRacesWithoutResults;
-import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.RaceValidator;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public enum RaceService {
@@ -31,9 +24,6 @@ public enum RaceService {
     private RepositoryFactory factory = RepositoryFactory.INSTANCE;
     private RaceRepository raceRepository = factory.getRaceRepository();
     private HorseRepository horseRepository = factory.getHorseRepository();
-    private UserRepository userRepository = factory.getUserRepository();
-    private BetRepository betRepository = factory.getBetRepository();
-    private OddsRepository oddsRepository = factory.getOddsRepository();
 
     private RaceValidator raceValidator = new RaceValidator();
 
@@ -71,19 +61,25 @@ public enum RaceService {
         if (race == null) {
             throw new ServiceException("Null race");
         }
-
         checkHorseWinnerIsNotSet(race);
         checkHorseWinnerPerformedInRace(race);
         try {
-            raceRepository.update(race);
-            List<Bet> wonBets = betRepository.query(new FindWonBetsInRaceByUserId(race.getId()));
-            List<Bet> lostBets = betRepository.query(new FindLostBetsInRaceByUserId(race.getId()));
+            raceRepository.setRaceResults(race);
+            updateHorsesStatistics(race);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
 
-            for (Bet bet : wonBets) {
-                payMoneyToUsersWhoWon(bet);
-            }
-            for (Bet bet : lostBets) {
-                withdrawMoneyFromUsersWhoLost(bet);
+    private void updateHorsesStatistics(Race race) throws ServiceException {
+        try {
+            List<Horse> horses = horseRepository.query(new FindHorsesPerformingInRace(race.getId()));
+            for (Horse horse : horses) {
+                if (horse.getId() == race.getHorseWinnerId()) {
+                    horse.incrementWonRacesNumber();
+                } else {
+                    horse.incrementLostRacesNumber();
+                }
             }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
@@ -95,7 +91,6 @@ public enum RaceService {
             throw new ServiceException("Null race");
         }
         validateRaceFields(race);
-
         try {
             raceRepository.update(race);
         } catch (RepositoryException e) {
@@ -157,38 +152,6 @@ public enum RaceService {
     public Race getRaceById(int raceId) throws ServiceException {
         try {
             return raceRepository.query(new FindRaceById(raceId)).get(0);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    private void payMoneyToUsersWhoWon(Bet bet) throws ServiceException {
-        try {
-            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
-            Odds odds = oddsRepository.query(new FindOddsById(bet.getOddsId())).get(0);
-            User bookmaker = userRepository.query(new FindUserById(odds.getBookmakerId())).get(0);
-            int oddsInFavour = odds.getOddsInFavour();
-            BigDecimal userWin = bet.getSum().multiply(new BigDecimal(oddsInFavour));
-            user.setBalance(user.getBalance().add(userWin));
-            bookmaker.setBalance(bookmaker.getBalance().subtract(userWin));
-            userRepository.update(user);
-            userRepository.update(bookmaker);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    private void withdrawMoneyFromUsersWhoLost(Bet bet) throws ServiceException {
-        try {
-            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
-            Odds odds = oddsRepository.query(new FindOddsById(bet.getOddsId())).get(0);
-            User bookmaker = userRepository.query(new FindUserById(odds.getBookmakerId())).get(0);
-            int oddsAgainst = odds.getOddsAgainst();
-            BigDecimal userLoss = bet.getSum().multiply(new BigDecimal(oddsAgainst - 1));
-            user.setBalance(user.getBalance().subtract(userLoss));
-            bookmaker.setBalance(bookmaker.getBalance().add(userLoss));
-            userRepository.update(user);
-            userRepository.update(bookmaker);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

@@ -7,7 +7,7 @@ import java.util.Objects;
  * Main participant of the races. The core element of the project.
  *
  * @author Natalie
- * */
+ */
 public class Horse implements Serializable {
 
     private int id;
@@ -18,7 +18,8 @@ public class Horse implements Serializable {
     private int racesWonNumber;
     private int racesLostNumber;
 
-    public Horse(){}
+    public Horse() {
+    }
 
     public Horse(int id, String name, String breed, int age, boolean isPerforming, int racesWonNumber, int racesLostNumber) {
         this.id = id;
@@ -84,6 +85,14 @@ public class Horse implements Serializable {
 
     public void setRacesLostNumber(int racesLostNumber) {
         this.racesLostNumber = racesLostNumber;
+    }
+
+    public void incrementWonRacesNumber() {
+        racesWonNumber++;
+    }
+
+    public void incrementLostRacesNumber() {
+        racesLostNumber++;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class AddRace implements Command {
         int distance = Integer.parseInt(request.getParameter(JSPParameter.RACE_DISTANCE.getParameter()));
         BigDecimal prizeMoney = new BigDecimal(request.getParameter(JSPParameter.RACE_PRIZE_MONEY.getParameter()));
         try {
-            Date raceDate = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(date);
+            Date raceDate = new SimpleDateFormat("yyyy-MM-dd hh:mm aa").parse(date);
             Race race = new Race();
             race.setLocation(location);
             race.setDistance(distance);

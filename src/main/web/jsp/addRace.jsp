@@ -107,10 +107,10 @@
                 <input placeholder=
                        <fmt:message bundle="${locale}" key="race.prize_money"/> type="text"
                        class="form-control" pattern="^[0-9]+(\.[0-9]{1,2})?$" name="racePrizeMoney" required>
-                <%--        date--%>
+
                 <div class="md-form">
                     <input placeholder=
-                           <fmt:message bundle="${locale}" key="race.date"/> type="text" data-provide="datepicker"
+                           "<fmt:message bundle="${locale}" key="race.date"/>" type="datetime-local" data-provide="datepicker"
                            id="date-picker-example"
                            class="form-control datepicker" name="raceDate">
                 </div>

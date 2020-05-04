@@ -6,8 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FindWonBetsInRaceByUserId implements SqlSpecification {
-    private int userId;
+public class FindWonBetsInRace implements SqlSpecification {
     private int raceId;
     private static final String SQL_QUERY =
                     "SELECT \n" +
@@ -22,8 +21,7 @@ public class FindWonBetsInRaceByUserId implements SqlSpecification {
                     "    odds.horse_id = races.horse_winner_id\n" +
                     "        AND races.race_id = ?";
 
-    public FindWonBetsInRaceByUserId(int raceId) {
-//        this.userId = userId;
+    public FindWonBetsInRace(int raceId) {
         this.raceId = raceId;
     }
 
@@ -31,7 +29,6 @@ public class FindWonBetsInRaceByUserId implements SqlSpecification {
     public PreparedStatement toSqlStatement(Connection connection) throws SQLException {
         PreparedStatement statement = connection.prepareStatement(SQL_QUERY);
         statement.setInt(1, raceId);
-        //statement.setInt(2, userId);
         return statement;
     }
 }
