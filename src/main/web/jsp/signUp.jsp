@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${language}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale"/>
 <!DOCTYPE html>
@@ -68,7 +69,7 @@
 
 <div style="text-align: center; margin-top: 2rem">
     <h1><strong><fmt:message bundle="${locale}" key="welcome"/></strong></h1>
-    <div class="card" style="width: 28rem; display: inline-block; margin-top: 2rem">
+    <div class="card" style="width: 28rem; display: inline-block; margin-top: 1rem">
 
         <h5 class="card-header elegant-color white-text text-center py-4">
             <strong><fmt:message bundle="${locale}" key="sign_up"/></strong>
@@ -108,6 +109,14 @@
         </div>
     </div>
 </div>
+
+<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+        <ctg:copyright/>
+    </div>
+</footer>
+
 
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>

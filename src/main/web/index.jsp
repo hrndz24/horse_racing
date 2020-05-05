@@ -73,8 +73,8 @@
 </nav>
 
 <%--log in stuff--%>
-<div style="text-align: center; margin-top: 3rem">
-    <h1 style="margin-top: 1rem"><strong><fmt:message bundle="${locale}" key="welcome"/></strong></h1>
+<div style="text-align: center; padding-top: 5rem">
+    <h1><strong><fmt:message bundle="${locale}" key="welcome"/></strong></h1>
     <div class="card" style="width: 28rem; display: inline-block; margin-top: 1rem">
 
         <h5 class="card-header elegant-color white-text text-center py-4">
