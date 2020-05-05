@@ -16,6 +16,7 @@
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <servlet.version>4.0.1</servlet.version>
         <jstl.version>1.2</jstl.version>
+        <jsp-apiVersion>2.2</jsp-apiVersion>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
@@ -77,6 +78,13 @@
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
             <version>${servlet.version}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>${jsp-apiVersion}</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -2,6 +2,8 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
+
 <c:if test="${empty sessionScope.language}">
     <fmt:setLocale value="es"/>
 </c:if>
@@ -31,7 +33,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
+<nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark fixed-top" style="height: 4rem">
 
     <a class="navbar-brand" href="#"><fmt:message bundle="${locale}" key="navbar.name"/></a>
 
@@ -71,9 +73,9 @@
 </nav>
 
 <%--log in stuff--%>
-<div style="text-align: center; margin-top: 2rem">
-    <h1><strong><fmt:message bundle="${locale}" key="welcome"/></strong></h1>
-    <div class="card" style="width: 28rem; display: inline-block; margin-top: 2rem">
+<div style="text-align: center; margin-top: 3rem">
+    <h1 style="margin-top: 1rem"><strong><fmt:message bundle="${locale}" key="welcome"/></strong></h1>
+    <div class="card" style="width: 28rem; display: inline-block; margin-top: 1rem">
 
         <h5 class="card-header elegant-color white-text text-center py-4">
             <strong><fmt:message bundle="${locale}" key="log_in"/></strong>
@@ -113,6 +115,13 @@
         </div>
     </div>
 </div>
+
+<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+        <ctg:copyright/>
+    </div>
+</footer>
 
 <script type="text/javascript" src="js/jquery.min.js"></script>
 <script type="text/javascript" src="js/popper.min.js"></script>

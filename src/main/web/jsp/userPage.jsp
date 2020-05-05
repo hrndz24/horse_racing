@@ -2,6 +2,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="ctg" uri="customtags" %>
 <fmt:setLocale value="${language}" scope="session"/>
 <fmt:setBundle basename="locale" var="locale"/>
 <html>
@@ -307,6 +308,14 @@
         </div>
     </div>
 </div>
+
+<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+        <ctg:copyright/>
+    </div>
+</footer>
+
 <script type="text/javascript" src="../js/jquery.min.js"></script>
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
