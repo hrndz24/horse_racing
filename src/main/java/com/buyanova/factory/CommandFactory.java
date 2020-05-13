@@ -21,24 +21,24 @@ public enum CommandFactory {
     LANGUAGE(new ChangeLanguage()),
 
     SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()),
-    REDIRECT_ADD_RACE(new RedirectToAddRacePage()), ADD_RACE(new AddRace()),
-    SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()), SET_RESULTS(new SetRaceResults()),
-    SUBMIT_WINNER(new SubmitWinner()), EDIT_RACE(new EditRace()),
-    ADD_HORSE_TO_RACE(new AddHorseToRace()), REMOVE_HORSE_FROM_RACE(new RemoveHorseFromRace()),
-    DELETE_RACE(new DeleteRace()), SHOW_RACES_WITHOUT_ODDS(new ShowRacesWithoutOdds()),
 
     SUBMIT_BET(new SubmitBet()), MAKE_BET(new MakeBet()),
 
     PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()), EDIT_ODDS(new EditOdds()),
+    SHOW_RACES_WITHOUT_ODDS(new ShowRacesWithoutOdds()), REDIRECT_EDIT_ODDS(new RedirectToEditOddsPage()),
 
     SHOW_HORSES(new ShowHorses()), CHANGE_HORSES(new ChangeHorses()),
     INVALIDATE_HORSE(new InvalidateHorse()), VALIDATE_HORSE(new ValidateHorse()),
     ADD_HORSE(new AddHorse()), EDIT_HORSE(new EditHorse()),
+    REDIRECT_ADD_RACE(new RedirectToAddRacePage()), ADD_RACE(new AddRace()),
+    SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()), SET_RESULTS(new SetRaceResults()),
+    SUBMIT_WINNER(new SubmitWinner()), EDIT_RACE(new EditRace()),
+    ADD_HORSE_TO_RACE(new AddHorseToRace()), REMOVE_HORSE_FROM_RACE(new RemoveHorseFromRace()),
+    DELETE_RACE(new DeleteRace()),
+    REDIRECT_EDIT_RACE(new RedirectToEditRacePage()), REDIRECT_EDIT_HORSE(new RedirectToEditHorsePage()),
 
     REDIRECT_SIGN_UP(new RedirectToSignUpPage()), REDIRECT_RACES(new RedirectToRacesPage()),
-    REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage()),
-    REDIRECT_EDIT_RACE(new RedirectToEditRacePage()), REDIRECT_EDIT_HORSE(new RedirectToEditHorsePage()),
-    REDIRECT_EDIT_ODDS(new RedirectToEditOddsPage());
+    REDIRECT_HOME(new RedirectToHomePage()), REDIRECT_USER(new RedirectToUserPage());
 
     private Command command;
 

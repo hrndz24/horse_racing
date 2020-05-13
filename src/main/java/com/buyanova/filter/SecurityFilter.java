@@ -11,7 +11,12 @@ import java.io.IOException;
         initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")})
 public class SecurityFilter implements Filter {
 
-    String indexPath;
+    private String indexPath;
+
+    @Override
+    public void init(FilterConfig filterConfig) {
+        indexPath = filterConfig.getInitParameter("INDEX_PATH");
+    }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
@@ -19,15 +24,5 @@ public class SecurityFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.sendRedirect(request.getContextPath() + indexPath);
         filterChain.doFilter(servletRequest, servletResponse);
-    }
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-        indexPath = filterConfig.getInitParameter("INDEX_PATH");
-    }
-
-    @Override
-    public void destroy() {
-
     }
 }

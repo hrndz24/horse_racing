@@ -4,6 +4,27 @@
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>500</error-code>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>400</error-code>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>403</error-code>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+    <error-page>
+        <error-code>401</error-code>
+        <location>/jsp/errorPage.jsp</location>
+    </error-page>
+
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
         <welcome-file>index.htm</welcome-file>
