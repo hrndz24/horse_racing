@@ -19,14 +19,17 @@ import java.util.EnumSet;
 public class CommandFilter implements Filter {
 
     private EnumMap<UserRole, EnumSet<CommandFactory>> roleDependantCommands;
+    EnumSet<CommandFactory> commonCommands = EnumSet.range(CommandFactory.LOG_IN, CommandFactory.REDIRECT_USER);
 
     @Override
     public void init(FilterConfig filterConfig) {
         roleDependantCommands = new EnumMap<>(UserRole.class);
         EnumSet<CommandFactory> bookmakerCommands = EnumSet.range(CommandFactory.PLACE_ODDS, CommandFactory.REDIRECT_EDIT_ODDS);
         EnumSet<CommandFactory> adminCommands = EnumSet.range(CommandFactory.SHOW_HORSES, CommandFactory.REDIRECT_EDIT_HORSE);
+        EnumSet<CommandFactory> userCommands = EnumSet.range(CommandFactory.VIEW_BETS, CommandFactory.MAKE_BET);
         roleDependantCommands.put(UserRole.BOOKMAKER, bookmakerCommands);
         roleDependantCommands.put(UserRole.ADMINISTRATOR, adminCommands);
+        roleDependantCommands.put(UserRole.CLIENT, userCommands);
     }
 
     @Override
@@ -38,12 +41,11 @@ public class CommandFilter implements Filter {
             User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
             if (user != null) {
                 UserRole role = user.getUserRole();
-                if (role == UserRole.BOOKMAKER || role == UserRole.ADMINISTRATOR) {
-                    EnumSet<CommandFactory> commands = roleDependantCommands.get(role);
-                    if (!commands.contains(CommandFactory.valueOf(command.toUpperCase()))) {
-                        response.sendRedirect(request.getContextPath() + JSPPath.HOME_PAGE.getPath());
-                        return;
-                    }
+                EnumSet<CommandFactory> commands = roleDependantCommands.get(role);
+                if (!(commands.contains(CommandFactory.valueOf(command.toUpperCase())) ||
+                        commonCommands.contains(CommandFactory.valueOf(command.toUpperCase())))) {
+                    response.sendRedirect(request.getContextPath() + JSPPath.HOME_PAGE.getPath());
+                    return;
                 }
             }
         }

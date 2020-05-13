@@ -31,16 +31,6 @@ public class MainServlet extends HttpServlet {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
-        try {
-            ConnectionPool.INSTANCE.destroyPool();
-        } catch (ConnectionPoolException e) {
-            logger.fatal(e);
-        }
-    }
-
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         processRequest(request, response);
     }
@@ -54,5 +44,15 @@ public class MainServlet extends HttpServlet {
         Command command = CommandFactory.valueOf(request.getParameter(JSPParameter.COMMAND.getParameter()).toUpperCase()).getCommand();
         String jsp = command.getJSP(request, response);
         request.getRequestDispatcher(jsp).forward(request, response);
+    }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        try {
+            ConnectionPool.INSTANCE.destroyPool();
+        } catch (ConnectionPoolException e) {
+            logger.fatal(e);
+        }
     }
 }
