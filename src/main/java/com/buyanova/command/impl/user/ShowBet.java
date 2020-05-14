@@ -12,11 +12,15 @@ import com.buyanova.service.BetService;
 import com.buyanova.service.HorseService;
 import com.buyanova.service.OddsService;
 import com.buyanova.service.RaceService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class ShowBet implements Command {
+    private static Logger logger = LogManager.getLogger(ShowBet.class);
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int betId = Integer.parseInt(request.getParameter(JSPParameter.BET_ID.getParameter()));
@@ -31,6 +35,7 @@ public class ShowBet implements Command {
             request.getSession().setAttribute(JSPParameter.HORSE.getParameter(), horse);
             return JSPPath.BET.getPath();
         } catch (ServiceException e) {
+            logger.warn("Failed to execute command to show bet", e);
             request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }

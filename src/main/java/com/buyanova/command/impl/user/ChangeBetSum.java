@@ -7,12 +7,16 @@ import com.buyanova.entity.Bet;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.service.BetService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.math.BigDecimal;
 
 public class ChangeBetSum implements Command {
+    private static Logger logger = LogManager.getLogger(ChangeBetSum.class);
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         BigDecimal sum = new BigDecimal(request.getParameter(JSPParameter.SUM.getParameter()));
@@ -25,6 +29,7 @@ public class ChangeBetSum implements Command {
             user.setBalance(user.getBalance().subtract(bet.getSum().subtract(oldSum)));
             return JSPPath.BET.getPath();
         } catch (ServiceException e) {
+            logger.warn("Failed to execute command to change bet sum", e);
             bet.setSum(oldSum);
             request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();

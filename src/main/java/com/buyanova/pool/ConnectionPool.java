@@ -35,7 +35,7 @@ public enum ConnectionPool {
 
     INSTANCE;
 
-    private Logger logger = LogManager.getLogger(ConnectionPool.class);
+    private static Logger logger = LogManager.getLogger(ConnectionPool.class);
 
     /**
      * The number of database connections stored.

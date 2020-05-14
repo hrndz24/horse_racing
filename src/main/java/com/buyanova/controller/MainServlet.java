@@ -15,10 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/controller")
+@WebServlet(name = "/controller", loadOnStartup = 1)
 public class MainServlet extends HttpServlet {
 
-    private Logger logger = LogManager.getLogger(MainServlet.class);
+    private static Logger logger = LogManager.getLogger(MainServlet.class);
 
     @Override
     public void init() throws ServletException {

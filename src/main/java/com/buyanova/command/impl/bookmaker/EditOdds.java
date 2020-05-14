@@ -7,11 +7,15 @@ import com.buyanova.entity.Odds;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.service.OddsService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class EditOdds implements Command {
+    private static Logger logger = LogManager.getLogger(EditOdds.class);
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int raceId = ((Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter())).getId();
@@ -28,6 +32,7 @@ public class EditOdds implements Command {
 
                 OddsService.INSTANCE.changeOddsNumbers(odds);
             } catch (ServiceException e) {
+                logger.warn("Failed to execute command to edit odds", e);
                 request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
                 return JSPPath.ERROR_PAGE.getPath();
             }

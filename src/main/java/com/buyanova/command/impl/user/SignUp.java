@@ -7,11 +7,15 @@ import com.buyanova.entity.User;
 import com.buyanova.entity.UserRole;
 import com.buyanova.exception.ServiceException;
 import com.buyanova.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class SignUp implements Command {
+    private static Logger logger = LogManager.getLogger(SignUp.class);
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         User user = new User();
@@ -25,6 +29,7 @@ public class SignUp implements Command {
             request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
+            logger.warn("Failed to execute command to sign up", e);
             return JSPPath.SIGN_UP.getPath();
         }
     }
