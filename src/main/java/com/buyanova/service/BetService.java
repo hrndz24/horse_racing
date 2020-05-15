@@ -36,8 +36,6 @@ public enum BetService {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
             checkUserHasEnoughMoneyToBet(user, bet.getSum());
             betRepository.add(bet);
-            user.setBalance(user.getBalance().subtract(bet.getSum()));
-            userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -61,10 +59,7 @@ public enum BetService {
         }
         checkBetExists(bet);
         try {
-            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
             betRepository.remove(bet);
-            user.setBalance(user.getBalance().add(bet.getSum()));
-            userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -76,15 +71,12 @@ public enum BetService {
         }
         checkBetExists(bet);
         validateBetFields(bet);
-
         try {
             User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
             BigDecimal oldSum = betRepository.query(new FindBetById(bet.getId())).get(0).getSum();
             BigDecimal sumDifference = bet.getSum().subtract(oldSum);
             checkUserHasEnoughMoneyToBet(user, sumDifference);
             betRepository.update(bet);
-            user.setBalance(user.getBalance().subtract(sumDifference));
-            userRepository.update(user);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

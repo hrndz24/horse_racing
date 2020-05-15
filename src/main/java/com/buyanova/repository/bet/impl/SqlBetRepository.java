@@ -9,10 +9,7 @@ import com.buyanova.repository.bet.BetRepository;
 import com.buyanova.specification.Specification;
 import com.buyanova.specification.SqlSpecification;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,26 +24,24 @@ public enum SqlBetRepository implements BetRepository {
 
     INSTANCE;
 
-    private static final String INSERT_QUERY = "INSERT INTO bets(user_id, bet_sum, odds_id) VALUES(?,?,?)";
+    private static final String MAKE_BET = "{CALL usp_MakeBet(?, ?, ?, ?)}";
 
-    private static final String REMOVE_QUERY = "DELETE FROM bets WHERE bet_id = ?";
+    private static final String REMOVE_BET = "{CALL usp_DeleteBet(?, ?)}";
 
-    private static final String UPDATE_QUERY = "UPDATE bets SET bet_sum = ?, odds_id = ? WHERE bet_id = ?";
+    private static final String UPDATE_BET_SUM = "{CALL usp_UpdateBetSum(?, ?, ?)}";
 
     @Override
     public void add(Bet bet) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
+             CallableStatement statement = connection.prepareCall(MAKE_BET)) {
 
             statement.setInt(1, bet.getUserId());
             statement.setBigDecimal(2, bet.getSum());
             statement.setInt(3, bet.getOddsId());
-            statement.executeUpdate();
-            try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    bet.setId(generatedKeys.getInt(1));
-                }
-            }
+            statement.registerOutParameter(4, Types.INTEGER);
+            statement.execute();
+            int betId = statement.getInt(4);
+            bet.setId(betId);
         } catch (SQLException e) {
             throw new RepositoryException("Failed to add bet", e);
         }
@@ -55,10 +50,11 @@ public enum SqlBetRepository implements BetRepository {
     @Override
     public void remove(Bet bet) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
+             CallableStatement statement = connection.prepareCall(REMOVE_BET)) {
 
             statement.setInt(1, bet.getId());
-            statement.executeUpdate();
+            statement.setInt(2, bet.getUserId());
+            statement.execute();
         } catch (SQLException e) {
             throw new RepositoryException("Failed to remove bet", e);
         }
@@ -67,13 +63,13 @@ public enum SqlBetRepository implements BetRepository {
     @Override
     public void update(Bet bet) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
+             CallableStatement statement = connection.prepareCall(UPDATE_BET_SUM)) {
 
-            statement.setBigDecimal(1, bet.getSum());
-            statement.setInt(2, bet.getOddsId());
-            statement.setInt(3, bet.getId());
+            statement.setInt(1, bet.getId());
+            statement.setBigDecimal(2, bet.getSum());
+            statement.setInt(3, bet.getUserId());
 
-            statement.executeUpdate();
+            statement.execute();
         } catch (SQLException e) {
             throw new RepositoryException("Failed to update bet", e);
         }
