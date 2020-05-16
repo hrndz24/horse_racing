@@ -91,46 +91,21 @@
         </div>
     </div>
 </nav>
-<img src="../images/rainbow_standing.png" alt="Smiley face" align="left" style="background-repeat: repeat-y">
-<%--add race--%>
-<br/>
-<div class="container">
-    <form action="/controller" method="post" style="margin-left: 28rem;padding-left: 10rem">
-        <c:if test="${sessionScope.user.userRole.id==1}">
-            <button class="btn red darken-4 text-white" type="submit" name="command" value="redirect_add_race">
-                <fmt:message
-                        bundle="${locale}"
-                        key="add_race"/></button>
 
-            <button class="btn elegant-color-dark text-white" type="submit" name="command"
-                    value="show_races_without_results"><fmt:message
-                    bundle="${locale}"
-                    key="races_without_results"/></button>
-        </c:if>
-        <c:if test="${sessionScope.user.userRole.id==3}">
-            <button class="btn elegant-color-dark text-white" type="submit" name="command"
-                    value="show_races_without_odds"><fmt:message
-                    bundle="${locale}"
-                    key="races_without_odds"/></button>
-        </c:if>
-    </form>
-</div>
-<div class="container">
-    <form action="/controller" method="post" style="margin-left: 35rem;padding-left: 10rem">
-        <button class="btn unique-color-dark text-white" type="submit" name="command"
-                value="show_past_races"><fmt:message
-                bundle="${locale}"
-                key="past_races"/></button>
-    </form>
-</div>
+<br/>
 <%--races--%>
 <div class="container">
-    <c:forEach var="race" items="${races}">
-        <div class="container">
+
+    <c:forEach var="race" items="${pastRaces}">
+        <div style="display: flex;align-items: center; justify-content: center">
             <div class="card white"
-                 style="width: 30rem; display: inline-block;padding-top: 2rem;margin: 1rem">
+                 style="width: 33rem; display: inline-block;padding-top: 2rem;margin: 1rem">
                 <div class="card-body px-lg-5 pt-0">
                     <form action="/controller" method="post">
+                        <div class="text-center font-weight-bold">
+                            <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                        </div>
+                        <hr>
                         <p><fmt:message bundle="${locale}" key="race.distance"/>:
                             <c:out value="${race.distance}"/>.</p>
                         <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
@@ -140,33 +115,17 @@
                         <p><fmt:message bundle="${locale}" key="race.location"/>:
                             <c:out value="${race.location}"/>.</p>
                         <input type="hidden" name="raceId" value="${race.id}"/>
-
                         <div style="display: flex;align-items: center; justify-content: center">
-                            <button class="btn special-color text-white" type="submit" name="command" value="show_race">
+                            <button class="btn elegant-color-dark text-white" type="submit" name="command"
+                                    value="show_past_race">
                                 <fmt:message
                                         bundle="${locale}"
                                         key="view_details"/></button>
-                            <c:if test="${sessionScope.user.userRole.id==3}">
-                                <button style="margin-left: 2rem" class="btn elegant-color-dark text-white"
-                                        type="submit"
-                                        name="command"
-                                        value="redirect_edit_odds"><fmt:message
-                                        bundle="${locale}"
-                                        key="edit_odds"/></button>
-                            </c:if>
-                            <c:if test="${sessionScope.user.userRole.id==1}">
-                                <button style="margin-left: 2rem" class="btn elegant-color-dark text-white"
-                                        type="submit"
-                                        name="command"
-                                        value="redirect_edit_race"><fmt:message
-                                        bundle="${locale}"
-                                        key="edit"/></button>
-                            </c:if>
                         </div>
                     </form>
-
                 </div>
             </div>
+            <br/>
         </div>
     </c:forEach>
 </div>

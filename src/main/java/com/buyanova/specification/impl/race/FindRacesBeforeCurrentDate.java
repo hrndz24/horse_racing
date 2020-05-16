@@ -6,8 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FindRacesAfterCurrentDate implements SqlSpecification {
-
+public class FindRacesBeforeCurrentDate implements SqlSpecification {
     private static final String SQL_QUERY = "SELECT \n" +
             "    race_id,\n" +
             "    race_prize_money,\n" +
@@ -18,7 +17,7 @@ public class FindRacesAfterCurrentDate implements SqlSpecification {
             "FROM\n" +
             "    races\n" +
             "WHERE\n" +
-            "    race_date > now()";
+            "    race_date < now()";
 
 
     @Override

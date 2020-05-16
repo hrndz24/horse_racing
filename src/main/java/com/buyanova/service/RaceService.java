@@ -9,12 +9,11 @@ import com.buyanova.repository.horse.HorseRepository;
 import com.buyanova.repository.race.RaceRepository;
 import com.buyanova.specification.impl.horse.FindHorseById;
 import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
-import com.buyanova.specification.impl.race.FindRaceById;
-import com.buyanova.specification.impl.race.FindRacesAfterCurrentDate;
-import com.buyanova.specification.impl.race.FindRacesAfterCurrentDateWithoutOdds;
-import com.buyanova.specification.impl.race.FindRacesWithoutResults;
+import com.buyanova.specification.impl.race.*;
 import com.buyanova.validator.RaceValidator;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public enum RaceService {
@@ -147,6 +146,21 @@ public enum RaceService {
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
+    }
+
+    public List<Race> getPastRaces() throws ServiceException {
+        try {
+            List<Race> races = raceRepository.query(new FindRacesBeforeCurrentDate());
+            sortRacesByDateDescending(races);
+            return races;
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void sortRacesByDateDescending(List<Race> races){
+        races.sort(Comparator.comparing(Race::getDate));
+        Collections.reverse(races);
     }
 
     public Race getRaceById(int raceId) throws ServiceException {

@@ -15,20 +15,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class ShowRace implements Command {
+public class ShowPastRace implements Command {
     private static Logger logger = LogManager.getLogger(ShowRace.class);
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         try {
-            Race race = RaceService.INSTANCE.getRaceById(raceId);
-            List<Horse> horses = HorseService.INSTANCE.getHorsesFromRace(race);
+            Race pastRace = RaceService.INSTANCE.getRaceById(raceId);
+            List<Horse> horses = HorseService.INSTANCE.getHorsesFromRace(pastRace);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
-            request.getSession().setAttribute(JSPParameter.RACE.getParameter(), race);
-            return JSPPath.RACE.getPath();
+            request.getSession().setAttribute(JSPParameter.PAST_RACE.getParameter(), pastRace);
+            return JSPPath.PAST_RACE.getPath();
         } catch (ServiceException e) {
-            logger.warn("Failed to execute command to show race", e);
+            logger.warn("Failed to execute command to show past race", e);
             return JSPPath.RACES.getPath();
         }
     }

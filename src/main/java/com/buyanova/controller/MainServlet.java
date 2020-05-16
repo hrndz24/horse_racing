@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(name = "/controller", loadOnStartup = 1)
+@WebServlet(urlPatterns = "/controller", loadOnStartup = 0)
 public class MainServlet extends HttpServlet {
 
     private static Logger logger = LogManager.getLogger(MainServlet.class);
@@ -41,7 +41,8 @@ public class MainServlet extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Command command = CommandFactory.valueOf(request.getParameter(JSPParameter.COMMAND.getParameter()).toUpperCase()).getCommand();
+        String commandName = request.getParameter(JSPParameter.COMMAND.getParameter());
+        Command command = CommandFactory.INSTANCE.getCommandByName(commandName);
         String jsp = command.getJSP(request, response);
         request.getRequestDispatcher(jsp).forward(request, response);
     }
