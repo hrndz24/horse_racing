@@ -135,7 +135,7 @@
         <div style="display: flex;align-items: center; justify-content: center">
             <form action="/controller" method="post">
                 <button type="submit" name="command" value="delete_bet"
-                        class="btn btn-elegant">
+                        class="btn red darken-4 text-white">
                     <fmt:message bundle="${locale}" key="delete_bet"/>
                 </button>
             </form>

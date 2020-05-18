@@ -10,10 +10,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title><fmt:message bundle="${locale}" key="navbar.name"/></title>
+    <title>Oops</title>
 
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/mdb.min.css">
+    <style>
+        body, html {
+            height: 100%;
+            background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(11).jpg");
+            background-repeat: repeat-y;
+            background-position: center;
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark elegant-color-dark" style="height: 4rem">
@@ -83,11 +92,16 @@
     </div>
 </nav>
 
-<div class="container">
-    <c:out value="${errorMessage}"/>
+<div class="container text-center">
+    <c:if test="${errorMessage eq null}">
+        <h2><fmt:message bundle="${locale}" key="sorry"/></h2>
+    </c:if>
+    <c:if test="${errorMessage ne null}">
+        <h2><c:out value="${errorMessage}"/></h2>
+    </c:if>
 </div>
 
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 3rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>
