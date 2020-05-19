@@ -32,9 +32,21 @@ public enum BetService {
             throw new ServiceException("Null bet");
         }
         validateBetFields(bet);
+        User user = getUser(bet.getUserId());
+        checkUserHasEnoughMoneyToBet(user, bet.getSum());
+        tryAddBetToDataSource(bet);
+    }
+
+    private User getUser(int userId) throws ServiceException {
         try {
-            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
-            checkUserHasEnoughMoneyToBet(user, bet.getSum());
+            return userRepository.query(new FindUserById(userId)).get(0);
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get user due to data source problems", e);
+        }
+    }
+
+    private void tryAddBetToDataSource(Bet bet) throws ServiceException {
+        try {
             betRepository.add(bet);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
@@ -58,6 +70,10 @@ public enum BetService {
             throw new ServiceException("Null bet");
         }
         checkBetExists(bet);
+        tryRemoveBetFromDataSource(bet);
+    }
+
+    private void tryRemoveBetFromDataSource(Bet bet) throws ServiceException {
         try {
             betRepository.remove(bet);
         } catch (RepositoryException e) {
@@ -71,11 +87,23 @@ public enum BetService {
         }
         checkBetExists(bet);
         validateBetFields(bet);
+        User user = getUser(bet.getUserId());
+        BigDecimal oldSum = getBetSumFromDataSource(bet.getId());
+        BigDecimal sumDifference = bet.getSum().subtract(oldSum);
+        checkUserHasEnoughMoneyToBet(user, sumDifference);
+        tryUpdateBetInDataSource(bet);
+    }
+
+    private BigDecimal getBetSumFromDataSource(int betId) throws ServiceException {
         try {
-            User user = userRepository.query(new FindUserById(bet.getUserId())).get(0);
-            BigDecimal oldSum = betRepository.query(new FindBetById(bet.getId())).get(0).getSum();
-            BigDecimal sumDifference = bet.getSum().subtract(oldSum);
-            checkUserHasEnoughMoneyToBet(user, sumDifference);
+            return betRepository.query(new FindBetById(betId)).get(0).getSum();
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get bet due to data source problems", e);
+        }
+    }
+
+    private void tryUpdateBetInDataSource(Bet bet) throws ServiceException {
+        try {
             betRepository.update(bet);
         } catch (RepositoryException e) {
             throw new ServiceException(e);

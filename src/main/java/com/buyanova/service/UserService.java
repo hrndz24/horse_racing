@@ -35,7 +35,7 @@ public enum UserService {
 
     private void setDefaultUserValues(User user) {
         user.setActive(true);
-        user.setBalance(new BigDecimal(0));
+        user.setBalance(BigDecimal.ZERO);
     }
 
     private void encryptUserPassword(User user) {
@@ -58,15 +58,14 @@ public enum UserService {
         }
         validateUserLogInCredentials(user);
         encryptUserPassword(user);
-        return getFirstUserFoundByLoginAndPassword(user);
+        return getFirstUserFoundByLoginAndPasswordIfExists(user);
     }
 
-    private User getFirstUserFoundByLoginAndPassword(User user) throws ServiceException {
+    private User getFirstUserFoundByLoginAndPasswordIfExists(User user) throws ServiceException {
         try {
             List<User> users = userRepository.query(new FindUserByLoginAndPassword(user.getLogin(), user.getPassword()));
-            if (users.isEmpty() || !users.get(0).isActive()) {
+            if (users.isEmpty() || !users.get(0).isActive())
                 throw new ServiceException("User not found");
-            }
             return users.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to find user due to data source problems", e);
@@ -77,10 +76,10 @@ public enum UserService {
         if (user == null) {
             throw new ServiceException("Null user");
         }
-        tryToRemoveUserFromDataSource(user);
+        tryRemoveUserFromDataSource(user);
     }
 
-    private void tryToRemoveUserFromDataSource(User user) throws ServiceException {
+    private void tryRemoveUserFromDataSource(User user) throws ServiceException {
         try {
             userRepository.remove(user);
         } catch (RepositoryException e) {
@@ -97,7 +96,7 @@ public enum UserService {
         }
         checkLoginIsUnique(newLogin);
         user.setLogin(newLogin);
-        tryToUpdateUserInDataSource(user);
+        tryUpdateUserInDataSource(user);
     }
 
     public void changePassword(User user, String newPassword) throws ServiceException {
@@ -108,10 +107,10 @@ public enum UserService {
             throw new ServiceException("Invalid user password");
         }
         encryptUserPassword(user);
-        getFirstUserFoundByLoginAndPassword(user);
+        getFirstUserFoundByLoginAndPasswordIfExists(user);
         user.setPassword(newPassword);
         encryptUserPassword(user);
-        tryToUpdateUserInDataSource(user);
+        tryUpdateUserInDataSource(user);
     }
 
     public void changeName(User user, String name) throws ServiceException {
@@ -122,7 +121,7 @@ public enum UserService {
             throw new ServiceException("Invalid user name");
         }
         user.setName(name);
-        tryToUpdateUserInDataSource(user);
+        tryUpdateUserInDataSource(user);
     }
 
     public void changeEmail(User user, String email) throws ServiceException {
@@ -133,7 +132,7 @@ public enum UserService {
             throw new ServiceException("Invalid user email");
         }
         user.setEmail(email);
-        tryToUpdateUserInDataSource(user);
+        tryUpdateUserInDataSource(user);
     }
 
     public void replenishAccount(User user, BigDecimal replenishmentSum) throws ServiceException {
@@ -144,10 +143,10 @@ public enum UserService {
             throw new ServiceException("Negative replenishment sum");
         }
         user.setBalance(user.getBalance().add(replenishmentSum));
-        tryToUpdateUserInDataSource(user);
+        tryUpdateUserInDataSource(user);
     }
 
-    private void tryToUpdateUserInDataSource(User user) throws ServiceException {
+    private void tryUpdateUserInDataSource(User user) throws ServiceException {
         try {
             userRepository.update(user);
         } catch (RepositoryException e) {
@@ -158,9 +157,8 @@ public enum UserService {
     private void checkLoginIsUnique(String login) throws ServiceException {
         try {
             List<User> users = userRepository.query(new FindUserByLogin(login));
-            if (!users.isEmpty()) {
+            if (!users.isEmpty())
                 throw new ServiceException("Login is already taken");
-            }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

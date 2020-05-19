@@ -38,7 +38,10 @@ public enum OddsService {
             throw new ServiceException("Null odds");
         }
         validateOddsFields(odds);
+        tryAddOddsToDataSource(odds);
+    }
 
+    private void tryAddOddsToDataSource(Odds odds) throws ServiceException {
         try {
             oddsRepository.add(odds);
         } catch (RepositoryException e) {
@@ -50,11 +53,14 @@ public enum OddsService {
         if (odds == null) {
             throw new ServiceException("Null odds");
         }
-
         if (!(oddsValidator.areOddsPositive(odds.getOddsAgainst())
                 && oddsValidator.areOddsPositive(odds.getOddsInFavour()))) {
             throw new ServiceException("Negative odds numbers");
         }
+        tryUpdateOddsInDataSource(odds);
+    }
+
+    private void tryUpdateOddsInDataSource(Odds odds) throws ServiceException {
         try {
             oddsRepository.update(odds);
         } catch (RepositoryException e) {
@@ -86,60 +92,73 @@ public enum OddsService {
         }
     }
 
-    private void checkOddsExist(Odds odds) throws ServiceException {
-        try {
-            if (oddsRepository.query(new FindOddsById(odds.getId())).isEmpty()) {
-                throw new ServiceException("Odds with such id do not exist");
-            }
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
+    private void validateOddsFields(Odds odds) throws ServiceException {
+        checkOddsNumbersArePositive(odds);
+        checkBookmakerIdBelongsToBookmaker(odds.getBookmakerId());
+        checkRaceHasNotHappened(odds.getRaceId());
+        Horse horse = getHorseIfExists(odds.getHorseId());
+        checkHorsePerformingInRace(odds.getRaceId(), horse.getId());
     }
 
-    /*
-    Validates all fields of odds except id, since id is to be set after
-    adding it to the data source.
-    Checks:
-     - odds numbers are positive;
-     - bookmaker with such id exists and has UserRole.BOOKMAKER;
-     - race with provided id exists and hasn't happened yet;
-     - horse with such id exists and performs in the race.
-     */
-    private void validateOddsFields(Odds odds) throws ServiceException {
+    private void checkOddsNumbersArePositive(Odds odds) throws ServiceException {
         if (!oddsValidator.areOddsPositive(odds.getOddsInFavour())) {
             throw new ServiceException("Negative odds in favour");
         }
         if (!oddsValidator.areOddsPositive(odds.getOddsAgainst())) {
             throw new ServiceException("Negative odds against");
         }
+    }
+
+    private void checkBookmakerIdBelongsToBookmaker(int bookmakerId) throws ServiceException {
         try {
-            List<User> bookmakers = userRepository.query(new FindUserById(odds.getBookmakerId()));
+            List<User> bookmakers = userRepository.query(new FindUserById(bookmakerId));
             if (bookmakers.isEmpty()) {
                 throw new ServiceException("Bookmaker with such id does not exist");
             }
             if (bookmakers.get(0).getUserRole() != UserRole.BOOKMAKER) {
                 throw new ServiceException("Odds with non-existent bookmaker id");
             }
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get bookmaker due to data source problems", e);
+        }
+    }
 
-            List<Race> races = raceRepository.query(new FindRaceById(odds.getRaceId()));
+    private void checkRaceHasNotHappened(int raceId) throws ServiceException {
+        try {
+            List<Race> races = raceRepository.query(new FindRaceById(raceId));
             if (races.isEmpty()) {
                 throw new ServiceException("Race with such id does not exist");
             }
             if (!raceValidator.isDateAfterNow(races.get(0).getDate())) {
                 throw new ServiceException("Race has already happened");
             }
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get race due to data source problems", e);
+        }
+    }
 
-            List<Horse> horses = horseRepository.query(new FindHorseById(odds.getHorseId()));
-            if (horses.isEmpty()) {
+    private void checkHorsePerformingInRace(int raceId, int horseId) throws ServiceException {
+        Horse horse = getHorseIfExists(horseId);
+        List<Horse> horsesInRace = getHorsesFromRace(raceId);
+        if (!horsesInRace.contains(horse)) {
+            throw new ServiceException("Horse with such id did not perform in the race");
+        }
+    }
+
+    private List<Horse> getHorsesFromRace(int raceId) throws ServiceException {
+        try {
+            return horseRepository.query(new FindHorsesPerformingInRace(raceId));
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private Horse getHorseIfExists(int horseId) throws ServiceException {
+        try {
+            List<Horse> horses = horseRepository.query(new FindHorseById(horseId));
+            if (horses.isEmpty())
                 throw new ServiceException("Horse with such id does not exist");
-            }
-            Horse horse = horses.get(0);
-
-            List<Horse> horsesInRace = horseRepository.query(new FindHorsesPerformingInRace(odds.getRaceId()));
-            if (!horsesInRace.contains(horse)) {
-                throw new ServiceException("Horse with such id does not perform in race with provided id");
-            }
-
+            return horses.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }

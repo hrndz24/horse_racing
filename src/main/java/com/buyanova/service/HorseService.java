@@ -25,7 +25,15 @@ public enum HorseService {
             throw new ServiceException("Null horse");
         }
         validateHorseFields(horse);
+        setHorseDefaultValues(horse);
+        tryAddHorseToDataSource(horse);
+    }
+
+    private void setHorseDefaultValues(Horse horse) throws ServiceException {
         horse.setPerforming(true);
+    }
+
+    private void tryAddHorseToDataSource(Horse horse) throws ServiceException {
         try {
             horseRepository.add(horse);
         } catch (RepositoryException e) {
@@ -73,6 +81,10 @@ public enum HorseService {
             throw new ServiceException("Null horse");
         }
         validateHorseFields(horse);
+        tryUpdateHorseInDataSource(horse);
+    }
+
+    private void tryUpdateHorseInDataSource(Horse horse) throws ServiceException {
         try {
             horseRepository.update(horse);
         } catch (RepositoryException e) {
@@ -84,6 +96,10 @@ public enum HorseService {
         if (horse == null) {
             throw new ServiceException("Null horse");
         }
+        tryRemoveHorseFromDataSource(horse);
+    }
+
+    private void tryRemoveHorseFromDataSource(Horse horse) throws ServiceException {
         try {
             horseRepository.remove(horse);
         } catch (RepositoryException e) {

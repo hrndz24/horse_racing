@@ -31,6 +31,10 @@ public enum RaceService {
             throw new ServiceException("Null race");
         }
         validateRaceFields(race);
+        tryAddRaceToDataSource(race);
+    }
+
+    private void tryAddRaceToDataSource(Race race) throws ServiceException {
         try {
             raceRepository.add(race);
         } catch (RepositoryException e) {
@@ -62,24 +66,73 @@ public enum RaceService {
         }
         checkHorseWinnerIsNotSet(race);
         checkHorseWinnerPerformedInRace(race);
+        trySetRaceResults(race);
+        updateHorsesStatistics(race);
+    }
+
+    private void checkHorseWinnerIsNotSet(Race race) throws ServiceException {
+        try {
+            if (raceRepository.query(new FindRaceById(race.getId())).get(0).getHorseWinnerId() != 0)
+                throw new ServiceException("Horse winner is already set");
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void checkHorseWinnerPerformedInRace(Race race) throws ServiceException {
+        Horse horseWinner = getHorseIfExists(race.getHorseWinnerId());
+        List<Horse> horsesInRace = getHorsesFromRace(race.getId());
+        if (!horsesInRace.contains(horseWinner)) {
+            throw new ServiceException("Horse with such id did not perform in the race");
+        }
+    }
+
+    private Horse getHorseIfExists(int horseId) throws ServiceException {
+        try {
+            List<Horse> horses = horseRepository.query(new FindHorseById(horseId));
+            if (horses.isEmpty())
+                throw new ServiceException("Horse with such id does not exist");
+            return horses.get(0);
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void trySetRaceResults(Race race) throws ServiceException {
         try {
             raceRepository.setRaceResults(race);
-            updateHorsesStatistics(race);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
     }
 
     private void updateHorsesStatistics(Race race) throws ServiceException {
+        List<Horse> horses = getHorsesFromRace(race.getId());
+        for (Horse horse : horses) {
+            updateHorseStatisticsBasedOnRaceResults(horse, race.getHorseWinnerId());
+        }
+    }
+
+    private List<Horse> getHorsesFromRace(int raceId) throws ServiceException {
         try {
-            List<Horse> horses = horseRepository.query(new FindHorsesPerformingInRace(race.getId()));
-            for (Horse horse : horses) {
-                if (horse.getId() == race.getHorseWinnerId()) {
-                    horse.incrementWonRacesNumber();
-                } else {
-                    horse.incrementLostRacesNumber();
-                }
-            }
+            return horseRepository.query(new FindHorsesPerformingInRace(raceId));
+        } catch (RepositoryException e) {
+            throw new ServiceException(e);
+        }
+    }
+
+    private void updateHorseStatisticsBasedOnRaceResults(Horse horse, int horseWinnerId) throws ServiceException {
+        if (horse.getId() == horseWinnerId) {
+            horse.incrementWonRacesNumber();
+        } else {
+            horse.incrementLostRacesNumber();
+        }
+        tryUpdateHorseInDataSource(horse);
+    }
+
+    private void tryUpdateHorseInDataSource(Horse horse) throws ServiceException {
+        try {
+            horseRepository.update(horse);
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
@@ -90,6 +143,10 @@ public enum RaceService {
             throw new ServiceException("Null race");
         }
         validateRaceFields(race);
+        tryUpdateRaceInDataSource(race);
+    }
+
+    private void tryUpdateRaceInDataSource(Race race) throws ServiceException {
         try {
             raceRepository.update(race);
         } catch (RepositoryException e) {
@@ -101,6 +158,10 @@ public enum RaceService {
         if (race == null) {
             throw new ServiceException("Null race");
         }
+        tryRemoveRaceFromDataSource(race);
+    }
+
+    private void tryRemoveRaceFromDataSource(Race race) throws ServiceException {
         try {
             raceRepository.remove(race);
         } catch (RepositoryException e) {
@@ -158,7 +219,7 @@ public enum RaceService {
         }
     }
 
-    private void sortRacesByDateDescending(List<Race> races){
+    private void sortRacesByDateDescending(List<Race> races) {
         races.sort(Comparator.comparing(Race::getDate));
         Collections.reverse(races);
     }
@@ -166,43 +227,6 @@ public enum RaceService {
     public Race getRaceById(int raceId) throws ServiceException {
         try {
             return raceRepository.query(new FindRaceById(raceId)).get(0);
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    private void checkRaceExists(int raceId) throws ServiceException {
-        try {
-            if (raceRepository.query(new FindRaceById(raceId)).isEmpty()) {
-                throw new ServiceException("Race with such id does not exist");
-            }
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    private void checkHorseWinnerIsNotSet(Race race) throws ServiceException {
-        try {
-            if (raceRepository.query(new FindRaceById(race.getId())).get(0).getHorseWinnerId() != 0) {
-                throw new ServiceException("Horse winner is already set");
-            }
-        } catch (RepositoryException e) {
-            throw new ServiceException(e);
-        }
-    }
-
-    private void checkHorseWinnerPerformedInRace(Race race) throws ServiceException {
-        try {
-            List<Horse> horses = horseRepository.query(new FindHorseById(race.getHorseWinnerId()));
-            if (horses.isEmpty()) {
-                throw new ServiceException("Horse with such id does not exist");
-            }
-            Horse horseWinner = horses.get(0);
-
-            List<Horse> horsesInRace = horseRepository.query(new FindHorsesPerformingInRace(race.getId()));
-            if (!horsesInRace.contains(horseWinner)) {
-                throw new ServiceException("Horse with such id did not perform in the race");
-            }
         } catch (RepositoryException e) {
             throw new ServiceException(e);
         }
