@@ -10,7 +10,7 @@ public class FindRaceById implements SqlSpecification {
 
     private int raceId;
     private static final String SQL_QUERY =
-                    "SELECT \n" +
+            "SELECT \n" +
                     "    race_id,\n" +
                     "    race_prize_money,\n" +
                     "    horse_winner_id,\n" +

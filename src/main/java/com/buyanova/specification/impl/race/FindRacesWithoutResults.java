@@ -10,16 +10,16 @@ public class FindRacesWithoutResults implements SqlSpecification {
 
     private static final String SQL_QUERY =
             "SELECT \n" +
-            "    race_id,\n" +
-            "    race_prize_money,\n" +
-            "    horse_winner_id,\n" +
-            "    race_date,\n" +
-            "    race_distance,\n" +
-            "    race_location\n" +
-            "FROM\n" +
-            "    races\n" +
-            "WHERE\n" +
-            "    horse_winner_id IS NULL AND race_date< now()";
+                    "    race_id,\n" +
+                    "    race_prize_money,\n" +
+                    "    horse_winner_id,\n" +
+                    "    race_date,\n" +
+                    "    race_distance,\n" +
+                    "    race_location\n" +
+                    "FROM\n" +
+                    "    races\n" +
+                    "WHERE\n" +
+                    "    horse_winner_id IS NULL AND race_date< now()";
 
     @Override
     public PreparedStatement toSqlStatement(Connection connection) throws SQLException {

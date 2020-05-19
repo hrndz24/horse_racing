@@ -12,19 +12,19 @@ public class FindHorsesPerformingInRace implements SqlSpecification {
 
     private static final String SQL_QUERY =
             "SELECT \n" +
-            "    horses.horse_id,\n" +
-            "    horse_name, \n" +
-            "    horse_breed,\n" +
-            "    horse_age,\n" +
-            "    is_performing,\n" +
-            "    races_won_number,\n" +
-            "    races_lost_number\n" +
-            "FROM\n" +
-            "    horses\n" +
-            "        JOIN\n" +
-            "    race_horses ON horses.horse_id = race_horses.horse_id\n" +
-            "WHERE\n" +
-            "    race_id = ?;";
+                    "    horses.horse_id,\n" +
+                    "    horse_name, \n" +
+                    "    horse_breed,\n" +
+                    "    horse_age,\n" +
+                    "    is_performing,\n" +
+                    "    races_won_number,\n" +
+                    "    races_lost_number\n" +
+                    "FROM\n" +
+                    "    horses\n" +
+                    "        JOIN\n" +
+                    "    race_horses ON horses.horse_id = race_horses.horse_id\n" +
+                    "WHERE\n" +
+                    "    race_id = ?;";
 
     public FindHorsesPerformingInRace(int raceId) {
         this.raceId = raceId;

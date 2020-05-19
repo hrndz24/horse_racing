@@ -11,7 +11,7 @@ public class FindBetsByUserId implements SqlSpecification {
     private int userId;
 
     private static final String SQL_QUERY =
-                    "SELECT \n" +
+            "SELECT \n" +
                     "    bet_id,\n" +
                     "    bets.user_id,\n" +
                     "    bet_sum,\n" +
