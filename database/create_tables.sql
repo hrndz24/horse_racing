@@ -1,3 +1,6 @@
+CREATE DATABASE horse_racing;
+USE horse_racing;
+
 CREATE TABLE user_roles
 (
     role_id   INT PRIMARY KEY AUTO_INCREMENT,

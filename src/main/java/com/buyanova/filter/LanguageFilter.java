@@ -10,7 +10,7 @@ import java.io.IOException;
 @WebFilter("/*")
 public class LanguageFilter implements Filter {
 
-    private static final String DEFAULT_LOCALE = "es";
+    private static final String DEFAULT_LOCALE = "en";
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

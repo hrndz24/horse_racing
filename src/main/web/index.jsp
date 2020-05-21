@@ -5,7 +5,7 @@
 <%@ taglib prefix="ctg" uri="customtags" %>
 
 <c:if test="${empty sessionScope.language}">
-    <fmt:setLocale value="es"/>
+    <fmt:setLocale value="en"/>
 </c:if>
 <c:if test="${not empty sessionScope.language}">
     <fmt:setLocale value="${sessionScope.language}"/>
