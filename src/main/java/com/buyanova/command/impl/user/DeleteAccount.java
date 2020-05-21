@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.UserService;
+import com.buyanova.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class DeleteAccount implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
-            UserService.INSTANCE.removeUser(user);
+            UserServiceImpl.INSTANCE.removeUser(user);
             return JSPPath.HOME_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to delete account", e);

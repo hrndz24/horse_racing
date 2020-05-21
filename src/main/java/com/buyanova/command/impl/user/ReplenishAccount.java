@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.UserService;
+import com.buyanova.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class ReplenishAccount implements Command {
         BigDecimal sum = new BigDecimal(request.getParameter(JSPParameter.SUM.getParameter()));
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
-            UserService.INSTANCE.replenishAccount(user, sum);
+            UserServiceImpl.INSTANCE.replenishAccount(user, sum);
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to replenish account", e);

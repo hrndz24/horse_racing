@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.UserService;
+import com.buyanova.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,7 +22,7 @@ public class ChangePassword implements Command {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         user.setPassword(oldPassword);
         try {
-            UserService.INSTANCE.changePassword(user, newPassword);
+            UserServiceImpl.INSTANCE.changePassword(user, newPassword);
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to change password", e);

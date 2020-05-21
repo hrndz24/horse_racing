@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,10 +22,10 @@ public class SubmitWinner implements Command {
         int raceId = (Integer) request.getSession().getAttribute(JSPParameter.RACE_ID.getParameter());
 
         try {
-            Race race = RaceService.INSTANCE.getRaceById(raceId);
+            Race race = RaceServiceImpl.INSTANCE.getRaceById(raceId);
             race.setHorseWinnerId(horseId);
-            RaceService.INSTANCE.setRaceResults(race);
-            List<Race> racesWithoutResults = RaceService.INSTANCE.getRacesWithoutResults();
+            RaceServiceImpl.INSTANCE.setRaceResults(race);
+            List<Race> racesWithoutResults = RaceServiceImpl.INSTANCE.getRacesWithoutResults();
             request.getSession().setAttribute(JSPParameter.RACES_WITHOUT_RESULTS.getParameter(), racesWithoutResults);
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();
         } catch (ServiceException e) {

@@ -6,7 +6,7 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Bet;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.BetService;
+import com.buyanova.service.impl.BetServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,7 +21,7 @@ public class ViewBets implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
-            List<Bet> bets = BetService.INSTANCE.getBetsByUser(user);
+            List<Bet> bets = BetServiceImpl.INSTANCE.getBetsByUser(user);
             request.getSession().setAttribute(JSPParameter.BETS.getParameter(), bets);
             return JSPPath.USER_BETS.getPath();
         } catch (ServiceException e) {

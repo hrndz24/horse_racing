@@ -6,7 +6,7 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.entity.UserRole;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.UserService;
+import com.buyanova.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,7 +25,7 @@ public class SignUp implements Command {
         user.setEmail(request.getParameter(JSPParameter.EMAIL.getParameter()));
         user.setUserRole(UserRole.CLIENT);
         try {
-            UserService.INSTANCE.signUp(user);
+            UserServiceImpl.INSTANCE.signUp(user);
             request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {

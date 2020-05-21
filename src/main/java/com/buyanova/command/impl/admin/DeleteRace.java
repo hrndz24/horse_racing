@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,8 +20,8 @@ public class DeleteRace implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         Race race = (Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter());
         try {
-            RaceService.INSTANCE.removeRace(race);
-            List<Race> races = RaceService.INSTANCE.getUpcomingRaces();
+            RaceServiceImpl.INSTANCE.removeRace(race);
+            List<Race> races = RaceServiceImpl.INSTANCE.getUpcomingRaces();
             request.getSession().setAttribute(JSPParameter.RACES.getParameter(), races);
             return JSPPath.RACES.getPath();
         } catch (ServiceException e) {

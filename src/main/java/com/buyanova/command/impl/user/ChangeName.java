@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.UserService;
+import com.buyanova.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +20,7 @@ public class ChangeName implements Command {
         String name = request.getParameter(JSPParameter.NAME.getParameter());
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
-            UserService.INSTANCE.changeName(user, name);
+            UserServiceImpl.INSTANCE.changeName(user, name);
             request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {

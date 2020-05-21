@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.HorseService;
+import com.buyanova.service.impl.HorseServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,13 +24,13 @@ public class ChangeHorses implements Command {
         String horsesType = request.getParameter(JSPParameter.HORSES_TYPE.getParameter());
         try {
             if (horsesType.equals(ALL_HORSES)) {
-                List<Horse> allHorses = HorseService.INSTANCE.getAllHorses();
+                List<Horse> allHorses = HorseServiceImpl.INSTANCE.getAllHorses();
                 request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), allHorses);
             } else if (horsesType.equals(PERFORMING_HORSES)) {
-                List<Horse> performingHorses = HorseService.INSTANCE.getPerformingHorses();
+                List<Horse> performingHorses = HorseServiceImpl.INSTANCE.getPerformingHorses();
                 request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), performingHorses);
             } else {
-                List<Horse> nonPerformingHorses = HorseService.INSTANCE.getNonPerformingHorses();
+                List<Horse> nonPerformingHorses = HorseServiceImpl.INSTANCE.getNonPerformingHorses();
                 request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), nonPerformingHorses);
             }
             return request.getParameter(JSPParameter.JSP.getParameter());

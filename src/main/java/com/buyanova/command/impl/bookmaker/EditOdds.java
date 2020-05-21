@@ -6,7 +6,7 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Odds;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.OddsService;
+import com.buyanova.service.impl.OddsServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -26,11 +26,11 @@ public class EditOdds implements Command {
         Odds odds;
         for (int i = 0; i < horsesIds.length; i++) {
             try {
-                odds = OddsService.INSTANCE.getOddsForHorseInRace(Integer.parseInt(horsesIds[i]), raceId);
+                odds = OddsServiceImpl.INSTANCE.getOddsForHorseInRace(Integer.parseInt(horsesIds[i]), raceId);
                 odds.setOddsInFavour(Integer.parseInt(oddsInFavourArray[i]));
                 odds.setOddsAgainst(Integer.parseInt(oddsAgainstArray[i]));
 
-                OddsService.INSTANCE.changeOddsNumbers(odds);
+                OddsServiceImpl.INSTANCE.updateOdds(odds);
             } catch (ServiceException e) {
                 logger.warn("Failed to execute command to edit odds", e);
                 request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());

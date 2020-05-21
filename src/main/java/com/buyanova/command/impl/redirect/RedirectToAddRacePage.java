@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.HorseService;
+import com.buyanova.service.impl.HorseServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class RedirectToAddRacePage implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         try {
-            List<Horse> performingHorses = HorseService.INSTANCE.getPerformingHorses();
+            List<Horse> performingHorses = HorseServiceImpl.INSTANCE.getPerformingHorses();
             request.getSession().setAttribute(JSPParameter.PERFORMING_HORSES.getParameter(), performingHorses);
             return JSPPath.ADD_RACE.getPath();
         } catch (ServiceException e) {

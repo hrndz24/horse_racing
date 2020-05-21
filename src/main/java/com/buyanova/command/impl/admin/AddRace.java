@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -35,10 +35,10 @@ public class AddRace implements Command {
             race.setDistance(distance);
             race.setDate(raceDate);
             race.setPrizeMoney(prizeMoney);
-            RaceService.INSTANCE.addRace(race);
+            RaceServiceImpl.INSTANCE.addRace(race);
             String[] horses = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
             for (String horse : horses) {
-                RaceService.INSTANCE.addHorseToRace(Integer.parseInt(horse), race.getId());
+                RaceServiceImpl.INSTANCE.addHorseToRace(Integer.parseInt(horse), race.getId());
             }
             return JSPPath.RACES.getPath();
         } catch (ParseException | ServiceException e) {

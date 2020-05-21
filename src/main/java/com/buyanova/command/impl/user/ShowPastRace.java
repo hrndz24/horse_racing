@@ -6,8 +6,8 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.HorseService;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.HorseServiceImpl;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,8 +22,8 @@ public class ShowPastRace implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         try {
-            Race pastRace = RaceService.INSTANCE.getRaceById(raceId);
-            List<Horse> horses = HorseService.INSTANCE.getHorsesFromRace(pastRace);
+            Race pastRace = RaceServiceImpl.INSTANCE.getRaceById(raceId);
+            List<Horse> horses = HorseServiceImpl.INSTANCE.getHorsesFromRace(pastRace);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             request.getSession().setAttribute(JSPParameter.PAST_RACE.getParameter(), pastRace);
             return JSPPath.PAST_RACE.getPath();

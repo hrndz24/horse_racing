@@ -7,9 +7,9 @@ import com.buyanova.entity.Horse;
 import com.buyanova.entity.Odds;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.HorseService;
-import com.buyanova.service.OddsService;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.HorseServiceImpl;
+import com.buyanova.service.impl.OddsServiceImpl;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,9 +25,9 @@ public class MakeBet implements Command {
         int raceId = ((Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter())).getId();
 
         try {
-            Horse horse = HorseService.INSTANCE.getHorseById(horseId);
-            Race race = RaceService.INSTANCE.getRaceById(raceId);
-            Odds odds = OddsService.INSTANCE.getOddsForHorseInRace(horseId, raceId);
+            Horse horse = HorseServiceImpl.INSTANCE.getHorseById(horseId);
+            Race race = RaceServiceImpl.INSTANCE.getRaceById(raceId);
+            Odds odds = OddsServiceImpl.INSTANCE.getOddsForHorseInRace(horseId, raceId);
             request.getSession().setAttribute(JSPParameter.HORSE.getParameter(), horse);
             request.getSession().setAttribute(JSPParameter.RACE.getParameter(), race);
             request.getSession().setAttribute(JSPParameter.ODDS.getParameter(), odds);

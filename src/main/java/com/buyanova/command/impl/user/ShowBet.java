@@ -8,10 +8,10 @@ import com.buyanova.entity.Horse;
 import com.buyanova.entity.Odds;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.BetService;
-import com.buyanova.service.HorseService;
-import com.buyanova.service.OddsService;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.BetServiceImpl;
+import com.buyanova.service.impl.HorseServiceImpl;
+import com.buyanova.service.impl.OddsServiceImpl;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -25,10 +25,10 @@ public class ShowBet implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int betId = Integer.parseInt(request.getParameter(JSPParameter.BET_ID.getParameter()));
         try {
-            Bet bet = BetService.INSTANCE.getBetById(betId);
-            Odds odds = OddsService.INSTANCE.getOddsById(bet.getOddsId());
-            Race race = RaceService.INSTANCE.getRaceById(odds.getRaceId());
-            Horse horse = HorseService.INSTANCE.getHorseById(odds.getHorseId());
+            Bet bet = BetServiceImpl.INSTANCE.getBetById(betId);
+            Odds odds = OddsServiceImpl.INSTANCE.getOddsById(bet.getOddsId());
+            Race race = RaceServiceImpl.INSTANCE.getRaceById(odds.getRaceId());
+            Horse horse = HorseServiceImpl.INSTANCE.getHorseById(odds.getHorseId());
             request.getSession().setAttribute(JSPParameter.BET.getParameter(), bet);
             request.getSession().setAttribute(JSPParameter.ODDS.getParameter(), odds);
             request.getSession().setAttribute(JSPParameter.RACE.getParameter(), race);

@@ -6,7 +6,7 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Bet;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.BetService;
+import com.buyanova.service.impl.BetServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -24,7 +24,7 @@ public class ChangeBetSum implements Command {
         BigDecimal oldSum = bet.getSum();
         bet.setSum(sum);
         try {
-            BetService.INSTANCE.updateBetSum(bet);
+            BetServiceImpl.INSTANCE.updateBet(bet);
             User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
             user.setBalance(user.getBalance().subtract(bet.getSum().subtract(oldSum)));
             return JSPPath.BET.getPath();

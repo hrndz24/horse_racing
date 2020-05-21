@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class ShowRacesWithoutOdds implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         try {
-            List<Race> racesWithoutOdds = RaceService.INSTANCE.getUpcomingRacesWithoutOdds();
+            List<Race> racesWithoutOdds = RaceServiceImpl.INSTANCE.getUpcomingRacesWithoutOdds();
             request.getSession().setAttribute(JSPParameter.RACES_WITHOUT_ODDS.getParameter(), racesWithoutOdds);
             return JSPPath.RACES_WITHOUT_ODDS.getPath();
         } catch (ServiceException e) {

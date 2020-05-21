@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,7 +19,7 @@ public class ShowRaces implements Command {
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         try {
-            List<Race> races = RaceService.INSTANCE.getUpcomingRaces();
+            List<Race> races = RaceServiceImpl.INSTANCE.getUpcomingRaces();
             request.getSession().setAttribute(JSPParameter.RACES.getParameter(), races);
             return JSPPath.RACES.getPath();
         } catch (ServiceException e) {

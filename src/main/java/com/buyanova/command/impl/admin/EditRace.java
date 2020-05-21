@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.RaceService;
+import com.buyanova.service.impl.RaceServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -34,7 +34,7 @@ public class EditRace implements Command {
             race.setDistance(distance);
             race.setDate(raceDate);
             race.setPrizeMoney(prizeMoney);
-            RaceService.INSTANCE.updateRace(race);
+            RaceServiceImpl.INSTANCE.updateRace(race);
             return JSPPath.EDIT_RACE.getPath();
         } catch (ParseException | ServiceException e) {
             logger.warn("Failed to execute command to edit race", e);

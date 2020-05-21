@@ -7,7 +7,7 @@ import com.buyanova.entity.Bet;
 import com.buyanova.entity.Odds;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.BetService;
+import com.buyanova.service.impl.BetServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +31,7 @@ public class SubmitBet implements Command {
         bet.setUserId(userId);
 
         try {
-            BetService.INSTANCE.addBet(bet);
+            BetServiceImpl.INSTANCE.addBet(bet);
             user.setBalance(user.getBalance().subtract(bet.getSum()));
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {

@@ -5,7 +5,7 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.UserService;
+import com.buyanova.service.impl.UserServiceImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,7 +20,7 @@ public class ChangeEmail implements Command {
         String email = request.getParameter(JSPParameter.EMAIL.getParameter());
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
-            UserService.INSTANCE.changeEmail(user, email);
+            UserServiceImpl.INSTANCE.changeEmail(user, email);
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to change email", e);
