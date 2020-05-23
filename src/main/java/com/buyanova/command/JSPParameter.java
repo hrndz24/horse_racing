@@ -18,6 +18,7 @@ public enum JSPParameter {
     BETS("bets"), BET_ID("betId"), BET("bet"), SUM("sum"),
     HORSE_NAME("horseName"), HORSE_BREED("horseBreed"), HORSE_AGE("horseAge"),
     HORSE_WON_RACES("horseWonRaces"), HORSE_LOST_RACES("horseLostRaces"),
+    PREVIOUS_REQUEST("previousRequest"),
     ERROR_MESSAGE("errorMessage");
 
     private String parameter;

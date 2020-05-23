@@ -12,13 +12,17 @@ import com.buyanova.command.impl.user.*;
 public enum CommandEnum {
 
     SIGN_UP(new SignUp()),
+
+    /* user */
     VIEW_BETS(new ViewBets()), SHOW_BET(new ShowBet()), CHANGE_BET_SUM(new ChangeBetSum()),
     DELETE_BET(new DeleteBet()), DEACTIVATE_ACCOUNT(new DeleteAccount()),
     SUBMIT_BET(new SubmitBet()), MAKE_BET(new MakeBet()),
 
+    /* bookmaker */
     PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()), EDIT_ODDS(new EditOdds()),
     SHOW_RACES_WITHOUT_ODDS(new ShowRacesWithoutOdds()), REDIRECT_EDIT_ODDS(new RedirectToEditOddsPage()),
 
+    /* common */
     LOG_IN(new LogIn()), LOG_OUT(new LogOut()), LANGUAGE(new ChangeLanguage()),
     SHOW_RACES(new ShowRaces()), SHOW_RACE(new ShowRace()), SHOW_PAST_RACES(new ShowPastRaces()),
     REPLENISH_ACCOUNT(new ReplenishAccount()), CHANGE_LOGIN(new ChangeLogin()),
@@ -28,6 +32,7 @@ public enum CommandEnum {
     SHOW_PAST_RACE(new ShowPastRace()),
     NON_EXISTING_COMMAND(new NonExistingCommand()),
 
+    /* administrator */
     SHOW_HORSES(new ShowHorses()), CHANGE_HORSES(new ChangeHorses()),
     INVALIDATE_HORSE(new InvalidateHorse()), VALIDATE_HORSE(new ValidateHorse()),
     ADD_HORSE(new AddHorse()), EDIT_HORSE(new EditHorse()),

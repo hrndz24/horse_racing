@@ -12,6 +12,7 @@ public enum JSPPath {
     PAST_RACES("/jsp/pastRaces.jsp"), PAST_RACE("/jsp/pastRace.jsp"),
     USER_BETS("/jsp/userBets.jsp"), BET("/jsp/bet.jsp"),
     HORSES("/jsp/horses.jsp"), EDIT_HORSE("/jsp/editHorse.jsp"),
+    RESUBMIT_REDIRECT("/resubmitRedirectPage.jsp"),
     ERROR_PAGE("/jsp/errorPage.jsp");
 
     private String path;
