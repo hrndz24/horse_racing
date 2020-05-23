@@ -148,10 +148,13 @@
 
 
                                 <input type="hidden" name="horseId" value="${horse.id}"/>
-                                <div style="display: flex;align-items: center; justify-content: center">
-                                    <button class="btn elegant-color-dark text-white" type="submit" name="command" value="make_bet">
-                                        <fmt:message bundle="${locale}" key="make_bet"/></button>
-                                </div>
+                                <c:if test="${sessionScope.user.userRole.id==2}">
+                                    <div style="display: flex;align-items: center; justify-content: center">
+                                        <button class="btn elegant-color-dark text-white" type="submit" name="command"
+                                                value="make_bet">
+                                            <fmt:message bundle="${locale}" key="make_bet"/></button>
+                                    </div>
+                                </c:if>
                             </form>
                         </div>
                     </div>
@@ -163,7 +166,7 @@
 </div>
 <br/>
 <br/>
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 2.5rem">
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>

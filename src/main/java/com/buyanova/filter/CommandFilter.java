@@ -20,6 +20,7 @@ public class CommandFilter implements Filter {
 
     private EnumMap<UserRole, EnumSet<CommandEnum>> roleDependantCommands;
     private EnumSet<CommandEnum> commonCommands = EnumSet.range(CommandEnum.LOG_IN, CommandEnum.NON_EXISTING_COMMAND);
+    private EnumSet<CommandEnum> guestCommands = EnumSet.of(CommandEnum.SIGN_UP, CommandEnum.REDIRECT_HOME, CommandEnum.REDIRECT_SIGN_UP);
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -61,12 +62,13 @@ public class CommandFilter implements Filter {
     }
 
     private boolean checkUserRoleMatchesCommand(User user, String command) {
-        if (user != null) {
+        CommandEnum commandName = CommandEnum.valueOf(command.toUpperCase());
+        if (user == null) {
+            return guestCommands.contains(commandName);
+        } else {
             UserRole role = user.getUserRole();
             EnumSet<CommandEnum> commands = roleDependantCommands.get(role);
-            CommandEnum commandName = CommandEnum.valueOf(command.toUpperCase());
             return commands.contains(commandName) || commonCommands.contains(commandName);
         }
-        return true;
     }
 }

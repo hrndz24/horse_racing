@@ -131,8 +131,8 @@
             <fmt:message bundle="${locale}" key="add_horses"/>
         </button>
 
-        <button style="float: right" type="submit" class="btn red accent-4 text-white" name="command"
-                value="delete_race">
+        <button style="float: right; background-color: #9b0009" type="button" class="btn text-white"
+                data-toggle="modal" data-target="#deleteModal">
             <fmt:message bundle="${locale}" key="delete_race"/>
         </button>
     </form>
@@ -258,6 +258,28 @@
     </div>
 </div>
 
+<!-- delete popup window -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="confirmModalLabel"><fmt:message bundle="${locale}"
+                                                                            key="confirm"/></h5>
+            </div>
+            <div style="display: flex;align-items: center; justify-content: center">
+                <form action="/controller" method="post">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                                bundle="${locale}" key="close"/></button>
+                        <button type="submit" class="btn btn-elegant" name="command" value="delete_race">
+                            <fmt:message bundle="${locale}" key="confirm"/></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 <footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">

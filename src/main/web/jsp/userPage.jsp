@@ -145,19 +145,19 @@
             <br/>
             <br/>
             <br/>
-            <button style="float: right" type="submit" name="command" value="view_bets"
-                    class="btn btn-light font-weight-bolder">
-                <fmt:message bundle="${locale}" key="view_bets"/>
-            </button>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
             <c:if test="${sessionScope.user.userRole.id==2}">
-                <button style="float: right" type="button" data-toggle="modal"
+                <button style="float: right" type="submit" name="command" value="view_bets"
+                        class="btn btn-light font-weight-bolder">
+                    <fmt:message bundle="${locale}" key="view_bets"/>
+                </button>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <button style="float: right; background-color: #8c0009" type="button" data-toggle="modal"
                         data-target="#deleteModal"
-                        class="btn elegant-color-dark text-white">
+                        class="btn text-white">
                     <fmt:message bundle="${locale}" key="deactivate_account"/>
                 </button>
             </c:if>

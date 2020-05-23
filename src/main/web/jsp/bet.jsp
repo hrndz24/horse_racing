@@ -133,9 +133,9 @@
         <br/>
         <br/>
         <div style="display: flex;align-items: center; justify-content: center">
-            <button type="button" data-toggle="modal"
+            <button style="background-color: #9b0009" type="button" data-toggle="modal"
                     data-target="#deleteModal"
-                    class="btn red darken-4 text-white">
+                    class="btn text-white">
                 <fmt:message bundle="${locale}" key="delete_bet"/>
             </button>
         </div>
