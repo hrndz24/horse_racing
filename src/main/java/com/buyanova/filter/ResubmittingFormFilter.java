@@ -30,7 +30,7 @@ public class ResubmittingFormFilter implements Filter {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
 
-        Object previousHash = session.getAttribute(JSPParameter.PREVIOUS_REQUEST.getParameter());
+        Object previousHash = session.getAttribute(JSPParameter.PREVIOUS_REQUEST_HASH.getParameter());
         int currentHash = calculateRequestHash(request);
 
         if (previousHash != null && (Integer) previousHash == currentHash) {
@@ -41,15 +41,15 @@ public class ResubmittingFormFilter implements Filter {
             }
         } else {
             previousHash = currentHash;
-            session.setAttribute(JSPParameter.PREVIOUS_REQUEST.getParameter(), previousHash);
+            session.setAttribute(JSPParameter.PREVIOUS_REQUEST_HASH.getParameter(), previousHash);
         }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
     private int calculateRequestHash(HttpServletRequest request) {
         int hash = 0;
-        for (String[] v : request.getParameterMap().values()) {
-            hash += Arrays.toString(v).hashCode();
+        for (String[] value : request.getParameterMap().values()) {
+            hash += Arrays.toString(value).hashCode();
         }
         return hash;
     }

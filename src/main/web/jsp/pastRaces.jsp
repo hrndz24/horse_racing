@@ -91,44 +91,90 @@
         </div>
     </div>
 </nav>
-
 <br/>
 <%--races--%>
 <div class="container">
-
-    <c:forEach var="race" items="${pastRaces}">
-        <div style="display: flex;align-items: center; justify-content: center">
-            <div class="card white"
-                 style="width: 33rem; display: inline-block;padding-top: 2rem;margin: 1rem">
-                <div class="card-body px-lg-5 pt-0">
-                    <form action="/controller" method="post">
-                        <div class="text-center font-weight-bold">
-                            <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+    <div class="row">
+        <c:forEach var="race" items="${pastRaces}">
+            <div class="col-md-6">
+                <div style="display: flex;align-items: center; justify-content: center">
+                    <div class="card white"
+                         style="width: 33rem; display: inline-block;padding-top: 2rem;margin: 1rem">
+                        <div class="card-body px-lg-5 pt-0">
+                            <form action="/controller" method="post">
+                                <div class="text-center font-weight-bold">
+                                    <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
+                                </div>
+                                <hr>
+                                <p><fmt:message bundle="${locale}" key="race.distance"/>:
+                                    <c:out value="${race.distance}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
+                                    <c:out value="${race.prizeMoney}"/>. </p>
+                                <p><fmt:message bundle="${locale}" key="race.date"/>:
+                                    <c:out value="${race.date}"/>.</p>
+                                <p><fmt:message bundle="${locale}" key="race.location"/>:
+                                    <c:out value="${race.location}"/>.</p>
+                                <input type="hidden" name="raceId" value="${race.id}"/>
+                                <div style="display: flex;align-items: center; justify-content: center">
+                                    <button class="btn elegant-color-dark text-white" type="submit" name="command"
+                                            value="show_past_race">
+                                        <fmt:message
+                                                bundle="${locale}"
+                                                key="view_details"/></button>
+                                </div>
+                            </form>
                         </div>
-                        <hr>
-                        <p><fmt:message bundle="${locale}" key="race.distance"/>:
-                            <c:out value="${race.distance}"/>.</p>
-                        <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
-                            <c:out value="${race.prizeMoney}"/>. </p>
-                        <p><fmt:message bundle="${locale}" key="race.date"/>:
-                            <c:out value="${race.date}"/>.</p>
-                        <p><fmt:message bundle="${locale}" key="race.location"/>:
-                            <c:out value="${race.location}"/>.</p>
-                        <input type="hidden" name="raceId" value="${race.id}"/>
-                        <div style="display: flex;align-items: center; justify-content: center">
-                            <button class="btn elegant-color-dark text-white" type="submit" name="command"
-                                    value="show_past_race">
-                                <fmt:message
-                                        bundle="${locale}"
-                                        key="view_details"/></button>
-                        </div>
-                    </form>
+                    </div>
+                    <br/>
                 </div>
             </div>
-            <br/>
-        </div>
-    </c:forEach>
+        </c:forEach>
+    </div>
 </div>
+<br/>
+<br/>
+
+<div class="container">
+    <div class="row">
+        <%--For displaying Previous link except for the 1st page --%>
+        <c:set var="currentPage" value="${sessionScope.currentPage}"/>
+        <c:if test="${currentPage != 1}">
+            <form method="post" action="/controller">
+                <button type="submit" class="btn btn-sm unique-color text-white" name="command"
+                        value="show_past_races"><fmt:message bundle="${locale}" key="previous"/>
+                </button>
+                <input type="hidden" name="pageNumber" value="${currentPage-1}">
+            </form>
+        </c:if>
+        <%--For displaying Page numbers.
+        The when condition does not display a link for the current page--%>
+        <c:forEach var="i" begin="1" end="${pageQuantity}">
+            <div class="col-12 col-md-auto">
+                <c:if test="${currentPage eq i}">
+                    <button class="btn btn-sm elegant-color-dark text-white" type="button">${i}</button>
+                </c:if>
+                <c:if test="${currentPage ne i}">
+                    <form method="post" action="/controller">
+                        <button type="submit" class="btn btn-sm btn-light" name="command"
+                                value="show_past_races">${i}</button>
+                        <input type="hidden" name="pageNumber" value="${i}">
+                    </form>
+                </c:if>
+            </div>
+        </c:forEach>
+        <%--For displaying Next link --%>
+        <c:if test="${currentPage lt pageQuantity}">
+            <form method="post" action="/controller">
+                <button type="submit" class="btn btn-sm unique-color text-white" name="command"
+                        value="show_past_races"><fmt:message bundle="${locale}" key="next"/>
+                </button>
+                <input type="hidden" name="pageNumber" value="${currentPage+1}">
+            </form>
+        </c:if>
+    </div>
+</div>
+
+<br/>
 <br/>
 <br/>
 <footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">

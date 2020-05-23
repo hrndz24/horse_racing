@@ -16,6 +16,7 @@ import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.validator.BetValidator;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 public enum BetServiceImpl implements BetService {
@@ -104,10 +105,16 @@ public enum BetServiceImpl implements BetService {
             throw new ServiceException("Null user");
         }
         try {
-            return betRepository.query(new FindBetsByUserId(user.getId()));
+            List<Bet> bets = betRepository.query(new FindBetsByUserId(user.getId()));
+            sortBetsDescendingOrder(bets);
+            return bets;
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to bets due to data source problems", e);
         }
+    }
+
+    private void sortBetsDescendingOrder(List<Bet> bets) {
+        Collections.reverse(bets);
     }
 
     public Bet getBetById(int betId) throws ServiceException {

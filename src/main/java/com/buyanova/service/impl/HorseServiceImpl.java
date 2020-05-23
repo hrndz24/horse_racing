@@ -10,6 +10,7 @@ import com.buyanova.service.HorseService;
 import com.buyanova.specification.impl.horse.*;
 import com.buyanova.validator.HorseValidator;
 
+import java.util.Comparator;
 import java.util.List;
 
 public enum HorseServiceImpl implements HorseService {
@@ -44,7 +45,9 @@ public enum HorseServiceImpl implements HorseService {
 
     public List<Horse> getPerformingHorses() throws ServiceException {
         try {
-            return horseRepository.query(new FindAllPerformingHorses());
+            List<Horse> horses = horseRepository.query(new FindAllPerformingHorses());
+            sortHorsesByName(horses);
+            return horses;
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get horses due to data source problems", e);
         }
@@ -52,7 +55,9 @@ public enum HorseServiceImpl implements HorseService {
 
     public List<Horse> getNonPerformingHorses() throws ServiceException {
         try {
-            return horseRepository.query(new FindAllNonPerformingHorses());
+            List<Horse> horses = horseRepository.query(new FindAllNonPerformingHorses());
+            sortHorsesByName(horses);
+            return horses;
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get horses due to data source problems", e);
         }
@@ -60,10 +65,16 @@ public enum HorseServiceImpl implements HorseService {
 
     public List<Horse> getAllHorses() throws ServiceException {
         try {
-            return horseRepository.query(new FindAllHorses());
+            List<Horse> horses = horseRepository.query(new FindAllHorses());
+            sortHorsesByName(horses);
+            return horses;
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get horses due to data source problems", e);
         }
+    }
+
+    private void sortHorsesByName(List<Horse> horses) {
+        horses.sort(Comparator.comparing(Horse::getName));
     }
 
     public List<Horse> getHorsesFromRace(Race race) throws ServiceException {
