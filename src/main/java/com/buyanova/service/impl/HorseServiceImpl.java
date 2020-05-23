@@ -30,7 +30,7 @@ public enum HorseServiceImpl implements HorseService {
         tryAddHorseToDataSource(horse);
     }
 
-    private void setHorseDefaultValues(Horse horse) throws ServiceException {
+    private void setHorseDefaultValues(Horse horse) {
         horse.setPerforming(true);
     }
 
@@ -38,7 +38,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             horseRepository.add(horse);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to add horse due to data source problems", e);
         }
     }
 
@@ -46,7 +46,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             return horseRepository.query(new FindAllPerformingHorses());
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horses due to data source problems", e);
         }
     }
 
@@ -54,7 +54,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             return horseRepository.query(new FindAllNonPerformingHorses());
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horses due to data source problems", e);
         }
     }
 
@@ -62,7 +62,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             return horseRepository.query(new FindAllHorses());
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horses due to data source problems", e);
         }
     }
 
@@ -73,7 +73,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             return horseRepository.query(new FindHorsesPerformingInRace(race.getId()));
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horses due to data source problems", e);
         }
     }
 
@@ -89,7 +89,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             horseRepository.update(horse);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to update horse due to data source problems", e);
         }
     }
 
@@ -104,7 +104,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             horseRepository.remove(horse);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to remove horse due to data source problems", e);
         }
     }
 
@@ -112,7 +112,7 @@ public enum HorseServiceImpl implements HorseService {
         try {
             return horseRepository.query(new FindHorseById(horseId)).get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horse due to data source problems", e);
         }
     }
 

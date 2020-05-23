@@ -6,7 +6,8 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Bet;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.BetServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.BetService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,14 +18,16 @@ import java.util.List;
 public class DeleteBet implements Command {
     private static Logger logger = LogManager.getLogger(DeleteBet.class);
 
+    private BetService betService = ServiceFactory.INSTANCE.getBetService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         Bet bet = (Bet) request.getSession().getAttribute(JSPParameter.BET.getParameter());
         try {
-            BetServiceImpl.INSTANCE.removeBet(bet);
+            betService.removeBet(bet);
             User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
             user.setBalance(user.getBalance().add(bet.getSum()));
-            List<Bet> bets = BetServiceImpl.INSTANCE.getBetsByUser(user);
+            List<Bet> bets = betService.getBetsByUser(user);
             request.getSession().setAttribute(JSPParameter.BETS.getParameter(), bets);
             return JSPPath.USER_BETS.getPath();
         } catch (ServiceException e) {

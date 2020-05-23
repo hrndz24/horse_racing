@@ -5,7 +5,8 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.UserServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.UserService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,13 +16,15 @@ import javax.servlet.http.HttpServletResponse;
 public class LogIn implements Command {
     private static Logger logger = LogManager.getLogger(LogIn.class);
 
+    private UserService userService = ServiceFactory.INSTANCE.getUserService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         User user = new User();
         user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
         user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
         try {
-            user = UserServiceImpl.INSTANCE.logIn(user);
+            user = userService.logIn(user);
             request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
             request.getSession().setAttribute(JSPParameter.USER.getParameter(), user);
             return JSPPath.USER_PAGE.getPath();

@@ -46,7 +46,7 @@ public enum OddsServiceImpl implements OddsService {
         try {
             oddsRepository.add(odds);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to add odds due to data source problems", e);
         }
     }
 
@@ -65,7 +65,7 @@ public enum OddsServiceImpl implements OddsService {
         try {
             oddsRepository.update(odds);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to update odds due to data source problems", e);
         }
     }
 
@@ -73,7 +73,7 @@ public enum OddsServiceImpl implements OddsService {
         try {
             return oddsRepository.query(new FindOddsByRace(raceId));
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get odds due to data source problems", e);
         }
     }
 
@@ -81,7 +81,7 @@ public enum OddsServiceImpl implements OddsService {
         try {
             return oddsRepository.query(new FindOddsByHorseIdAndRaceId(horseId, raceId)).get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get odds due to data source problems", e);
         }
     }
 
@@ -89,7 +89,7 @@ public enum OddsServiceImpl implements OddsService {
         try {
             return oddsRepository.query(new FindOddsById(oddsId)).get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get odds due to data source problems", e);
         }
     }
 
@@ -150,7 +150,7 @@ public enum OddsServiceImpl implements OddsService {
         try {
             return horseRepository.query(new FindHorsesPerformingInRace(raceId));
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horses due to data source problems", e);
         }
     }
 
@@ -161,7 +161,7 @@ public enum OddsServiceImpl implements OddsService {
                 throw new ServiceException("Horse with such id does not exist");
             return horses.get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horse because of data source problems", e);
         }
     }
 }

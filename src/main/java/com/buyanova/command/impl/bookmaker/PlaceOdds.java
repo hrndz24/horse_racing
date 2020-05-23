@@ -6,8 +6,9 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.HorseServiceImpl;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.HorseService;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,13 +19,16 @@ import java.util.List;
 public class PlaceOdds implements Command {
     private static Logger logger = LogManager.getLogger(PlaceOdds.class);
 
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
+    private HorseService horseService = ServiceFactory.INSTANCE.getHorseService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
 
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         try {
-            Race race = RaceServiceImpl.INSTANCE.getRaceById(raceId);
-            List<Horse> horses = HorseServiceImpl.INSTANCE.getHorsesFromRace(race);
+            Race race = raceService.getRaceById(raceId);
+            List<Horse> horses = horseService.getHorsesFromRace(race);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             request.getSession().setAttribute(JSPParameter.RACE.getParameter(), race);
             return JSPPath.PLACE_ODDS.getPath();

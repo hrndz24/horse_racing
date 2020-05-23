@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Main participant of the races. The core element of the project.
+ * Main participant of the races.
  *
  * @author Natalie
  */
@@ -19,16 +19,6 @@ public class Horse implements Serializable {
     private int racesLostNumber;
 
     public Horse() {
-    }
-
-    public Horse(int id, String name, String breed, int age, boolean isPerforming, int racesWonNumber, int racesLostNumber) {
-        this.id = id;
-        this.name = name;
-        this.breed = breed;
-        this.age = age;
-        this.isPerforming = isPerforming;
-        this.racesWonNumber = racesWonNumber;
-        this.racesLostNumber = racesLostNumber;
     }
 
     public int getId() {

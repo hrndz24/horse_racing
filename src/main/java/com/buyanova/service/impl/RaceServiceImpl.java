@@ -39,28 +39,10 @@ public enum RaceServiceImpl implements RaceService {
         try {
             raceRepository.add(race);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to add race due to data source problems", e);
         }
     }
 
-    /**
-     * Updates information about the race in the data source.
-     * <p>
-     * It automatically updates users' and bookmaker's balances
-     * according to their bets and odds.
-     * <p>
-     * Note: by race results we imply setting the horse winner.
-     * In case when other information about the race in the data
-     * source doesn't match the data stored in {@code race} fields,
-     * the latter is in priority and will overwrite information
-     * in the data source.
-     *
-     * @param race race that is to be updated
-     * @throws ServiceException if null or non-existent race is passed,
-     *                          if horse winner is already specified in the data source
-     *                          if horse winner did not perform in the race,
-     *                          if a data source access error occurs
-     */
     public void setRaceResults(Race race) throws ServiceException {
         if (race == null) {
             throw new ServiceException("Null race");
@@ -76,7 +58,7 @@ public enum RaceServiceImpl implements RaceService {
             if (raceRepository.query(new FindRaceById(race.getId())).get(0).getHorseWinnerId() != 0)
                 throw new ServiceException("Horse winner is already set");
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horse winner due to data source problems", e);
         }
     }
 
@@ -95,7 +77,7 @@ public enum RaceServiceImpl implements RaceService {
                 throw new ServiceException("Horse with such id does not exist");
             return horses.get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horse due to data source problems", e);
         }
     }
 
@@ -103,7 +85,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             raceRepository.setRaceResults(race);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to set race results due to data source problems", e);
         }
     }
 
@@ -118,7 +100,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             return horseRepository.query(new FindHorsesPerformingInRace(raceId));
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get horses of the race due to data source problems", e);
         }
     }
 
@@ -135,7 +117,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             horseRepository.update(horse);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to update horse due to data source problems", e);
         }
     }
 
@@ -151,7 +133,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             raceRepository.update(race);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to update race due to data source problems", e);
         }
     }
 
@@ -166,7 +148,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             raceRepository.remove(race);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to remove race due to data source problems", e);
         }
     }
 
@@ -174,7 +156,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             return raceRepository.query(new FindRacesWithoutResults());
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get races due to data source problems", e);
         }
     }
 
@@ -182,7 +164,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             raceRepository.addHorseToRace(horseId, raceId);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to add horse to race due to data source problems", e);
         }
     }
 
@@ -190,7 +172,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             raceRepository.removeHorseFromRace(horseId, raceId);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to remove horse from race due to data source problems", e);
         }
     }
 
@@ -198,7 +180,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             return raceRepository.query(new FindRacesAfterCurrentDate());
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get upcoming races due to data source problems", e);
         }
     }
 
@@ -206,7 +188,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             return raceRepository.query(new FindRacesAfterCurrentDateWithoutOdds());
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get upcoming races without odds due to data source problems", e);
         }
     }
 
@@ -216,7 +198,7 @@ public enum RaceServiceImpl implements RaceService {
             sortRacesByDateDescending(races);
             return races;
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get past races due to data source problems", e);
         }
     }
 
@@ -229,7 +211,7 @@ public enum RaceServiceImpl implements RaceService {
         try {
             return raceRepository.query(new FindRaceById(raceId)).get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get race due to data source problems", e);
         }
     }
 

@@ -18,7 +18,7 @@ import java.util.Objects;
  * in other case you lose two dollars (1 times 2).
  *
  * @author Natalie
- * */
+ */
 public class Odds implements Serializable {
 
     private int id;
@@ -29,15 +29,6 @@ public class Odds implements Serializable {
     private int oddsAgainst;
 
     public Odds() {
-    }
-
-    public Odds(int id, int bookmakerId, int horseId, int raceId, int oddsInFavour, int oddsAgainst) {
-        this.id = id;
-        this.bookmakerId = bookmakerId;
-        this.horseId = horseId;
-        this.raceId = raceId;
-        this.oddsInFavour = oddsInFavour;
-        this.oddsAgainst = oddsAgainst;
     }
 
     public int getId() {

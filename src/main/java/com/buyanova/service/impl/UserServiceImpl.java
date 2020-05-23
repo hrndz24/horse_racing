@@ -160,7 +160,7 @@ public enum UserServiceImpl implements UserService {
             if (!users.isEmpty())
                 throw new ServiceException("Login is already taken");
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get user due to data source problems", e);
         }
     }
 

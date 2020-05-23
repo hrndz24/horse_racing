@@ -6,7 +6,8 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Odds;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.OddsServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.OddsService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class SubmitOdds implements Command {
     private static Logger logger = LogManager.getLogger(SubmitOdds.class);
+
+    private OddsService oddsService = ServiceFactory.INSTANCE.getOddsService();
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
@@ -34,7 +37,7 @@ public class SubmitOdds implements Command {
             odds.setOddsInFavour(Integer.parseInt(oddsInFavourArray[i]));
             odds.setOddsAgainst(Integer.parseInt(oddsAgainstArray[i]));
             try {
-                OddsServiceImpl.INSTANCE.addOdds(odds);
+                oddsService.addOdds(odds);
             } catch (ServiceException e) {
                 logger.warn("Failed to execute command to submit odds", e);
                 request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());

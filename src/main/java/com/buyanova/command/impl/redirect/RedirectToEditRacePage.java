@@ -6,8 +6,9 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.HorseServiceImpl;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.HorseService;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,13 +19,16 @@ import java.util.List;
 public class RedirectToEditRacePage implements Command {
     private static Logger logger = LogManager.getLogger(RedirectToEditRacePage.class);
 
+    private HorseService horseService = ServiceFactory.INSTANCE.getHorseService();
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         try {
-            Race race = RaceServiceImpl.INSTANCE.getRaceById(raceId);
-            List<Horse> performingHorses = HorseServiceImpl.INSTANCE.getPerformingHorses();
-            List<Horse> horses = HorseServiceImpl.INSTANCE.getHorsesFromRace(race);
+            Race race = raceService.getRaceById(raceId);
+            List<Horse> performingHorses = horseService.getPerformingHorses();
+            List<Horse> horses = horseService.getHorsesFromRace(race);
             request.getSession().setAttribute(JSPParameter.PERFORMING_HORSES.getParameter(), performingHorses);
             request.getSession().setAttribute(JSPParameter.RACE.getParameter(), race);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);

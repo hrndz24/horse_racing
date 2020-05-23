@@ -3,33 +3,39 @@ package com.buyanova.factory;
 import com.buyanova.service.*;
 import com.buyanova.service.impl.*;
 
+/**
+ * {@code ServiceFactory} class uses factory pattern to decide
+ * what classes that implement business logic should be provided to
+ * layers above the business logic layer.
+ *
+ * @author Natalie
+ * @see com.buyanova.service.BetService
+ * @see com.buyanova.service.HorseService
+ * @see com.buyanova.service.OddsService
+ * @see com.buyanova.service.RaceService
+ * @see com.buyanova.service.UserService
+ */
 public enum ServiceFactory {
 
     INSTANCE;
 
-    private BetService betService = BetServiceImpl.INSTANCE;
-    private HorseService horseService = HorseServiceImpl.INSTANCE;
-    private OddsService oddsService = OddsServiceImpl.INSTANCE;
-    private RaceService raceService = RaceServiceImpl.INSTANCE;
-    private UserService userService = UserServiceImpl.INSTANCE;
-
     public BetService getBetService() {
-        return betService;
+        return BetServiceImpl.INSTANCE;
     }
 
     public HorseService getHorseService() {
-        return horseService;
+        return HorseServiceImpl.INSTANCE;
     }
 
     public OddsService getOddsService() {
-        return oddsService;
+        return OddsServiceImpl.INSTANCE;
     }
 
     public RaceService getRaceService() {
-        return raceService;
+        return RaceServiceImpl.INSTANCE;
     }
 
     public UserService getUserService() {
-        return userService;
+        return UserServiceImpl.INSTANCE;
     }
 }

@@ -7,7 +7,8 @@ import com.buyanova.entity.Bet;
 import com.buyanova.entity.Odds;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.BetServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.BetService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -17,6 +18,8 @@ import java.math.BigDecimal;
 
 public class SubmitBet implements Command {
     private static Logger logger = LogManager.getLogger(SubmitBet.class);
+
+    private BetService betService = ServiceFactory.INSTANCE.getBetService();
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
@@ -31,12 +34,13 @@ public class SubmitBet implements Command {
         bet.setUserId(userId);
 
         try {
-            BetServiceImpl.INSTANCE.addBet(bet);
+            betService.addBet(bet);
             user.setBalance(user.getBalance().subtract(bet.getSum()));
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to submit bet", e);
-            return JSPPath.MAKE_BET.getPath();
+            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            return JSPPath.ERROR_PAGE.getPath();
         }
     }
 }

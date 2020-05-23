@@ -18,36 +18,30 @@ import com.buyanova.repository.user.impl.SqlUserRepository;
  * <p>
  * Currently it provides classes that use sql database as data source.
  *
- * @see com.buyanova.repository.Repository
  * @author Natalie
+ * @see com.buyanova.repository.Repository
  */
 public enum RepositoryFactory {
 
     INSTANCE;
 
-    private UserRepository userRepository = SqlUserRepository.INSTANCE;
-    private HorseRepository horseRepository = SqlHorseRepository.INSTANCE;
-    private RaceRepository raceRepository = SqlRaceRepository.INSTANCE;
-    private BetRepository betRepository = SqlBetRepository.INSTANCE;
-    private OddsRepository oddsRepository = SqlOddsRepository.INSTANCE;
-
     public UserRepository getUserRepository() {
-        return userRepository;
+        return SqlUserRepository.INSTANCE;
     }
 
     public HorseRepository getHorseRepository() {
-        return horseRepository;
+        return SqlHorseRepository.INSTANCE;
     }
 
     public RaceRepository getRaceRepository() {
-        return raceRepository;
+        return SqlRaceRepository.INSTANCE;
     }
 
     public BetRepository getBetRepository() {
-        return betRepository;
+        return SqlBetRepository.INSTANCE;
     }
 
     public OddsRepository getOddsRepository() {
-        return oddsRepository;
+        return SqlOddsRepository.INSTANCE;
     }
 }

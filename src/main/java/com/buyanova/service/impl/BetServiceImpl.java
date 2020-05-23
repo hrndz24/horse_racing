@@ -50,22 +50,10 @@ public enum BetServiceImpl implements BetService {
         try {
             betRepository.add(bet);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to add bet due to data source problems", e);
         }
     }
 
-    /**
-     * Removes bet from the data source and
-     * returns money to the user.
-     * <p>
-     * Note: checks bet exists so that to prevent
-     * replenishment of user's account
-     *
-     * @param bet bet that is to be removed,
-     *            should be present in the data source
-     * @throws ServiceException if null or non-existent bet is passed
-     *                          or a data source access error occurs
-     */
     public void removeBet(Bet bet) throws ServiceException {
         if (bet == null) {
             throw new ServiceException("Null bet");
@@ -78,7 +66,7 @@ public enum BetServiceImpl implements BetService {
         try {
             betRepository.remove(bet);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to remove bet due to data source problems", e);
         }
     }
 
@@ -107,7 +95,7 @@ public enum BetServiceImpl implements BetService {
         try {
             betRepository.update(bet);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to update bet due to data source problems", e);
         }
     }
 
@@ -118,7 +106,7 @@ public enum BetServiceImpl implements BetService {
         try {
             return betRepository.query(new FindBetsByUserId(user.getId()));
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to bets due to data source problems", e);
         }
     }
 
@@ -126,7 +114,7 @@ public enum BetServiceImpl implements BetService {
         try {
             return betRepository.query(new FindBetById(betId)).get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("failed to get bet due to data source problems", e);
         }
     }
 
@@ -136,7 +124,7 @@ public enum BetServiceImpl implements BetService {
                 throw new ServiceException("Bet with such id does not exist");
             }
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to get bet due to data source problems", e);
         }
     }
 
@@ -162,7 +150,7 @@ public enum BetServiceImpl implements BetService {
                 throw new ServiceException("Odds with such id do not exist");
             }
         } catch (RepositoryException e) {
-            throw new ServiceException(e);
+            throw new ServiceException("Failed to validate bet due to data source problems", e);
         }
     }
 }

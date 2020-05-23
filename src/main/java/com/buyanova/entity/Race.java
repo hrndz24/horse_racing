@@ -23,15 +23,6 @@ public class Race implements Serializable {
     public Race() {
     }
 
-    public Race(int id, BigDecimal prizeMoney, int horseWinnerId, Date date, int distance, String location) {
-        this.id = id;
-        this.prizeMoney = prizeMoney;
-        this.horseWinnerId = horseWinnerId;
-        this.date = date;
-        this.distance = distance;
-        this.location = location;
-    }
-
     public int getId() {
         return id;
     }

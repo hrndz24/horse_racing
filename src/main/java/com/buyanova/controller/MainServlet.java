@@ -15,6 +15,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * {@code MainServlet} class represents project's
+ * controller layer and is used to process users'
+ * http requests.
+ * <p>
+ * It should be the only {@code Servlet} class used
+ * in the project.
+ * <p>
+ * Note: the class is loaded at the same time as
+ * the servlet container starts.
+ *
+ * @author Natalie
+ */
 @WebServlet(urlPatterns = "/controller", loadOnStartup = 0)
 public class MainServlet extends HttpServlet {
 

@@ -5,10 +5,11 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
- * Any mere mortal scrolling down the website.
+ * {@code User} class is used to describe
+ * anyone who is using the website.
  *
  * @author Natalie
- * */
+ */
 public class User implements Serializable {
 
     private int id;
@@ -21,17 +22,6 @@ public class User implements Serializable {
     private BigDecimal balance;
 
     public User() {
-    }
-
-    public User(int id, String name, String login, String password, String email, UserRole userRole, boolean isActive, BigDecimal balance) {
-        this.id = id;
-        this.name = name;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.userRole = userRole;
-        this.isActive = isActive;
-        this.balance = balance;
     }
 
     public int getId() {

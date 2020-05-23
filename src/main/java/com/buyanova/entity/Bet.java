@@ -7,9 +7,9 @@ import java.util.Objects;
 /**
  * The money client stakes based on bookmaker's odds.
  *
- * @see com.buyanova.entity.Odds
  * @author Natalie
- * */
+ * @see com.buyanova.entity.Odds
+ */
 public class Bet implements Serializable {
 
     private int id;
@@ -18,13 +18,6 @@ public class Bet implements Serializable {
     private int oddsId;
 
     public Bet() {
-    }
-
-    public Bet(int id, int userId, BigDecimal sum, int oddsId) {
-        this.id = id;
-        this.userId = userId;
-        this.sum = sum;
-        this.oddsId = oddsId;
     }
 
     public int getId() {
