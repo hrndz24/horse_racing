@@ -19,7 +19,7 @@ public class CopyrightTag extends TagSupport {
         int year = calendar.get(Calendar.YEAR);
         try {
             JspWriter out = pageContext.getOut();
-            String copyrightText = author + ", " + year;
+            String copyrightText = "<p>" + author + ", " + year + "</p>";
             out.write(copyrightText);
         } catch (IOException e) {
             logger.warn("Problems with copyright tag writer", e);

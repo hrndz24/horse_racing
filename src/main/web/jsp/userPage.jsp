@@ -136,7 +136,7 @@
         </div>
         <br/>
         <form action="/controller" method="post" style="float: right; margin-right: 2rem">
-            <button style="float: right" type="button" name="command" value="change_password"
+            <button style="float: right" type="button"
                     class="btn btn-light font-weight-bolder"
                     data-toggle="modal"
                     data-target="#changePasswordModal">
@@ -155,7 +155,8 @@
             <br/>
             <br/>
             <c:if test="${sessionScope.user.userRole.id==2}">
-                <button style="float: right" type="submit" name="command" value="deactivate_account"
+                <button style="float: right" type="button" data-toggle="modal"
+                        data-target="#deleteModal"
                         class="btn elegant-color-dark text-white">
                     <fmt:message bundle="${locale}" key="deactivate_account"/>
                 </button>
@@ -282,7 +283,7 @@
 </div>
 
 <!-- replenish popup window -->
-<div class="modal fade" id="replenishAccountModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel"
+<div class="modal fade" id="replenishAccountModal" tabindex="-1" role="dialog" aria-labelledby="accountModalLabel"
      aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -309,7 +310,30 @@
     </div>
 </div>
 
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+<!-- delete popup window -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="confirmModalLabel"><fmt:message bundle="${locale}"
+                                                                            key="confirm"/></h5>
+            </div>
+            <div style="display: flex;align-items: center; justify-content: center">
+                <form action="/controller" method="post">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                                bundle="${locale}" key="close"/></button>
+                        <button type="submit" class="btn btn-elegant" name="command" value="deactivate_account">
+                            <fmt:message bundle="${locale}" key="confirm"/></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>

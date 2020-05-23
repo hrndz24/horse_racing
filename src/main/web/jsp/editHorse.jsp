@@ -149,7 +149,7 @@
     <br/>
 </div>
 
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>

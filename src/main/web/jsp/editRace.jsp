@@ -126,7 +126,7 @@
     </div>
     <br/>
     <form action="/controller" method="post" style="margin-left: 10rem;margin-right: 15rem">
-        <button style="margin-left: 5rem" type="button" class="btn light-blue darken-4 text-white" data-toggle="modal"
+        <button style="margin-left: 5rem" type="button" class="btn unique-color text-white" data-toggle="modal"
                 data-target="#addHorsesModal">
             <fmt:message bundle="${locale}" key="add_horses"/>
         </button>
@@ -258,7 +258,7 @@
     </div>
 </div>
 
-<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 3rem">
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>

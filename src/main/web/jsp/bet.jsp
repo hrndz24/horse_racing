@@ -133,12 +133,11 @@
         <br/>
         <br/>
         <div style="display: flex;align-items: center; justify-content: center">
-            <form action="/controller" method="post">
-                <button type="submit" name="command" value="delete_bet"
-                        class="btn red darken-4 text-white">
-                    <fmt:message bundle="${locale}" key="delete_bet"/>
-                </button>
-            </form>
+            <button type="button" data-toggle="modal"
+                    data-target="#deleteModal"
+                    class="btn red darken-4 text-white">
+                <fmt:message bundle="${locale}" key="delete_bet"/>
+            </button>
         </div>
     </div>
 </div>
@@ -169,8 +168,29 @@
         </div>
     </div>
 </div>
-
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 3rem">
+<!-- delete popup window -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="text-align: center;display: inline-block">
+                <h5 class="modal-title" id="confirmModalLabel"><fmt:message bundle="${locale}"
+                                                                            key="confirm"/></h5>
+            </div>
+            <div style="display: flex;align-items: center; justify-content: center">
+                <form action="/controller" method="post">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-light" data-dismiss="modal"><fmt:message
+                                bundle="${locale}" key="close"/></button>
+                        <button type="submit" class="btn btn-elegant" name="command" value="delete_bet">
+                            <fmt:message bundle="${locale}" key="confirm"/></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>
