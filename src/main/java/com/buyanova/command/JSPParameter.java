@@ -14,7 +14,7 @@ public enum JSPParameter {
     RACE_DISTANCE("raceDistance"), RACES_WITHOUT_RESULTS("racesWithoutResults"),
     RACES_WITHOUT_ODDS("racesWithoutOdds"), PAST_RACES("pastRaces"),
     PAGE_NUMBER("pageNumber"), CURRENT_PAGE("currentPage"), PAGE_QUANTITY("pageQuantity"),
-    PAST_RACE("pastRace"),
+    PAST_RACE("pastRace"), USERS("users"), USER_ID("userId"),
     HORSES_TYPE("horsesType"),
     BETS("bets"), BET_ID("betId"), BET("bet"), SUM("sum"),
     HORSE_NAME("horseName"), HORSE_BREED("horseBreed"), HORSE_AGE("horseAge"),

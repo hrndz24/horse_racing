@@ -4,6 +4,7 @@ import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * {@code UserService} interface is used to describe
@@ -55,6 +56,15 @@ public interface UserService {
      *                          if a data source access error occurs
      */
     void removeUser(User user) throws ServiceException;
+
+    /**
+     * Unblocks user in the data source.
+     *
+     * @param user user that is to be unblocked
+     * @throws ServiceException if null user is passed,
+     *                          if a data source access error occurs
+     */
+    void unblockUser(User user) throws ServiceException;
 
     /**
      * Updates user's login in the data source.
@@ -117,4 +127,34 @@ public interface UserService {
      *                          if a data source access error occurs
      */
     void replenishAccount(User user, BigDecimal replenishmentSum) throws ServiceException;
+
+    /**
+     * Returns list of users of size {@code limit} starting from {@code offset} position
+     * in the data source.
+     *
+     * @param offset row number of the first requested user in the list
+     * @param limit  number of users to return
+     * @return list of users of size {@code limit} starting from {@code offset} position
+     * @throws ServiceException if offset or limit are negative,
+     *                          if a data source access error occurs
+     */
+    List<User> getUsersSubList(int offset, int limit) throws ServiceException;
+
+    /**
+     * Returns number of records in the data source for {@code User} entity.
+     *
+     * @return number of records in the data source for {@code User} entity
+     * @throws ServiceException if a data source access error occurs
+     */
+    int getUsersTotalNumber() throws ServiceException;
+
+    /**
+     * Returns {@code User} object with the full information about the
+     * user from the data source.
+     *
+     * @param userId id of the requested user
+     * @return user with the specified id
+     * @throws ServiceException if a data source access error occurs
+     */
+    User getUserById(int userId) throws ServiceException;
 }

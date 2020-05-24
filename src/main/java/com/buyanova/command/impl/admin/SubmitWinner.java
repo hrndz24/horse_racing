@@ -5,7 +5,8 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,16 +17,18 @@ import java.util.List;
 public class SubmitWinner implements Command {
     private static Logger logger = LogManager.getLogger(SubmitWinner.class);
 
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         int raceId = (Integer) request.getSession().getAttribute(JSPParameter.RACE_ID.getParameter());
 
         try {
-            Race race = RaceServiceImpl.INSTANCE.getRaceById(raceId);
+            Race race = raceService.getRaceById(raceId);
             race.setHorseWinnerId(horseId);
-            RaceServiceImpl.INSTANCE.setRaceResults(race);
-            List<Race> racesWithoutResults = RaceServiceImpl.INSTANCE.getRacesWithoutResults();
+            raceService.setRaceResults(race);
+            List<Race> racesWithoutResults = raceService.getRacesWithoutResults();
             request.getSession().setAttribute(JSPParameter.RACES_WITHOUT_RESULTS.getParameter(), racesWithoutResults);
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();
         } catch (ServiceException e) {

@@ -38,7 +38,7 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="md-form align-items-center">
+            <li class="md-form">
                 <form action="/controller" method="post" class="nav-item">
                     <button class="nav-link btn btn-sm" type="submit" name="command" value="show_races">
                         <fmt:message bundle="${locale}" key="navbar.races"/></button>
@@ -50,6 +50,15 @@
                         <button class="nav-link btn btn-sm" type="submit" name="command"
                                 value="show_horses">
                             <fmt:message bundle="${locale}" key="navbar.horses"/></button>
+                    </form>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.user.userRole.id==1}">
+                <li class="nav-item md-form">
+                    <form action="/controller" method="post">
+                        <button class="nav-link btn btn-sm" type="submit" name="command"
+                                value="show_users">
+                            <fmt:message bundle="${locale}" key="navbar.users"/></button>
                     </form>
                 </li>
             </c:if>
@@ -85,7 +94,7 @@
         <div>
             <form action="/controller" method="post" class="nav-item my-0">
                 <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm text-white">
-                    <c:out value="${userName}"/>
+                    <c:out value="${user.getName()}"/>
                 </button>
             </form>
         </div>
@@ -93,8 +102,6 @@
 </nav>
 
 <div class="container">
-    <br/>
-    <br/>
     <div style="display: flex;align-items: center; justify-content: center">
         <%--    Horse types dropdown--%>
         <div class="nav-item dropdown md-form" style="margin-right: 20rem;float: left">
@@ -133,7 +140,8 @@
             <c:forEach var="horse" items="${horses}">
                 <div class="col-md-6">
                     <div class="card white"
-                         style="width: 28rem; display: inline-block;  height: 22rem;padding-top: 2rem;padding-bottom: 2rem;margin: 2rem">
+                         style="width: 28rem; display: inline-block;  height: 21rem;padding-top: 2rem;padding-bottom: 1rem;
+                          margin-bottom: 2rem;margin-left: 2rem">
                         <div class="card-body px-lg-5 pt-0">
                             <form action="/controller" method="post">
                                 <p><fmt:message bundle="${locale}" key="horse.name"/>: <c:out
@@ -159,8 +167,8 @@
                                         <fmt:message bundle="${locale}" key="edit"/>
                                     </button>
                                     <c:if test="${horse.performing eq true}">
-                                        <button style="margin: 1rem" type="submit"
-                                                class="btn danger-color-dark text-white" name="command"
+                                        <button style="margin: 1rem; background-color: #a80009" type="submit"
+                                                class="btn text-white" name="command"
                                                 value="invalidate_horse">
                                             <fmt:message bundle="${locale}" key="invalidate"/>
                                         </button>

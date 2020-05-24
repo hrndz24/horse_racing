@@ -36,6 +36,10 @@ public enum SqlUserRepository implements UserRepository {
     private static final String UPDATE_QUERY = "UPDATE users SET user_name = ?, user_login = ?," +
             "user_password = ?, user_email = ?, user_role_id = ?, user_balance = ? WHERE user_id = ?";
 
+    private static final String UNBLOCK_QUERY = "UPDATE users SET user_is_active = true WHERE user_id = ?";
+
+    private static final String GET_ROWS_COUNT = "SELECT COUNT(*) FROM users";
+
     @Override
     public void add(User user) throws RepositoryException {
         try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
@@ -88,6 +92,31 @@ public enum SqlUserRepository implements UserRepository {
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RepositoryException("Failed to update user", e);
+        }
+    }
+
+    @Override
+    public void unblock(User user) throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(UNBLOCK_QUERY)) {
+
+            statement.setInt(1, user.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to unblock user", e);
+        }
+    }
+
+    @Override
+    public int getNumberOfRecords() throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_ROWS_COUNT);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to get number of records", e);
         }
     }
 

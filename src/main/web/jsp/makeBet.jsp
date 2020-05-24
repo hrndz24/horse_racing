@@ -38,7 +38,7 @@
 
         <ul class="navbar-nav mr-auto">
 
-            <li class="md-form align-items-center">
+            <li class="md-form">
                 <form action="/controller" method="post" class="nav-item">
                     <button class="nav-link btn btn-sm" type="submit" name="command" value="show_races">
                         <fmt:message bundle="${locale}" key="navbar.races"/></button>
@@ -50,6 +50,15 @@
                         <button class="nav-link btn btn-sm" type="submit" name="command"
                                 value="show_horses">
                             <fmt:message bundle="${locale}" key="navbar.horses"/></button>
+                    </form>
+                </li>
+            </c:if>
+            <c:if test="${sessionScope.user.userRole.id==1}">
+                <li class="nav-item md-form">
+                    <form action="/controller" method="post">
+                        <button class="nav-link btn btn-sm" type="submit" name="command"
+                                value="show_users">
+                            <fmt:message bundle="${locale}" key="navbar.users"/></button>
                     </form>
                 </li>
             </c:if>
@@ -85,7 +94,7 @@
         <div>
             <form action="/controller" method="post" class="nav-item my-0">
                 <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm text-white">
-                    <c:out value="${userName}"/>
+                    <c:out value="${user.getName()}"/>
                 </button>
             </form>
         </div>
@@ -135,7 +144,7 @@
     </div>
 </div>
 
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 2.5rem">
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>

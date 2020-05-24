@@ -5,7 +5,8 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.HorseServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.HorseService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -16,14 +17,15 @@ import java.util.List;
 public class InvalidateHorse implements Command {
     private static Logger logger = LogManager.getLogger(InvalidateHorse.class);
 
+    private HorseService horseService = ServiceFactory.INSTANCE.getHorseService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         try {
-            Horse horse = HorseServiceImpl.INSTANCE.getHorseById(horseId);
-            horse.setPerforming(false);
-            HorseServiceImpl.INSTANCE.removeHorse(horse);
-            List<Horse> horses = HorseServiceImpl.INSTANCE.getPerformingHorses();
+            Horse horse = horseService.getHorseById(horseId);
+            horseService.removeHorse(horse);
+            List<Horse> horses = horseService.getPerformingHorses();
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             return JSPPath.HORSES.getPath();
         } catch (ServiceException e) {

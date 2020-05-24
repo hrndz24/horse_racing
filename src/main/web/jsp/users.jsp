@@ -101,56 +101,57 @@
     </div>
 </nav>
 <br/>
-<%--races--%>
+<%--users--%>
 <div class="container">
-    <div class="row">
-        <c:forEach var="race" items="${pastRaces}">
-            <div class="col-md-6">
-                <div style="display: flex;align-items: center; justify-content: center">
-                    <div class="card white"
-                         style="width: 33rem; display: inline-block;padding-top: 2rem;margin: 1rem">
-                        <div class="card-body px-lg-5 pt-0">
-                            <form action="/controller" method="post">
-                                <div class="text-center font-weight-bold">
-                                    <h4><fmt:message bundle="${locale}" key="race_info"/>:</h4>
-                                </div>
-                                <hr>
-                                <p><fmt:message bundle="${locale}" key="race.distance"/>:
-                                    <c:out value="${race.distance}"/>.</p>
-                                <p><fmt:message bundle="${locale}" key="race.prize_money"/>:
-                                    <c:out value="${race.prizeMoney}"/>. </p>
-                                <p><fmt:message bundle="${locale}" key="race.date"/>:
-                                    <c:out value="${race.date}"/>.</p>
-                                <p><fmt:message bundle="${locale}" key="race.location"/>:
-                                    <c:out value="${race.location}"/>.</p>
-                                <input type="hidden" name="raceId" value="${race.id}"/>
-                                <div style="display: flex;align-items: center; justify-content: center">
-                                    <button class="btn elegant-color-dark text-white" type="submit" name="command"
-                                            value="show_past_race">
-                                        <fmt:message
-                                                bundle="${locale}"
-                                                key="view_details"/></button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <br/>
-                </div>
-            </div>
+    <table class="table table-bordered table-striped table-light text-white">
+        <thead class="black white-text text-center">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Active</th>
+        </tr>
+        </thead>
+        <c:forEach var="user" items="${users}">
+            <tr>
+                <td class="font-weight-bold text-dark text-center"><c:out value="${user.id}"/></td>
+                <td class="font-weight-bold text-dark text-center"><c:out value="${user.getName()}"/></td>
+                <td class="font-weight-bold text-dark text-center"><c:out value="${user.login}"/></td>
+                <td class="font-weight-bold text-dark text-center"><c:out value="${user.email}"/></td>
+                <td class="font-weight-bold text-dark text-center">
+                    <form method="post" action="/controller">
+                        <input type="hidden" name="userId" value="${user.id}">
+                        <input type="hidden" name="pageNumber" value="${currentPage}">
+                        <c:if test="${user.active eq true}">
+                            <button style="margin: 1rem; background-color: #a80009" type="submit"
+                                    class="btn text-white" name="command"
+                                    value="block_user">
+                                <fmt:message bundle="${locale}" key="block"/>
+                            </button>
+                        </c:if>
+                        <c:if test="${user.active eq false}">
+                            <button style="margin: 1rem" type="submit"
+                                    class="btn light-blue darken-4 text-white" name="command"
+                                    value="unblock_user">
+                                <fmt:message bundle="${locale}" key="unblock"/>
+                            </button>
+                        </c:if>
+                    </form>
+                </td>
+            </tr>
         </c:forEach>
-    </div>
+    </table>
 </div>
-<br/>
 <br/>
 
 <div class="container">
     <div class="row">
         <%--For displaying Previous link except for the 1st page --%>
-        <c:set var="currentPage" value="${sessionScope.currentPage}"/>
         <c:if test="${currentPage != 1}">
             <form method="post" action="/controller">
                 <button type="submit" class="btn btn-sm unique-color text-white" name="command"
-                        value="show_past_races"><fmt:message bundle="${locale}" key="previous"/>
+                        value="show_users"><fmt:message bundle="${locale}" key="previous"/>
                 </button>
                 <input type="hidden" name="pageNumber" value="${currentPage-1}">
             </form>
@@ -165,7 +166,7 @@
                 <c:if test="${currentPage ne i}">
                     <form method="post" action="/controller">
                         <button type="submit" class="btn btn-sm btn-light" name="command"
-                                value="show_past_races">${i}</button>
+                                value="show_users">${i}</button>
                         <input type="hidden" name="pageNumber" value="${i}">
                     </form>
                 </c:if>
@@ -175,7 +176,7 @@
         <c:if test="${currentPage lt pageQuantity}">
             <form method="post" action="/controller">
                 <button type="submit" class="btn btn-sm unique-color text-white" name="command"
-                        value="show_past_races"><fmt:message bundle="${locale}" key="next"/>
+                        value="show_users"><fmt:message bundle="${locale}" key="next"/>
                 </button>
                 <input type="hidden" name="pageNumber" value="${currentPage+1}">
             </form>
@@ -184,8 +185,6 @@
 </div>
 
 <br/>
-<br/>
-
 <footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
@@ -197,5 +196,6 @@
 <script type="text/javascript" src="../js/popper.min.js"></script>
 <script type="text/javascript" src="../js/bootstrap.min.js"></script>
 <script type="text/javascript" src="../js/mdb.min.js"></script>
+
 </body>
 </html>

@@ -29,7 +29,7 @@ public class SignUp implements Command {
         user.setUserRole(UserRole.CLIENT);
         try {
             userService.signUp(user);
-            request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
+            request.getSession().setAttribute(JSPParameter.USER.getParameter(), user);
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to sign up", e);

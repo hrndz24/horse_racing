@@ -5,7 +5,8 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,6 +20,8 @@ import java.util.Date;
 public class EditRace implements Command {
     private static Logger logger = LogManager.getLogger(EditRace.class);
     private static final String DATE_PATTERN = "EEE MMM dd HH:mm:ss zzz yyyy";
+
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
@@ -34,7 +37,7 @@ public class EditRace implements Command {
             race.setDistance(distance);
             race.setDate(raceDate);
             race.setPrizeMoney(prizeMoney);
-            RaceServiceImpl.INSTANCE.updateRace(race);
+            raceService.updateRace(race);
             return JSPPath.EDIT_RACE.getPath();
         } catch (ParseException | ServiceException e) {
             logger.warn("Failed to execute command to edit race", e);

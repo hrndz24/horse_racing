@@ -20,7 +20,8 @@ public class CommandFilter implements Filter {
 
     private EnumMap<UserRole, EnumSet<CommandEnum>> roleDependantCommands;
     private EnumSet<CommandEnum> commonCommands = EnumSet.range(CommandEnum.LOG_IN, CommandEnum.NON_EXISTING_COMMAND);
-    private EnumSet<CommandEnum> guestCommands = EnumSet.of(CommandEnum.SIGN_UP, CommandEnum.REDIRECT_HOME, CommandEnum.REDIRECT_SIGN_UP);
+    private EnumSet<CommandEnum> guestCommands = EnumSet.of(CommandEnum.SIGN_UP, CommandEnum.REDIRECT_HOME,
+            CommandEnum.REDIRECT_SIGN_UP, CommandEnum.LOG_IN);
 
     @Override
     public void init(FilterConfig filterConfig) {

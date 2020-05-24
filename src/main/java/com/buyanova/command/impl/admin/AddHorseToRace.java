@@ -6,8 +6,9 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.HorseServiceImpl;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.HorseService;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -19,15 +20,18 @@ public class AddHorseToRace implements Command {
 
     private static Logger logger = LogManager.getLogger(AddHorseToRace.class);
 
+    private HorseService horseService = ServiceFactory.INSTANCE.getHorseService();
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         String[] horseIds = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
         Race race = (Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter());
         try {
             for (String horseId : horseIds) {
-                RaceServiceImpl.INSTANCE.addHorseToRace(Integer.parseInt(horseId), race.getId());
+                raceService.addHorseToRace(Integer.parseInt(horseId), race.getId());
             }
-            List<Horse> horses = HorseServiceImpl.INSTANCE.getHorsesFromRace(race);
+            List<Horse> horses = horseService.getHorsesFromRace(race);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             return JSPPath.EDIT_RACE.getPath();
         } catch (ServiceException e) {

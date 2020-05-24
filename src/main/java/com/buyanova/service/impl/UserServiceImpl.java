@@ -6,8 +6,10 @@ import com.buyanova.exception.ServiceException;
 import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.user.UserRepository;
 import com.buyanova.service.UserService;
+import com.buyanova.specification.impl.user.FindUserById;
 import com.buyanova.specification.impl.user.FindUserByLogin;
 import com.buyanova.specification.impl.user.FindUserByLoginAndPassword;
+import com.buyanova.specification.impl.user.FindUsersSortedByLoginWithLimitAndOffset;
 import com.buyanova.util.PasswordEncryptor;
 import com.buyanova.validator.UserValidator;
 
@@ -87,6 +89,21 @@ public enum UserServiceImpl implements UserService {
         }
     }
 
+    public void unblockUser(User user) throws ServiceException {
+        if (user == null) {
+            throw new ServiceException("Null user");
+        }
+        tryUnblockUserInDataSource(user);
+    }
+
+    private void tryUnblockUserInDataSource(User user) throws ServiceException {
+        try {
+            userRepository.unblock(user);
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to unblock user due to data source problems", e);
+        }
+    }
+
     public void changeLogin(User user, String newLogin) throws ServiceException {
         if (user == null || newLogin == null) {
             throw new ServiceException("Null user parameter");
@@ -159,6 +176,35 @@ public enum UserServiceImpl implements UserService {
             List<User> users = userRepository.query(new FindUserByLogin(login));
             if (!users.isEmpty())
                 throw new ServiceException("Login is already taken");
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get user due to data source problems", e);
+        }
+    }
+
+    public List<User> getUsersSubList(int offset, int limit) throws ServiceException {
+        if (offset < 0 || limit < 0) {
+            throw new ServiceException("Invalid offset or limit number");
+        }
+        try {
+            return userRepository.query(new FindUsersSortedByLoginWithLimitAndOffset(offset, limit));
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get users due to data source problems", e);
+        }
+    }
+
+    @Override
+    public int getUsersTotalNumber() throws ServiceException {
+        try {
+            return userRepository.getNumberOfRecords();
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get number of users due to data source problems", e);
+        }
+    }
+
+    @Override
+    public User getUserById(int userId) throws ServiceException {
+        try {
+            return userRepository.query(new FindUserById(userId)).get(0);
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get user due to data source problems", e);
         }

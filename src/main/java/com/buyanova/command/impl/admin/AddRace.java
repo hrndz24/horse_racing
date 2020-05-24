@@ -5,7 +5,8 @@ import com.buyanova.command.JSPParameter;
 import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -22,6 +23,8 @@ public class AddRace implements Command {
 
     private static final String DATE_PATTERN = "yyyy-MM-dd hh:mm aa";
 
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
@@ -35,10 +38,10 @@ public class AddRace implements Command {
             race.setDistance(distance);
             race.setDate(raceDate);
             race.setPrizeMoney(prizeMoney);
-            RaceServiceImpl.INSTANCE.addRace(race);
+            raceService.addRace(race);
             String[] horses = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
             for (String horse : horses) {
-                RaceServiceImpl.INSTANCE.addHorseToRace(Integer.parseInt(horse), race.getId());
+                raceService.addHorseToRace(Integer.parseInt(horse), race.getId());
             }
             return JSPPath.RACES.getPath();
         } catch (ParseException | ServiceException e) {

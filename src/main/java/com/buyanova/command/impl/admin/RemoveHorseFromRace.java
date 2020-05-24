@@ -6,8 +6,9 @@ import com.buyanova.command.JSPPath;
 import com.buyanova.entity.Horse;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.ServiceException;
-import com.buyanova.service.impl.HorseServiceImpl;
-import com.buyanova.service.impl.RaceServiceImpl;
+import com.buyanova.factory.ServiceFactory;
+import com.buyanova.service.HorseService;
+import com.buyanova.service.RaceService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,13 +19,16 @@ import java.util.List;
 public class RemoveHorseFromRace implements Command {
     private static Logger logger = LogManager.getLogger(RemoveHorseFromRace.class);
 
+    private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
+    private HorseService horseService = ServiceFactory.INSTANCE.getHorseService();
+
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         Race race = (Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter());
         try {
-            RaceServiceImpl.INSTANCE.removeHorseFromRace(horseId, race.getId());
-            List<Horse> horses = HorseServiceImpl.INSTANCE.getHorsesFromRace(race);
+            raceService.removeHorseFromRace(horseId, race.getId());
+            List<Horse> horses = horseService.getHorsesFromRace(race);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             return JSPPath.EDIT_RACE.getPath();
         } catch (ServiceException e) {

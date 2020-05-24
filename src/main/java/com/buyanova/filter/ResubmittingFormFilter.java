@@ -22,7 +22,7 @@ public class ResubmittingFormFilter implements Filter {
             CommandEnum.LOG_IN, CommandEnum.REPLENISH_ACCOUNT, CommandEnum.INVALIDATE_HORSE, CommandEnum.VALIDATE_HORSE,
             CommandEnum.ADD_HORSE, CommandEnum.EDIT_HORSE, CommandEnum.ADD_RACE, CommandEnum.EDIT_RACE,
             CommandEnum.ADD_HORSE_TO_RACE, CommandEnum.REMOVE_HORSE_FROM_RACE, CommandEnum.DELETE_RACE,
-            CommandEnum.DELETE_BET);
+            CommandEnum.DELETE_BET, CommandEnum.BLOCK_USER, CommandEnum.UNBLOCK_USER);
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

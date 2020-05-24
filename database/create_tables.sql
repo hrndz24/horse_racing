@@ -28,16 +28,16 @@ CREATE TABLE horses
     horse_age        INT,
     is_performing    BOOL,
     races_won_number INT,
-    races_lost       INT,
+    races_lost       INT
 );
 
-create table race_horses
+CREATE TABLE race_horses
 (
-    race_id  int,
-    horse_id int,
-    primary key (race_id, horse_id),
-    foreign key (race_id) references races (race_id),
-    foreign key (horse_id) references horses (horse_id)
+    race_id  INT,
+    horse_id INT,
+    PRIMARY KEY (race_id, horse_id),
+    FOREIGN KEY (race_id) REFERENCES races (race_id),
+    FOREIGN KEY (horse_id) REFERENCES horses (horse_id)
 );
 
 CREATE TABLE races
@@ -59,7 +59,7 @@ CREATE TABLE odds
     horse_id       INT,
     odds_in_favour INT,
     odds_against   INT,
-    FOREIGN KEY (race_id) REFERENCES races (race_id),
+    FOREIGN KEY (race_id) REFERENCES races (race_id) ON DELETE CASCADE,
     FOREIGN KEY (bookmaker_id) REFERENCES users (user_id),
     FOREIGN KEY (horse_id) REFERENCES horses (horse_id)
 );
@@ -70,6 +70,6 @@ create table bets
     user_id INT,
     bet_sum DECIMAL(11, 2),
     odds_id INT,
-    FOREIGN KEY (user_id) REFERENCES users (user_id),
-    FOREIGN KEY (odds_id) REFERENCES odds (odds_id)
+    FOREIGN KEY (user_id) REFERENCES users (user_id) ON DELETE CASCADE,
+    FOREIGN KEY (odds_id) REFERENCES odds (odds_id) ON DELETE CASCADE
 );
