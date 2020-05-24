@@ -116,11 +116,11 @@
     <table class="table table-bordered table-striped table-light text-white">
         <thead class="black white-text text-center">
         <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Login</th>
-            <th>Email</th>
-            <th>Active</th>
+            <th><fmt:message bundle="${locale}" key="id"/></th>
+            <th><fmt:message bundle="${locale}" key="name"/></th>
+            <th><fmt:message bundle="${locale}" key="login"/></th>
+            <th><fmt:message bundle="${locale}" key="email"/></th>
+            <th><fmt:message bundle="${locale}" key="active"/></th>
         </tr>
         </thead>
         <c:forEach var="user" items="${users}">
