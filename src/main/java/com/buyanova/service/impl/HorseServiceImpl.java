@@ -133,7 +133,7 @@ public enum HorseServiceImpl implements HorseService {
             throw new ServiceException("Null pattern");
         }
         try {
-            return horseRepository.query(new FindHorsesWhichNameMatchString(pattern));
+            return horseRepository.query(new FindHorsesWhoseNameStartsWithPattern(pattern));
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get horses due to data source problems", e);
         }

@@ -1,5 +1,6 @@
 package com.buyanova.service;
 
+import com.buyanova.entity.Horse;
 import com.buyanova.entity.User;
 import com.buyanova.exception.ServiceException;
 
@@ -157,4 +158,14 @@ public interface UserService {
      * @throws ServiceException if a data source access error occurs
      */
     User getUserById(int userId) throws ServiceException;
+
+    /**
+     * Returns list of users whose login starts with the given string.
+     *
+     * @param pattern first part of users' login
+     * @return list of users whose login starts with {@code pattern}
+     * @throws ServiceException if null pattern is passed,
+     *                          if a data source access error occurs
+     */
+    List<User> getUsersWhoseLoginMatchString(String pattern) throws ServiceException;
 }

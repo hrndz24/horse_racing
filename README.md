@@ -40,6 +40,8 @@ Website visitors are provided with the following services:
 * add horse;
 * edit horse's information;
 * invalidate or validate horses;
+* view users;
+* block or unblock users;
 
 ***Guest:***
 * sign up;

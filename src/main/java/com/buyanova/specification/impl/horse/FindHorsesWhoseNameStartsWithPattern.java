@@ -6,11 +6,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FindHorsesWhichNameMatchString implements SqlSpecification {
+public class FindHorsesWhoseNameStartsWithPattern implements SqlSpecification {
 
     private String pattern;
 
-    public FindHorsesWhichNameMatchString(String pattern) {
+    public FindHorsesWhoseNameStartsWithPattern(String pattern) {
         this.pattern = pattern;
     }
 

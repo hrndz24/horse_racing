@@ -84,6 +84,16 @@
                 </div>
             </li>
         </ul>
+        <c:if test="${sessionScope.user.userRole.id==1}">
+            <div>
+                <form class="form-inline nav-item my-2" method="post" action="/controller">
+                    <input type="hidden" name="command" value="search_user">
+                    <input class="form-control mr-sm-2" type="text" name="search"
+                           placeholder="<fmt:message bundle="${locale}" key="search"/>"
+                           aria-label="Search">
+                </form>
+            </div>
+        </c:if>
         <div>
             <form action="/controller" method="post" class="nav-item my-1">
                 <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm text-white">

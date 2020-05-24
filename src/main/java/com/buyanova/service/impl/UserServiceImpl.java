@@ -6,10 +6,7 @@ import com.buyanova.exception.ServiceException;
 import com.buyanova.factory.RepositoryFactory;
 import com.buyanova.repository.user.UserRepository;
 import com.buyanova.service.UserService;
-import com.buyanova.specification.impl.user.FindUserById;
-import com.buyanova.specification.impl.user.FindUserByLogin;
-import com.buyanova.specification.impl.user.FindUserByLoginAndPassword;
-import com.buyanova.specification.impl.user.FindUsersSortedByLoginWithLimitAndOffset;
+import com.buyanova.specification.impl.user.*;
 import com.buyanova.util.PasswordEncryptor;
 import com.buyanova.validator.UserValidator;
 
@@ -198,6 +195,18 @@ public enum UserServiceImpl implements UserService {
             return userRepository.getNumberOfRecords();
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get number of users due to data source problems", e);
+        }
+    }
+
+    @Override
+    public List<User> getUsersWhoseLoginMatchString(String pattern) throws ServiceException {
+        if (pattern == null) {
+            throw new ServiceException("Null pattern");
+        }
+        try {
+            return userRepository.query(new FindUsersWhoseLoginStartsWithPattern(pattern));
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get users due to data source problems", e);
         }
     }
 
