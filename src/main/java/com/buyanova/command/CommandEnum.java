@@ -37,7 +37,7 @@ public enum CommandEnum {
     INVALIDATE_HORSE(new InvalidateHorse()), VALIDATE_HORSE(new ValidateHorse()),
     ADD_HORSE(new AddHorse()), EDIT_HORSE(new EditHorse()),
     SHOW_USERS(new ShowUsers()), BLOCK_USER(new BlockUser()),
-    UNBLOCK_USER(new UnblockUser()),
+    UNBLOCK_USER(new UnblockUser()), SEARCH_HORSE(new SearchHorsesByName()),
     REDIRECT_ADD_RACE(new RedirectToAddRacePage()), ADD_RACE(new AddRace()),
     SHOW_RACES_WITHOUT_RESULTS(new ShowRacesWithoutResults()), SET_RESULTS(new SetRaceResults()),
     SUBMIT_WINNER(new SubmitWinner()), EDIT_RACE(new EditRace()),

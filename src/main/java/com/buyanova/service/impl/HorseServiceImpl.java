@@ -127,6 +127,18 @@ public enum HorseServiceImpl implements HorseService {
         }
     }
 
+    @Override
+    public List<Horse> getHorsesWhoseNameMatchString(String pattern) throws ServiceException {
+        if (pattern == null) {
+            throw new ServiceException("Null pattern");
+        }
+        try {
+            return horseRepository.query(new FindHorsesWhichNameMatchString(pattern));
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get horses due to data source problems", e);
+        }
+    }
+
     private void validateHorseFields(Horse horse) throws ServiceException {
         if (horse.getName() == null) {
             throw new ServiceException("Null horse name");

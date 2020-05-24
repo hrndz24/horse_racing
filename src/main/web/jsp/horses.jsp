@@ -84,20 +84,31 @@
                 </div>
             </li>
         </ul>
-        <div>
-            <form action="/controller" method="post" class="nav-item my-1">
-                <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm text-white">
-                    <fmt:message bundle="${locale}" key="log_out"/>
-                </button>
-            </form>
-        </div>
-        <div>
-            <form action="/controller" method="post" class="nav-item my-0">
-                <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm text-white">
-                    <c:out value="${user.getName()}"/>
-                </button>
-            </form>
-        </div>
+        <c:if test="${sessionScope.user.userRole.id==1}">
+            <div>
+                <form class="form-inline nav-item my-2" method="post" action="/controller">
+                    <input type="hidden" name="command" value="search_horse">
+                    <input class="form-control mr-sm-2" type="text" name="search"
+                           placeholder="<fmt:message bundle="${locale}" key="search"/>"
+                           aria-label="Search">
+                </form>
+            </div>
+        </c:if>
+    </div>
+    <div>
+        <form action="/controller" method="post" class="nav-item my-1">
+            <button type="submit" name="command" value="log_out" class="nav-link btn btn-sm text-white">
+                <fmt:message bundle="${locale}" key="log_out"/>
+            </button>
+        </form>
+    </div>
+    <div>
+        <form action="/controller" method="post" class="nav-item my-0">
+            <button type="submit" name="command" value="redirect_user" class="nav-link btn btn-sm text-white">
+                <c:out value="${user.getName()}"/>
+            </button>
+        </form>
+    </div>
     </div>
 </nav>
 
@@ -249,7 +260,7 @@
 </div>
 <br/>
 <br/>
-<footer class="page-footer font-small elegant-color fixed-bottom"  style="height: 2.5rem">
+<footer class="page-footer font-small elegant-color fixed-bottom" style="height: 2.5rem">
     <!-- Copyright -->
     <div class="footer-copyright text-center py-3">
         <ctg:copyright/>

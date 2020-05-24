@@ -94,4 +94,14 @@ public interface HorseService {
      * @throws ServiceException if a data source access error occurs
      */
     Horse getHorseById(int horseId) throws ServiceException;
+
+    /**
+     * Returns list of horses whose name starts with the given string.
+     *
+     * @param pattern first part of horses' name
+     * @return list of horses whose name starts with {@code pattern}
+     * @throws ServiceException if null pattern is passed,
+     *                          if a data source access error occurs
+     */
+    List<Horse> getHorsesWhoseNameMatchString(String pattern) throws ServiceException;
 }
