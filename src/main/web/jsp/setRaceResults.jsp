@@ -155,6 +155,7 @@
                                         value="${horse.racesLostNumber}"/>.</p>
 
                                 <input type="hidden" name="horseId" value="${horse.id}"/>
+                                <input type="hidden" name="raceId" value="${race.id}"/>
                                 <div style="display: flex;align-items: center; justify-content: center">
                                     <button class="btn elegant-color-dark text-white" type="submit" name="command"
                                             value="submit_winner">

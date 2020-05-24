@@ -41,6 +41,8 @@ public enum SqlRaceRepository implements RaceRepository {
 
     private static final String SET_RACE_RESULTS = "{CALL usp_SetRaceResults(?, ?)}";
 
+    private static final String GET_PAST_RACES_COUNT = "SELECT COUNT(*) FROM races WHERE race_date < now()";
+
 
     @Override
     public void addHorseToRace(int horseId, int raceId) throws RepositoryException {
@@ -127,6 +129,19 @@ public enum SqlRaceRepository implements RaceRepository {
             statement.execute();
         } catch (SQLException e) {
             throw new RepositoryException("Failed to set race results in database", e);
+        }
+    }
+
+    @Override
+    public int getNumberOfPastRacesRecords() throws RepositoryException {
+        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(GET_PAST_RACES_COUNT);
+             ResultSet resultSet = statement.executeQuery()) {
+
+            resultSet.next();
+            return resultSet.getInt(1);
+        } catch (SQLException e) {
+            throw new RepositoryException("Failed to get number of records", e);
         }
     }
 

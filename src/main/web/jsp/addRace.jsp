@@ -138,7 +138,7 @@
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="${horse.id}" name="horseId"
                            value="${horse.id}">
-                    <label class="custom-control-label text-dark" for="${horse.id}"><c:out
+                    <label class="custom-control-label text-dark font-weight-bold" for="${horse.id}"><c:out
                             value="${horse.name}"/></label>
                 </div>
                 <br/>

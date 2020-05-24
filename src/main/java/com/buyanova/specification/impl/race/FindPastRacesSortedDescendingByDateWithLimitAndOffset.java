@@ -6,7 +6,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class FindRacesBeforeCurrentDate implements SqlSpecification {
+public class FindPastRacesSortedDescendingByDateWithLimitAndOffset implements SqlSpecification {
+
+    private int offset;
+    private int limit;
+
+    public FindPastRacesSortedDescendingByDateWithLimitAndOffset(int offset, int limit) {
+        this.offset = offset;
+        this.limit = limit;
+    }
+
     private static final String SQL_QUERY = "SELECT \n" +
             "    race_id,\n" +
             "    race_prize_money,\n" +
@@ -17,11 +26,16 @@ public class FindRacesBeforeCurrentDate implements SqlSpecification {
             "FROM\n" +
             "    races\n" +
             "WHERE\n" +
-            "    race_date < now()";
+            "    race_date < now()\n" +
+            "ORDER BY race_date DESC\n" +
+            "LIMIT ? OFFSET ?";
 
 
     @Override
     public PreparedStatement toSqlStatement(Connection connection) throws SQLException {
-        return connection.prepareStatement(SQL_QUERY);
+        PreparedStatement statement = connection.prepareStatement(SQL_QUERY);
+        statement.setInt(1, limit);
+        statement.setInt(2, offset);
+        return statement;
     }
 }

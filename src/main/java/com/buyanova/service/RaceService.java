@@ -122,15 +122,28 @@ public interface RaceService {
 
     /**
      * Returns list of races that happened in the past(their date
-     * is before the current date).
+     * is before the current date) of size {@code size} starting
+     * from {@code indexFrom} position.
      * <p>
      * The races are sorted in the descending order, meaning
      * the latest ones are viewed first.
      *
+     * @param indexFrom row number of the first requested race in the list
+     * @param size amount of races to return
      * @return list of past races
+     * @throws ServiceException if indexFrom or size are negative,
+     *                          if a data source access error occurs
+     */
+    List<Race> getPastRacesSubList(int indexFrom, int size) throws ServiceException;
+
+    /**
+     * Returns number of past races(their date is before current date)
+     * in the data source.
+     *
+     * @return number of records for past races in the data source
      * @throws ServiceException if a data source access error occurs
      */
-    List<Race> getPastRaces() throws ServiceException;
+    int getPastRacesTotalNumber() throws ServiceException;
 
     /**
      * Returns {@code Race} object with the full information about the

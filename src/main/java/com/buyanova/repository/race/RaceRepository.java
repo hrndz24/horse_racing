@@ -45,4 +45,13 @@ public interface RaceRepository extends Repository<Race> {
      * @throws RepositoryException if a data source access error occurs
      */
     void setRaceResults(Race race) throws RepositoryException;
+
+    /**
+     * Returns number of records for past races(their date is before current date)
+     * in the data source.
+     *
+     * @return number of records for past races in the data source
+     * @throws RepositoryException if a data source access error occurs
+     */
+    int getNumberOfPastRacesRecords() throws RepositoryException;
 }

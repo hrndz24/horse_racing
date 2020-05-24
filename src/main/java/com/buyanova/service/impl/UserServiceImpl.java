@@ -181,12 +181,12 @@ public enum UserServiceImpl implements UserService {
         }
     }
 
-    public List<User> getUsersSubList(int offset, int limit) throws ServiceException {
-        if (offset < 0 || limit < 0) {
-            throw new ServiceException("Invalid offset or limit number");
+    public List<User> getUsersSubList(int indexFrom, int size) throws ServiceException {
+        if (indexFrom < 0 || size < 0) {
+            throw new ServiceException("Invalid index from or size number");
         }
         try {
-            return userRepository.query(new FindUsersSortedByLoginWithLimitAndOffset(offset, limit));
+            return userRepository.query(new FindUsersSortedByLoginWithLimitAndOffset(indexFrom, size));
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get users due to data source problems", e);
         }

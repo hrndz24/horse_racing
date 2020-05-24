@@ -13,8 +13,6 @@ import com.buyanova.specification.impl.horse.FindHorsesPerformingInRace;
 import com.buyanova.specification.impl.race.*;
 import com.buyanova.validator.RaceValidator;
 
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public enum RaceServiceImpl implements RaceService {
@@ -192,19 +190,24 @@ public enum RaceServiceImpl implements RaceService {
         }
     }
 
-    public List<Race> getPastRaces() throws ServiceException {
+    public List<Race> getPastRacesSubList(int indexFrom, int size) throws ServiceException {
+        if (indexFrom < 0 || size < 0) {
+            throw new ServiceException("Invalid index from or size number");
+        }
         try {
-            List<Race> races = raceRepository.query(new FindRacesBeforeCurrentDate());
-            sortRacesByDateDescending(races);
-            return races;
+            return raceRepository.query(new FindPastRacesSortedDescendingByDateWithLimitAndOffset(indexFrom, size));
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get past races due to data source problems", e);
         }
     }
 
-    private void sortRacesByDateDescending(List<Race> races) {
-        races.sort(Comparator.comparing(Race::getDate));
-        Collections.reverse(races);
+    @Override
+    public int getPastRacesTotalNumber() throws ServiceException {
+        try {
+            return raceRepository.getNumberOfPastRacesRecords();
+        } catch (RepositoryException e) {
+            throw new ServiceException("Failed to get number of past races due to data source problems", e);
+        }
     }
 
     public Race getRaceById(int raceId) throws ServiceException {

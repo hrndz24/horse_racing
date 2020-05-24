@@ -129,16 +129,16 @@ public interface UserService {
     void replenishAccount(User user, BigDecimal replenishmentSum) throws ServiceException;
 
     /**
-     * Returns list of users of size {@code limit} starting from {@code offset} position
+     * Returns list of users of size {@code size} starting from {@code indexFrom} position
      * in the data source.
      *
-     * @param offset row number of the first requested user in the list
-     * @param limit  number of users to return
-     * @return list of users of size {@code limit} starting from {@code offset} position
-     * @throws ServiceException if offset or limit are negative,
+     * @param indexFrom row number of the first requested user in the list
+     * @param size  number of users to return
+     * @return list of users of size {@code size} starting from {@code indexFrom} position
+     * @throws ServiceException if indexFrom or size are negative,
      *                          if a data source access error occurs
      */
-    List<User> getUsersSubList(int offset, int limit) throws ServiceException;
+    List<User> getUsersSubList(int indexFrom, int size) throws ServiceException;
 
     /**
      * Returns number of records in the data source for {@code User} entity.

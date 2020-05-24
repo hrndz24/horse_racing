@@ -26,10 +26,10 @@ public class ShowPastRaces implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         try {
             int pageNumber = identifyPageNumber(request);
-            List<Race> pastRaces = raceService.getPastRaces();
-            int racesQuantity = pastRaces.size();
+            int racesQuantity = raceService.getPastRacesTotalNumber();
             int pageQuantity = (int) Math.ceil(racesQuantity * 1.0 / RECORDS_PER_PAGE);
-            List<Race> racesToShowOnPage = getRacesToShowOnPage(pastRaces, pageNumber);
+            int indexFrom = (pageNumber - 1) * RECORDS_PER_PAGE;
+            List<Race> racesToShowOnPage = raceService.getPastRacesSubList(indexFrom, RECORDS_PER_PAGE);
             request.getSession().setAttribute(JSPParameter.PAST_RACES.getParameter(), racesToShowOnPage);
             request.getSession().setAttribute(JSPParameter.PAGE_QUANTITY.getParameter(), pageQuantity);
             request.getSession().setAttribute(JSPParameter.CURRENT_PAGE.getParameter(), pageNumber);
@@ -46,17 +46,6 @@ public class ShowPastRaces implements Command {
             return Integer.parseInt(request.getParameter(JSPParameter.PAGE_NUMBER.getParameter()));
         } else {
             return FIRST_PAGE_NUMBER;
-        }
-    }
-
-    private List<Race> getRacesToShowOnPage(List<Race> pastRaces, int pageNumber) {
-        int indexFrom = (pageNumber - 1) * RECORDS_PER_PAGE;
-        int indexTo = indexFrom + RECORDS_PER_PAGE;
-        int racesQuantity = pastRaces.size();
-        if (indexTo < racesQuantity) {
-            return pastRaces.subList(indexFrom, indexTo);
-        } else {
-            return pastRaces.subList(indexFrom, racesQuantity - 1);
         }
     }
 }
