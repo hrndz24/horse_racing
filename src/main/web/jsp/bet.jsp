@@ -105,7 +105,7 @@
 <div style="display: flex;align-items: center; justify-content: center">
     <div style="clear:both;">
         <div class="card white"
-             style="width: 33rem; display: inline-block;  height: 33rem;padding: 2rem">
+             style="width: 33rem; display: inline-block;  height: 34rem;padding: 2rem">
             <div class="card-body px-lg-5 pt-0">
                 <div style="text-align: center">
                     <p><fmt:message bundle="${locale}" key="race_info"/></p>
@@ -130,6 +130,14 @@
                     <p><fmt:message bundle="${locale}" key="bet_details"/></p>
                 </div>
                 <hr>
+                <c:if test="${race.horseWinnerId!=0}">
+                    <c:if test="${horse.id eq race.horseWinnerId}">
+                        <p><fmt:message bundle="${locale}" key="won_bet"/>.</p>
+                    </c:if>
+                    <c:if test="${horse.id ne race.horseWinnerId}">
+                        <p><fmt:message bundle="${locale}" key="lost_bet"/>.</p>
+                    </c:if>
+                </c:if>
                 <p><fmt:message bundle="${locale}" key="sum"/>: <c:out value="${bet.sum}"/>.
                     <button style="float: right;" type="button" class="btn btn-elegant btn-sm" data-toggle="modal"
                             data-target="#changeBetModal">
