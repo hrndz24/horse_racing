@@ -82,7 +82,7 @@ public enum SqlBetRepository implements BetRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-        SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        SqlSpecification sqlSpecification = (SqlSpecification) specification;
         return getBetsFromDatabase(sqlSpecification);
     }
 

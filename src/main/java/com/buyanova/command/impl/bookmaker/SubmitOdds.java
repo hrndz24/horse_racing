@@ -40,7 +40,7 @@ public class SubmitOdds implements Command {
                 oddsService.addOdds(odds);
             } catch (ServiceException e) {
                 logger.warn("Failed to execute command to submit odds", e);
-                request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+                request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
                 return JSPPath.ERROR_PAGE.getPath();
             }
         }

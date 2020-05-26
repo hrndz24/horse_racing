@@ -23,7 +23,6 @@ public class SubmitWinner implements Command {
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
-
         try {
             Race race = raceService.getRaceById(raceId);
             race.setHorseWinnerId(horseId);
@@ -33,7 +32,7 @@ public class SubmitWinner implements Command {
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to submit winner", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

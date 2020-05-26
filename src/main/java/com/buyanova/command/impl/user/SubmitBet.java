@@ -23,6 +23,19 @@ public class SubmitBet implements Command {
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
+        Bet bet = buildBet(request);
+        try {
+            betService.addBet(bet);
+            updateSessionUserBalance(request, bet);
+            return JSPPath.USER_PAGE.getPath();
+        } catch (ServiceException e) {
+            logger.warn("Failed to execute command to submit bet", e);
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            return JSPPath.ERROR_PAGE.getPath();
+        }
+    }
+
+    private Bet buildBet(HttpServletRequest request) {
         int oddsId = ((Odds) request.getSession().getAttribute(JSPParameter.ODDS.getParameter())).getId();
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         int userId = user.getId();
@@ -32,15 +45,11 @@ public class SubmitBet implements Command {
         bet.setOddsId(oddsId);
         bet.setSum(sum);
         bet.setUserId(userId);
+        return bet;
+    }
 
-        try {
-            betService.addBet(bet);
-            user.setBalance(user.getBalance().subtract(bet.getSum()));
-            return JSPPath.USER_PAGE.getPath();
-        } catch (ServiceException e) {
-            logger.warn("Failed to execute command to submit bet", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
-            return JSPPath.ERROR_PAGE.getPath();
-        }
+    private void updateSessionUserBalance(HttpServletRequest request, Bet bet) {
+        User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
+        user.setBalance(user.getBalance().subtract(bet.getSum()));
     }
 }

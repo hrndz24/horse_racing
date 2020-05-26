@@ -30,7 +30,7 @@ public class InvalidateHorse implements Command {
             return JSPPath.HORSES.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to invalidate horse", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

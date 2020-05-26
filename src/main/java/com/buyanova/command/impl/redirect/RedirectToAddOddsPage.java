@@ -1,4 +1,4 @@
-package com.buyanova.command.impl.bookmaker;
+package com.buyanova.command.impl.redirect;
 
 import com.buyanova.command.Command;
 import com.buyanova.command.JSPParameter;
@@ -16,15 +16,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class PlaceOdds implements Command {
-    private static Logger logger = LogManager.getLogger(PlaceOdds.class);
+public class RedirectToAddOddsPage implements Command {
+    private static Logger logger = LogManager.getLogger(RedirectToAddOddsPage.class);
 
     private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
     private HorseService horseService = ServiceFactory.INSTANCE.getHorseService();
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-
         int raceId = Integer.parseInt(request.getParameter(JSPParameter.RACE_ID.getParameter()));
         try {
             Race race = raceService.getRaceById(raceId);
@@ -34,7 +33,7 @@ public class PlaceOdds implements Command {
             return JSPPath.PLACE_ODDS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to place odds", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

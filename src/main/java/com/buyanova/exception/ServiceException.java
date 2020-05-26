@@ -1,5 +1,11 @@
 package com.buyanova.exception;
 
+/**
+ * Thrown in case of any exceptional situation
+ * on the business logic level.
+ *
+ * @author Natalie
+ * */
 public class ServiceException extends Exception {
     public ServiceException() {
     }

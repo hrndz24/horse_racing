@@ -22,12 +22,7 @@ public class AddHorse implements Command {
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        Horse horse = new Horse();
-        horse.setName(request.getParameter(JSPParameter.HORSE_NAME.getParameter()));
-        horse.setBreed(request.getParameter(JSPParameter.HORSE_BREED.getParameter()));
-        horse.setAge(Integer.parseInt(request.getParameter(JSPParameter.HORSE_AGE.getParameter())));
-        horse.setRacesWonNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_WON_RACES.getParameter())));
-        horse.setRacesLostNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_LOST_RACES.getParameter())));
+        Horse horse = buildHorse(request);
         try {
             horseService.addHorse(horse);
             List<Horse> horses = horseService.getPerformingHorses();
@@ -35,8 +30,18 @@ public class AddHorse implements Command {
             return JSPPath.HORSES.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to add horse", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
+    }
+
+    private Horse buildHorse(HttpServletRequest request) {
+        Horse horse = new Horse();
+        horse.setName(request.getParameter(JSPParameter.HORSE_NAME.getParameter()));
+        horse.setBreed(request.getParameter(JSPParameter.HORSE_BREED.getParameter()));
+        horse.setAge(Integer.parseInt(request.getParameter(JSPParameter.HORSE_AGE.getParameter())));
+        horse.setRacesWonNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_WON_RACES.getParameter())));
+        horse.setRacesLostNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_LOST_RACES.getParameter())));
+        return horse;
     }
 }

@@ -29,7 +29,7 @@ public class DeleteRace implements Command {
             return JSPPath.RACES.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to delete race", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

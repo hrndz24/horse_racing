@@ -33,7 +33,7 @@ public class ShowPastRace implements Command {
             return JSPPath.PAST_RACE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to show past race", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

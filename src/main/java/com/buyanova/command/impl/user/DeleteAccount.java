@@ -23,10 +23,11 @@ public class DeleteAccount implements Command {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
             userService.removeUser(user);
+            request.getSession().invalidate();
             return JSPPath.HOME_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to delete account", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

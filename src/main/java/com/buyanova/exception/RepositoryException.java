@@ -5,6 +5,7 @@ package com.buyanova.exception;
  * on the data access level.
  *
  * @author Natalie
+ * @see com.buyanova.repository.Repository
  * */
 public class RepositoryException extends Exception {
     public RepositoryException() {

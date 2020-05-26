@@ -33,7 +33,7 @@ public class RemoveHorseFromRace implements Command {
             return JSPPath.EDIT_RACE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to remove horse from race", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

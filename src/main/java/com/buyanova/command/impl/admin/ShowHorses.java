@@ -27,7 +27,7 @@ public class ShowHorses implements Command {
             return JSPPath.HORSES.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to show horses", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

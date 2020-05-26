@@ -29,7 +29,7 @@ public class ChangePassword implements Command {
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to change password", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

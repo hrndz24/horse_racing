@@ -152,7 +152,7 @@ public enum SqlRaceRepository implements RaceRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-        SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        SqlSpecification sqlSpecification = (SqlSpecification) specification;
         return getRacesFromDatabase(sqlSpecification);
     }
 

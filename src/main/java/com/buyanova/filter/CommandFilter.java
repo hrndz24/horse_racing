@@ -19,9 +19,8 @@ import java.util.EnumSet;
 public class CommandFilter implements Filter {
 
     private EnumMap<UserRole, EnumSet<CommandEnum>> roleDependantCommands;
-    private EnumSet<CommandEnum> commonCommands = EnumSet.range(CommandEnum.LOG_IN, CommandEnum.NON_EXISTING_COMMAND);
-    private EnumSet<CommandEnum> guestCommands = EnumSet.of(CommandEnum.SIGN_UP, CommandEnum.REDIRECT_HOME,
-            CommandEnum.REDIRECT_SIGN_UP, CommandEnum.LOG_IN);
+    private EnumSet<CommandEnum> commonCommands;
+    private EnumSet<CommandEnum> guestCommands;
 
     @Override
     public void init(FilterConfig filterConfig) {
@@ -32,6 +31,9 @@ public class CommandFilter implements Filter {
         roleDependantCommands.put(UserRole.BOOKMAKER, bookmakerCommands);
         roleDependantCommands.put(UserRole.ADMINISTRATOR, adminCommands);
         roleDependantCommands.put(UserRole.CLIENT, userCommands);
+        commonCommands = EnumSet.range(CommandEnum.LOG_IN, CommandEnum.NON_EXISTING_COMMAND);
+        guestCommands = EnumSet.of(CommandEnum.SIGN_UP, CommandEnum.REDIRECT_HOME,
+                CommandEnum.REDIRECT_SIGN_UP, CommandEnum.LOG_IN);
     }
 
     @Override

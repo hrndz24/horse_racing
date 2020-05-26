@@ -38,7 +38,7 @@ public class RedirectToEditOddsPage implements Command {
             return JSPPath.EDIT_ODDS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to redirect to edit odds page", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

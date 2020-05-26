@@ -33,7 +33,7 @@ public class SetRaceResults implements Command {
             return JSPPath.SET_RACE_RESULTS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to set race results", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

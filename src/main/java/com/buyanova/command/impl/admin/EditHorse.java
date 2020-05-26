@@ -24,19 +24,23 @@ public class EditHorse implements Command {
         int horseId = Integer.parseInt(request.getParameter(JSPParameter.HORSE_ID.getParameter()));
         try {
             Horse horse = horseService.getHorseById(horseId);
-            horse.setBreed(request.getParameter(JSPParameter.HORSE_BREED.getParameter()));
-            horse.setName(request.getParameter(JSPParameter.HORSE_NAME.getParameter()));
-            horse.setAge(Integer.parseInt(request.getParameter(JSPParameter.HORSE_AGE.getParameter())));
-            horse.setRacesWonNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_WON_RACES.getParameter())));
-            horse.setRacesLostNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_LOST_RACES.getParameter())));
+            updateHorseFields(request, horse);
             horseService.updateHorse(horse);
             List<Horse> horses = horseService.getPerformingHorses();
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             return JSPPath.HORSES.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to edit horse", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
+    }
+
+    private void updateHorseFields(HttpServletRequest request, Horse horse) {
+        horse.setBreed(request.getParameter(JSPParameter.HORSE_BREED.getParameter()));
+        horse.setName(request.getParameter(JSPParameter.HORSE_NAME.getParameter()));
+        horse.setAge(Integer.parseInt(request.getParameter(JSPParameter.HORSE_AGE.getParameter())));
+        horse.setRacesWonNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_WON_RACES.getParameter())));
+        horse.setRacesLostNumber(Integer.parseInt(request.getParameter(JSPParameter.HORSE_LOST_RACES.getParameter())));
     }
 }

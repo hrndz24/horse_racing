@@ -27,20 +27,32 @@ public class ChangeHorses implements Command {
         String horsesType = request.getParameter(JSPParameter.HORSES_TYPE.getParameter());
         try {
             if (horsesType.equals(ALL_HORSES)) {
-                List<Horse> allHorses = horseService.getAllHorses();
-                request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), allHorses);
+                putAllHorsesIntoSession(request);
             } else if (horsesType.equals(PERFORMING_HORSES)) {
-                List<Horse> performingHorses = horseService.getPerformingHorses();
-                request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), performingHorses);
+                putPerformingHorsesIntoSession(request);
             } else {
-                List<Horse> nonPerformingHorses = horseService.getNonPerformingHorses();
-                request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), nonPerformingHorses);
+                putNonPerformingHorsesIntoSession(request);
             }
             return request.getParameter(JSPParameter.JSP.getParameter());
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to change horses", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
+    }
+
+    private void putAllHorsesIntoSession(HttpServletRequest request) throws ServiceException {
+        List<Horse> allHorses = horseService.getAllHorses();
+        request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), allHorses);
+    }
+
+    private void putPerformingHorsesIntoSession(HttpServletRequest request) throws ServiceException {
+        List<Horse> performingHorses = horseService.getPerformingHorses();
+        request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), performingHorses);
+    }
+
+    private void putNonPerformingHorsesIntoSession(HttpServletRequest request) throws ServiceException {
+        List<Horse> nonPerformingHorses = horseService.getNonPerformingHorses();
+        request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), nonPerformingHorses);
     }
 }

@@ -25,15 +25,19 @@ public class DeleteBet implements Command {
         Bet bet = (Bet) request.getSession().getAttribute(JSPParameter.BET.getParameter());
         try {
             betService.removeBet(bet);
-            User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
-            user.setBalance(user.getBalance().add(bet.getSum()));
-            List<Bet> bets = betService.getBetsByUser(user);
-            request.getSession().setAttribute(JSPParameter.BETS.getParameter(), bets);
+            updateSessionAttributes(request, bet);
             return JSPPath.USER_BETS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to delete bet", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
+    }
+
+    private void updateSessionAttributes(HttpServletRequest request, Bet bet) throws ServiceException {
+        User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
+        user.setBalance(user.getBalance().add(bet.getSum()));
+        List<Bet> bets = betService.getBetsByUser(user);
+        request.getSession().setAttribute(JSPParameter.BETS.getParameter(), bets);
     }
 }

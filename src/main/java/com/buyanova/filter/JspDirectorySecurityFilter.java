@@ -9,7 +9,7 @@ import java.io.IOException;
 
 @WebFilter(urlPatterns = {"/jsp/*"},
         initParams = {@WebInitParam(name = "INDEX_PATH", value = "/index.jsp")})
-public class SecurityFilter implements Filter {
+public class JspDirectorySecurityFilter implements Filter {
 
     private String indexPath;
 

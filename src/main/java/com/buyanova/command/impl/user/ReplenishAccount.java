@@ -28,7 +28,7 @@ public class ReplenishAccount implements Command {
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to replenish account", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

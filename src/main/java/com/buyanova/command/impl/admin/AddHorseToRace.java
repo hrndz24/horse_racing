@@ -25,19 +25,23 @@ public class AddHorseToRace implements Command {
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        String[] horseIds = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
         Race race = (Race) request.getSession().getAttribute(JSPParameter.RACE.getParameter());
         try {
-            for (String horseId : horseIds) {
-                raceService.addHorseToRace(Integer.parseInt(horseId), race.getId());
-            }
+            addHorsesToRace(request, race);
             List<Horse> horses = horseService.getHorsesFromRace(race);
             request.getSession().setAttribute(JSPParameter.HORSES.getParameter(), horses);
             return JSPPath.EDIT_RACE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to add horse to race", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
+        }
+    }
+
+    private void addHorsesToRace(HttpServletRequest request, Race race) throws ServiceException {
+        String[] horseIds = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
+        for (String horseId : horseIds) {
+            raceService.addHorseToRace(Integer.parseInt(horseId), race.getId());
         }
     }
 }

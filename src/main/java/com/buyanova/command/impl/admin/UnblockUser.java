@@ -31,7 +31,7 @@ public class UnblockUser implements Command {
             return JSPPath.USERS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to block user", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

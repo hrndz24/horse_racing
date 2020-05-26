@@ -27,7 +27,7 @@ public class ShowRacesWithoutResults implements Command {
             return JSPPath.RACES_WITHOUT_RESULTS.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to show races without results", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

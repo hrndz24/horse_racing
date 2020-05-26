@@ -16,38 +16,47 @@ import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class AddRace implements Command {
 
     private static Logger logger = LogManager.getLogger(AddRace.class);
 
-    private static final String DATE_PATTERN = "yyyy-MM-dd hh:mm aa";
+    private static final String DATE_PATTERN = "yyyy-MM-dd'T'hh:mm";
 
     private RaceService raceService = ServiceFactory.INSTANCE.getRaceService();
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        String location = request.getParameter(JSPParameter.RACE_LOCATION.getParameter());
-        String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
-        int distance = Integer.parseInt(request.getParameter(JSPParameter.RACE_DISTANCE.getParameter()));
-        BigDecimal prizeMoney = new BigDecimal(request.getParameter(JSPParameter.RACE_PRIZE_MONEY.getParameter()));
         try {
-            Date raceDate = new SimpleDateFormat(DATE_PATTERN).parse(date);
-            Race race = new Race();
-            race.setLocation(location);
-            race.setDistance(distance);
-            race.setDate(raceDate);
-            race.setPrizeMoney(prizeMoney);
+            Race race = buildRace(request);
             raceService.addRace(race);
-            String[] horses = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
-            for (String horse : horses) {
-                raceService.addHorseToRace(Integer.parseInt(horse), race.getId());
-            }
+            addHorsesToRace(request, race);
+            List<Race> races = raceService.getUpcomingRaces();
+            request.getSession().setAttribute(JSPParameter.RACES.getParameter(), races);
             return JSPPath.RACES.getPath();
         } catch (ParseException | ServiceException e) {
             logger.warn("Failed to execute command to add race", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
+        }
+    }
+
+    private Race buildRace(HttpServletRequest request) throws ParseException {
+        Race race = new Race();
+        race.setLocation(request.getParameter(JSPParameter.RACE_LOCATION.getParameter()));
+        race.setDistance(Integer.parseInt(request.getParameter(JSPParameter.RACE_DISTANCE.getParameter())));
+        String date = request.getParameter(JSPParameter.RACE_DATE.getParameter());
+        Date raceDate = new SimpleDateFormat(DATE_PATTERN).parse(date);
+        race.setDate(raceDate);
+        race.setPrizeMoney(new BigDecimal(request.getParameter(JSPParameter.RACE_PRIZE_MONEY.getParameter())));
+        return race;
+    }
+
+    private void addHorsesToRace(HttpServletRequest request, Race race) throws ServiceException {
+        String[] horses = request.getParameterValues(JSPParameter.HORSE_ID.getParameter());
+        for (String horse : horses) {
+            raceService.addHorseToRace(Integer.parseInt(horse), race.getId());
         }
     }
 }

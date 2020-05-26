@@ -21,20 +21,25 @@ public class SignUp implements Command {
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
-        user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
-        user.setName(request.getParameter(JSPParameter.NAME.getParameter()));
-        user.setEmail(request.getParameter(JSPParameter.EMAIL.getParameter()));
-        user.setUserRole(UserRole.CLIENT);
+        User user = buildUser(request);
         try {
             userService.signUp(user);
             request.getSession().setAttribute(JSPParameter.USER.getParameter(), user);
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to sign up", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
+    }
+
+    private User buildUser(HttpServletRequest request) {
+        User user = new User();
+        user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
+        user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
+        user.setName(request.getParameter(JSPParameter.NAME.getParameter()));
+        user.setEmail(request.getParameter(JSPParameter.EMAIL.getParameter()));
+        user.setUserRole(UserRole.CLIENT);
+        return user;
     }
 }

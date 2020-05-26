@@ -5,6 +5,21 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * {@code ProxyConnection} class uses proxy pattern to
+ * make database {@code Connection} instances reusable
+ * in {@code ConnectionPool} class.
+ * <p>
+ * Instead of closing connection, it's returned to
+ * {@code ConnectionPool} and therefore is reusable.
+ * <p>
+ * The method responsible for real connection closing
+ * is package private and should be called only in
+ * {@code ConnectionPool} class.
+ *
+ * @author Natalie
+ * @see com.buyanova.pool.ConnectionPool
+ */
 class ProxyConnection implements Connection {
 
     private Connection connection;

@@ -133,7 +133,6 @@
         <p><fmt:message bundle="${locale}" key="participants"/>:</p>
     </div>
     <form action="/controller" method="post">
-        <input type="hidden" name="raceId" value="${raceId}"/>
         <div class="container">
             <div class="row">
                 <c:forEach var="horse" items="${horses}">
@@ -159,18 +158,18 @@
                                 <input type="hidden" name="horseId" value="${horse.id}"/>
 
                                 <div class="md-form">
-                                    <label for="oddsInFavour">
+                                    <label for="oddsInFavour+${horse.id}">
                                         <fmt:message bundle="${locale}" key="odds_in_favour"/> </label>
-                                    <input id="oddsInFavour" style="width: 10rem" type="text"
+                                    <input id="oddsInFavour+${horse.id}" style="width: 10rem" type="text"
                                            class="form-control"
                                            pattern="[1-9]{1,3}" name="oddsInFavour" required/>
                                 </div>
 
                                 <div class="md-form">
-                                    <label for="oddsAgainst">
+                                    <label for="oddsAgainst+${horse.id}">
                                         <fmt:message bundle="${locale}" key="odds_against"/>
                                     </label>
-                                    <input id="oddsAgainst" style="width: 10rem" type="text" class="form-control"
+                                    <input id="oddsAgainst+${horse.id}" style="width: 10rem" type="text" class="form-control"
                                            pattern="[1-9]{1,3}" name="oddsAgainst" required/>
                                 </div>
                             </div>
@@ -180,6 +179,7 @@
             </div>
         </div>
         <div style="display: flex;align-items: center; justify-content: center">
+            <input type="hidden" name="raceId" value="${race.id}"/>
             <button class="btn btn-elegant" type="submit" name="command" value="submit_odds" style="margin-left: 5rem">
                 <fmt:message bundle="${locale}" key="submit"/></button>
         </div>

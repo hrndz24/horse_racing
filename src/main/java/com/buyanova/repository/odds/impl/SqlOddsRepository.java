@@ -92,7 +92,7 @@ public enum SqlOddsRepository implements OddsRepository {
         if (!(specification instanceof SqlSpecification)) {
             throw new RepositoryException("Invalid specification type");
         }
-        SqlSpecification sqlSpecification = ((SqlSpecification) specification);
+        SqlSpecification sqlSpecification = (SqlSpecification) specification;
         return getOddsFromDatabase(sqlSpecification);
     }
 

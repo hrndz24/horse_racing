@@ -24,11 +24,10 @@ public class ChangeName implements Command {
         User user = (User) request.getSession().getAttribute(JSPParameter.USER.getParameter());
         try {
             userService.changeName(user, name);
-            request.getSession().setAttribute(JSPParameter.USER_NAME.getParameter(), user.getName());
             return JSPPath.USER_PAGE.getPath();
         } catch (ServiceException e) {
             logger.warn("Failed to execute command to change name", e);
-            request.getSession().setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
+            request.setAttribute(JSPParameter.ERROR_MESSAGE.getParameter(), e.getMessage());
             return JSPPath.ERROR_PAGE.getPath();
         }
     }

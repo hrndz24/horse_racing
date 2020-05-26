@@ -20,9 +20,7 @@ public class LogIn implements Command {
 
     @Override
     public String getJSP(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
-        user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
+        User user = buildUser(request);
         try {
             user = userService.logIn(user);
             request.getSession().setAttribute(JSPParameter.USER.getParameter(), user);
@@ -31,5 +29,12 @@ public class LogIn implements Command {
             logger.warn("Failed to execute command to log in", e);
             return JSPPath.HOME_PAGE.getPath();
         }
+    }
+
+    private User buildUser(HttpServletRequest request) {
+        User user = new User();
+        user.setLogin(request.getParameter(JSPParameter.LOGIN.getParameter()));
+        user.setPassword(request.getParameter(JSPParameter.PASSWORD.getParameter()));
+        return user;
     }
 }

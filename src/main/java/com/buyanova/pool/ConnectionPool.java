@@ -1,7 +1,6 @@
 package com.buyanova.pool;
 
 import com.buyanova.exception.ConnectionPoolException;
-import com.buyanova.exception.NoJDBCPropertiesException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,7 +22,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * presented as instances of {@code ProxyConnection} class.
  * <p>
  * Any class that performs database access should get
- * {@code ProxyConnection} from here using {@code getConnection} method.
+ * {@code Connection} from here using {@code getConnection} method.
  * <p>
  * Note: method {@code init} should be called before any other method,
  * otherwise other methods would be forced to wait
@@ -109,7 +108,7 @@ public enum ConnectionPool {
                 Class.forName(driver);
                 fillAvailableConnections();
                 isInitialized.set(true);
-            } catch (SQLException | NoJDBCPropertiesException | ClassNotFoundException e) {
+            } catch (SQLException | IOException | ClassNotFoundException e) {
                 throw new ConnectionPoolException("Failed to initialize connection pool", e);
             }
         }
@@ -167,16 +166,12 @@ public enum ConnectionPool {
         }
     }
 
-    private void loadDatabaseProperties() throws NoJDBCPropertiesException {
+    private void loadDatabaseProperties() throws IOException {
         properties = new Properties();
         ClassLoader classLoader = this.getClass().getClassLoader();
-        try {
-            properties.load(classLoader.getResourceAsStream(DATABASE_PROPERTIES_PATH));
-            url = properties.getProperty(URL_KEY);
-            driver = properties.getProperty(DRIVER_KEY);
-        } catch (IOException e) {
-            throw new NoJDBCPropertiesException("Failed to load database properties");
-        }
+        properties.load(classLoader.getResourceAsStream(DATABASE_PROPERTIES_PATH));
+        url = properties.getProperty(URL_KEY);
+        driver = properties.getProperty(DRIVER_KEY);
     }
 
     private void deregisterDrivers() {

@@ -5,9 +5,10 @@ import java.util.regex.Pattern;
 
 public class UserValidator {
 
+    /* at least 8 characters, 1 digit and 1 upper case letter */
+    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
     private static final String EMAIL_REGEX = "^[A-Za-z0-9+_.-]+@(.+)$";
     private static final String LOGIN_REGEX = "^[a-z0-9_.@-]{3,16}$";
-    private static final String PASSWORD_REGEX = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";
     private static final String NAME_REGEX = "^[a-zA-Z0-9_.-]{3,16}$";
 
     public boolean isValidEmail(String email) {

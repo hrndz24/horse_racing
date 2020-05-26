@@ -2,7 +2,7 @@ package com.buyanova.command;
 
 import com.buyanova.command.impl.admin.*;
 import com.buyanova.command.impl.bookmaker.EditOdds;
-import com.buyanova.command.impl.bookmaker.PlaceOdds;
+import com.buyanova.command.impl.redirect.RedirectToAddOddsPage;
 import com.buyanova.command.impl.bookmaker.ShowRacesWithoutOdds;
 import com.buyanova.command.impl.bookmaker.SubmitOdds;
 import com.buyanova.command.impl.language.ChangeLanguage;
@@ -19,7 +19,7 @@ public enum CommandEnum {
     SUBMIT_BET(new SubmitBet()), MAKE_BET(new MakeBet()),
 
     /* bookmaker */
-    PLACE_ODDS(new PlaceOdds()), SUBMIT_ODDS(new SubmitOdds()), EDIT_ODDS(new EditOdds()),
+    PLACE_ODDS(new RedirectToAddOddsPage()), SUBMIT_ODDS(new SubmitOdds()), EDIT_ODDS(new EditOdds()),
     SHOW_RACES_WITHOUT_ODDS(new ShowRacesWithoutOdds()), REDIRECT_EDIT_ODDS(new RedirectToEditOddsPage()),
 
     /* common */
