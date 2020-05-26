@@ -3,16 +3,12 @@ package com.buyanova.repository.horse.impl;
 import com.buyanova.entity.Horse;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
-import com.buyanova.pool.ProxyConnection;
 import com.buyanova.repository.ColumnLabel;
 import com.buyanova.repository.horse.HorseRepository;
 import com.buyanova.specification.Specification;
 import com.buyanova.specification.SqlSpecification;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +33,7 @@ public enum SqlHorseRepository implements HorseRepository {
 
     @Override
     public void add(Horse horse) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, horse.getName());
@@ -60,7 +56,7 @@ public enum SqlHorseRepository implements HorseRepository {
 
     @Override
     public void remove(Horse horse) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
 
             statement.setInt(1, horse.getId());
@@ -72,7 +68,7 @@ public enum SqlHorseRepository implements HorseRepository {
 
     @Override
     public void update(Horse horse) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setString(1, horse.getName());
@@ -103,7 +99,7 @@ public enum SqlHorseRepository implements HorseRepository {
 
     private List<Horse> getHorsesFromDatabase(SqlSpecification specification) throws RepositoryException {
         List<Horse> horses = new ArrayList<>();
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 

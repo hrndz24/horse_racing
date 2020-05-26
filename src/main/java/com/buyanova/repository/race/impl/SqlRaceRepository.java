@@ -3,7 +3,6 @@ package com.buyanova.repository.race.impl;
 import com.buyanova.entity.Race;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
-import com.buyanova.pool.ProxyConnection;
 import com.buyanova.repository.ColumnLabel;
 import com.buyanova.repository.race.RaceRepository;
 import com.buyanova.specification.Specification;
@@ -46,7 +45,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public void addHorseToRace(int horseId, int raceId) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(ADD_HORSE_TO_RACE_QUERY)) {
 
             statement.setInt(1, raceId);
@@ -59,7 +58,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public void removeHorseFromRace(int horseId, int raceId) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(REMOVE_HORSE_FROM_RACE_QUERY)) {
 
             statement.setInt(1, horseId);
@@ -72,7 +71,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public void add(Race race) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
@@ -93,7 +92,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public void remove(Race race) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
 
             statement.setInt(1, race.getId());
@@ -105,7 +104,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public void update(Race race) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setBigDecimal(1, race.getPrizeMoney());
@@ -122,7 +121,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public void setRaceResults(Race race) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              CallableStatement statement = connection.prepareCall(SET_RACE_RESULTS)) {
             statement.setInt(1, race.getId());
             statement.setInt(2, race.getHorseWinnerId());
@@ -134,7 +133,7 @@ public enum SqlRaceRepository implements RaceRepository {
 
     @Override
     public int getNumberOfPastRacesRecords() throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_PAST_RACES_COUNT);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -158,7 +157,7 @@ public enum SqlRaceRepository implements RaceRepository {
     }
 
     private List<Race> getRacesFromDatabase(SqlSpecification specification) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 

@@ -3,16 +3,12 @@ package com.buyanova.repository.odds.impl;
 import com.buyanova.entity.Odds;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
-import com.buyanova.pool.ProxyConnection;
 import com.buyanova.repository.ColumnLabel;
 import com.buyanova.repository.odds.OddsRepository;
 import com.buyanova.specification.Specification;
 import com.buyanova.specification.SqlSpecification;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +34,7 @@ public enum SqlOddsRepository implements OddsRepository {
 
     @Override
     public void add(Odds odds) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setInt(1, odds.getRaceId());
@@ -60,7 +56,7 @@ public enum SqlOddsRepository implements OddsRepository {
 
     @Override
     public void remove(Odds odds) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
 
             statement.setInt(1, odds.getId());
@@ -72,7 +68,7 @@ public enum SqlOddsRepository implements OddsRepository {
 
     @Override
     public void update(Odds odds) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setInt(1, odds.getRaceId());
@@ -102,7 +98,7 @@ public enum SqlOddsRepository implements OddsRepository {
 
     private List<Odds> getOddsFromDatabase(SqlSpecification specification) throws RepositoryException {
         List<Odds> oddsList = new ArrayList<>();
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 

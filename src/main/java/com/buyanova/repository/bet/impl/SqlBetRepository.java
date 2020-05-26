@@ -3,7 +3,6 @@ package com.buyanova.repository.bet.impl;
 import com.buyanova.entity.Bet;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
-import com.buyanova.pool.ProxyConnection;
 import com.buyanova.repository.ColumnLabel;
 import com.buyanova.repository.bet.BetRepository;
 import com.buyanova.specification.Specification;
@@ -32,7 +31,7 @@ public enum SqlBetRepository implements BetRepository {
 
     @Override
     public void add(Bet bet) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              CallableStatement statement = connection.prepareCall(MAKE_BET)) {
 
             statement.setInt(1, bet.getUserId());
@@ -49,7 +48,7 @@ public enum SqlBetRepository implements BetRepository {
 
     @Override
     public void remove(Bet bet) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              CallableStatement statement = connection.prepareCall(REMOVE_BET)) {
 
             statement.setInt(1, bet.getId());
@@ -62,7 +61,7 @@ public enum SqlBetRepository implements BetRepository {
 
     @Override
     public void update(Bet bet) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              CallableStatement statement = connection.prepareCall(UPDATE_BET_SUM)) {
 
             statement.setInt(1, bet.getId());
@@ -89,7 +88,7 @@ public enum SqlBetRepository implements BetRepository {
 
     private List<Bet> getBetsFromDatabase(SqlSpecification specification) throws RepositoryException {
         List<Bet> bets = new ArrayList<>();
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 

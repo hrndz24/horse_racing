@@ -12,7 +12,7 @@ CREATE TABLE users
     user_id        INT PRIMARY KEY AUTO_INCREMENT,
     user_name      VARCHAR(50),
     user_log_in    VARCHAR(30) UNIQUE,
-    user_password  INT,
+    user_password  VARCHAR(128),
     user_email     VARCHAR(30),
     user_role_id   INT,
     user_is_active BOOL,

@@ -11,7 +11,8 @@ import java.security.NoSuchAlgorithmException;
 public enum PasswordEncryptor {
     INSTANCE;
 
-    private static final String HASHING_ALGORITHM = "SHA-1";
+    private static final String HASHING_ALGORITHM = "SHA-512";
+    private static final int HEXADECIMAL_RADIX = 16;
 
     private Logger logger = LogManager.getLogger(PasswordEncryptor.class);
 
@@ -25,6 +26,6 @@ public enum PasswordEncryptor {
             logger.warn("Password hashing algorithm not found", e);
         }
         BigInteger hashedPassword = new BigInteger(1, bytesEncoded);
-        return hashedPassword.toString(36);
+        return hashedPassword.toString(HEXADECIMAL_RADIX);
     }
 }

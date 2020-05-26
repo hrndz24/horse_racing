@@ -4,16 +4,12 @@ import com.buyanova.entity.User;
 import com.buyanova.entity.UserRole;
 import com.buyanova.exception.RepositoryException;
 import com.buyanova.pool.ConnectionPool;
-import com.buyanova.pool.ProxyConnection;
 import com.buyanova.repository.ColumnLabel;
 import com.buyanova.repository.user.UserRepository;
 import com.buyanova.specification.Specification;
 import com.buyanova.specification.SqlSpecification;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,7 +38,7 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public void add(User user) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
             statement.setString(1, user.getName());
@@ -66,7 +62,7 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public void remove(User user) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(REMOVE_QUERY)) {
 
             statement.setInt(1, user.getId());
@@ -78,7 +74,7 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public void update(User user) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UPDATE_QUERY)) {
 
             statement.setString(1, user.getName());
@@ -97,7 +93,7 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public void unblock(User user) throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(UNBLOCK_QUERY)) {
 
             statement.setInt(1, user.getId());
@@ -109,7 +105,7 @@ public enum SqlUserRepository implements UserRepository {
 
     @Override
     public int getNumberOfRecords() throws RepositoryException {
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(GET_ROWS_COUNT);
              ResultSet resultSet = statement.executeQuery()) {
 
@@ -134,7 +130,7 @@ public enum SqlUserRepository implements UserRepository {
 
     private List<User> getUsersFromDatabase(SqlSpecification specification) throws RepositoryException {
         List<User> users = new ArrayList<>();
-        try (ProxyConnection connection = ConnectionPool.INSTANCE.getConnection();
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = specification.toSqlStatement(connection);
              ResultSet resultSet = statement.executeQuery()) {
 

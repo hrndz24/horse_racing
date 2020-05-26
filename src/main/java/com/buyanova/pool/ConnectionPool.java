@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -101,7 +102,7 @@ public enum ConnectionPool {
      * @throws ConnectionPoolException If no or invalid jdbc properties are provided
      *                                 or a database access error occurs
      */
-    public void init() throws ConnectionPoolException {
+    public synchronized void init() throws ConnectionPoolException {
         if (!isInitialized.get()) {
             try {
                 loadDatabaseProperties();
@@ -120,7 +121,7 @@ public enum ConnectionPool {
      *
      * @return database connection
      */
-    public ProxyConnection getConnection() {
+    public Connection getConnection() {
         ProxyConnection connection = null;
         try {
             connection = availableConnections.take();
@@ -132,8 +133,8 @@ public enum ConnectionPool {
     }
 
     /*
-     * Package private method used in ProxyConnection so that to prevent closing
-     * database connection and make it reusable.
+     * Package private method used in ProxyConnection class so that to
+     * prevent closing database connection and make it reusable.
      * */
     void releaseConnection(ProxyConnection connection) {
         usedConnections.remove(connection);
