@@ -211,8 +211,16 @@ public enum RaceServiceImpl implements RaceService {
     }
 
     public Race getRaceById(int raceId) throws ServiceException {
+        return getFirstRaceByIdIfExists(raceId);
+    }
+
+    private Race getFirstRaceByIdIfExists(int raceId) throws ServiceException {
         try {
-            return raceRepository.query(new FindRaceById(raceId)).get(0);
+            List<Race> races = raceRepository.query(new FindRaceById(raceId));
+            if (races.isEmpty()) {
+                throw new ServiceException("Race with such id doesn't exist");
+            }
+            return races.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get race due to data source problems", e);
         }

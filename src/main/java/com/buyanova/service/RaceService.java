@@ -151,7 +151,8 @@ public interface RaceService {
      *
      * @param raceId id of the requested race
      * @return race with the specified id
-     * @throws ServiceException if a data source access error occurs
+     * @throws ServiceException if race with such id doesn't exist
+     *                          if a data source access error occurs
      */
     Race getRaceById(int raceId) throws ServiceException;
 }

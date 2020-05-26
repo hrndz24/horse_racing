@@ -118,10 +118,18 @@ public enum BetServiceImpl implements BetService {
     }
 
     public Bet getBetById(int betId) throws ServiceException {
+        return getFirstBetByIdIfExists(betId);
+    }
+
+    private Bet getFirstBetByIdIfExists(int betId) throws ServiceException {
         try {
-            return betRepository.query(new FindBetById(betId)).get(0);
+            List<Bet> bets = betRepository.query(new FindBetById(betId));
+            if (bets.isEmpty()) {
+                throw new ServiceException("Bet with such id does not exist");
+            }
+            return bets.get(0);
         } catch (RepositoryException e) {
-            throw new ServiceException("failed to get bet due to data source problems", e);
+            throw new ServiceException("Failed to get bet due to data source problems", e);
         }
     }
 

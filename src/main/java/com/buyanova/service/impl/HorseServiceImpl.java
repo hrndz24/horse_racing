@@ -120,8 +120,16 @@ public enum HorseServiceImpl implements HorseService {
     }
 
     public Horse getHorseById(int horseId) throws ServiceException {
+        return getFirstHorseByIdIfExists(horseId);
+    }
+
+    private Horse getFirstHorseByIdIfExists(int horseId) throws ServiceException {
         try {
-            return horseRepository.query(new FindHorseById(horseId)).get(0);
+            List<Horse> horses = horseRepository.query(new FindHorseById(horseId));
+            if (horses.isEmpty()) {
+                throw new ServiceException("Horse with such id doesn't exist");
+            }
+            return horses.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get horse due to data source problems", e);
         }

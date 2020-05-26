@@ -79,7 +79,8 @@ public interface BetService {
      *
      * @param betId id of the requested bet
      * @return bet with specified id
-     * @throws ServiceException if a data source access error occurs
+     * @throws ServiceException if bet with such id doesn't exist,
+     *                          if a data source access error occurs
      */
     Bet getBetById(int betId) throws ServiceException;
 }

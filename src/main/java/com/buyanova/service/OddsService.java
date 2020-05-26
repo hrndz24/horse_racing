@@ -64,7 +64,8 @@ public interface OddsService {
      *
      * @param oddsId id of the requested odds
      * @return odds with the specified id
-     * @throws ServiceException if a data source access error occurs
+     * @throws ServiceException if odds with such id don't exist
+     *                          if a data source access error occurs
      */
     Odds getOddsById(int oddsId) throws ServiceException;
 }

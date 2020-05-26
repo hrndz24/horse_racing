@@ -155,7 +155,8 @@ public interface UserService {
      *
      * @param userId id of the requested user
      * @return user with the specified id
-     * @throws ServiceException if a data source access error occurs
+     * @throws ServiceException if user with such id doesn't exist,
+     *                          if a data source access error occurs
      */
     User getUserById(int userId) throws ServiceException;
 

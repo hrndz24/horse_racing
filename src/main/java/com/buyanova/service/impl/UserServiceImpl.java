@@ -212,8 +212,16 @@ public enum UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(int userId) throws ServiceException {
+        return getFirstUserByIdIfExists(userId);
+    }
+
+    private User getFirstUserByIdIfExists(int userId) throws ServiceException {
         try {
-            return userRepository.query(new FindUserById(userId)).get(0);
+            List<User> users = userRepository.query(new FindUserById(userId));
+            if (users.isEmpty()) {
+                throw new ServiceException("User with such id doesn't exist");
+            }
+            return users.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get user due to data source problems", e);
         }

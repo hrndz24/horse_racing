@@ -86,8 +86,16 @@ public enum OddsServiceImpl implements OddsService {
     }
 
     public Odds getOddsById(int oddsId) throws ServiceException {
+        return getOddsByIdIfExist(oddsId);
+    }
+
+    private Odds getOddsByIdIfExist(int oddsId) throws ServiceException {
         try {
-            return oddsRepository.query(new FindOddsById(oddsId)).get(0);
+            List<Odds> odds = oddsRepository.query(new FindOddsById(oddsId));
+            if (odds.isEmpty()) {
+                throw new ServiceException("Odds with such id don't exist");
+            }
+            return odds.get(0);
         } catch (RepositoryException e) {
             throw new ServiceException("Failed to get odds due to data source problems", e);
         }

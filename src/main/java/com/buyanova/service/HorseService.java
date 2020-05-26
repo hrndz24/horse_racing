@@ -91,7 +91,8 @@ public interface HorseService {
      *
      * @param horseId id of the requested horse
      * @return horse with the specified id
-     * @throws ServiceException if a data source access error occurs
+     * @throws ServiceException if horse with such id doesn't exist
+     *                          if a data source access error occurs
      */
     Horse getHorseById(int horseId) throws ServiceException;
 
