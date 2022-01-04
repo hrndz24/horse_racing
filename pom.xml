@@ -11,7 +11,7 @@
 
     <properties>
         <junit.version>4.12</junit.version>
-        <log4j.version>2.13.2</log4j.version>
+        <log4j.version>2.17.1</log4j.version>
         <mysql.connector.version>8.0.16</mysql.connector.version>
         <maven.plugin.version>3.8.1</maven.plugin.version>
         <servlet.version>4.0.1</servlet.version>
